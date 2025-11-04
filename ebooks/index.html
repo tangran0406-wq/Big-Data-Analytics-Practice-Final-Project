@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ebooks Showcase</title>
+    <!-- Link to our CSS file -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for a nicer look (optional) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ============================================= -->
+    <!--   ↓↓↓ 将这段Header代码粘贴在这里 ↓↓↓        -->
+    <!-- ============================================= -->
+    <header>
+        <div class="header-container">
+          <div class="logo">
+            <!-- --- 修改点：<a> 标签现在只包裹图片 --- -->
+            <a href="../index.html">
+              <img src="../assets/school_logo.png" alt="校徽" class="school-logo">
+            </a>
+            <!-- --- 修改点：logo-text 现在在链接外部 --- -->
+            <div class="logo-text">
+              <h1>大数据分析实践课程平台</h1>
+              <span>依托教育改革，AI驱动全链路智能化</span>
+            </div>
+          </div>
+          <nav>
+            <ul>
+              <!-- 【重要】链接已为您修正为 ../index.html#... -->
+              <li><a href="../introduction/introdiction.html">课程介绍</a></li>
+              <li><a href="../index.html#content">课程内容</a></li>
+              <li><a href="../assist/assist.html">辅助学习</a></li>
+              <li><a href="../interaction/interaction.html">互动区</a></li>
+            </ul>
+          </nav>
+        </div>
+    </header>
+    <!-- ============================================= -->
+    <!--   ↑↑↑ Header 代码结束 ↑↑↑                   -->
+    <!-- ============================================= -->
+
+    <!-- This container is where JavaScript will create the grid of PPTs -->
+    <div id="ppt-grid-container">
+        <!-- The cards will be generated here -->
+    </div>
+
+    <!-- Link to our JavaScript file, placed at the end for faster page load -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+[
+    {   
+        "id": "pid001",
+        "name": "01-Introduction"
+    },
+    {   
+        "id": "pid002",
+        "name": "02-research tips"
+    },
+    {   
+        "id": "pid003",
+        "name": "03-data basics I"
+    },
+    {   
+        "id": "pid004",
+        "name": "04-data basicss II"
+    },
+    {   
+        "id": "pid005",
+        "name": "05-crowdsoucing and spreadsheet"
+    },
+    {   
+        "id": "pid006",
+        "name": "06-visualization design"
+    },
+    {   
+        "id": "pid007",
+        "name": "07-Machine Learning-1"
+    },
+    {   
+        "id": "pid008",
+        "name": "08-statistical methods"
+    },
+    {   
+        "id": "pid009",
+        "name": "09-deeplearning"
+    },
+    {   
+        "id": "pid010",
+        "name": "10-largesystem"
+    },
+    {   
+        "id": "pid011",
+        "name": "11-Ubiquitous Computing"
+    },
+    {   
+        "id": "pid012",
+        "name": "12-how to write a paper"
+    }
+]

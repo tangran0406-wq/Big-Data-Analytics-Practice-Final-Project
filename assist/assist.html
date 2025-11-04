@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>辅助学习资源 - 大数据分析实践课程平台</title>
+    <style>
+        :root {
+            --primary-color: #980a0e;
+            --secondary-color: #7a080b;
+            --accent-color: #f0a500;
+            --light-color: #f8fafc;
+            --dark-color: #1e293b;
+            --text-color: #334155;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            overflow-x: hidden;
+            background-color: #f1f5f9;
+        }
+        
+        /* 页面容器 */
+        .page-container {
+            position: relative;
+            width: 100%;
+            z-index: 1;
+        }
+        
+        /* 页面区块 */
+        .page-section {
+            min-height: 100vh;
+            width: 100%;
+            max-width: 1300px;
+            margin: 40px auto;
+            padding: 100px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background-color: rgba(249, 250, 251, 0.95);
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+        
+        /* 内容容器 */
+        .content-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* 头部样式 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 校徽样式 */
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .school-logo {
+            height: 50px;
+            margin-right: 15px;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0;
+            color: white;
+        }
+        
+        .logo span {
+            font-size: 0.9rem;
+            color: var(--light-color);
+            display: block;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 25px;
+        }
+        
+        nav a {
+            color: white;
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 5px;
+            opacity: 0.9;
+            text-decoration: none;
+        }
+        nav a:hover {
+            opacity: 1;
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover:after {
+            width: 100%;
+        }
+        
+        /* 通用样式 */
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: color 0.3s;
+        }
+        
+        a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            line-height: 1.2;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        h3 {
+            font-size: 1.8rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 4rem;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+        }
+        
+        /* 垂直布局样式 */
+        .vertical-feature-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 50px;
+            margin-bottom: 80px;
+        }
+        
+        .vertical-feature-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .vertical-feature-section:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .vertical-feature-text {
+            flex: 1;
+            max-width: 500px;
+        }
+        
+        .vertical-feature-text h3 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .vertical-feature-text p {
+           font-size: 1.1rem;
+           line-height: 1.7;
+        }
+
+         .vertical-feature-text ul {
+            list-style-position: inside;
+            padding-left: 10px;
+            margin-top: 20px;
+        }
+
+        .vertical-feature-text li {
+            margin-bottom: 10px;
+        }
+        
+        .vertical-feature-image {
+            flex: 1;
+            max-width: 500px;
+            height: 350px;
+        }
+        
+        .vertical-feature-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        /* 资源卡片样式 */
+        .resource-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .resource-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .resource-image {
+            height: 180px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .resource-content {
+            padding: 20px;
+        }
+        
+        .resource-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+        
+        .resource-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        
+        .resource-stats {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        
+        .stats-icon {
+            margin-right: 5px;
+            color: var(--primary-color);
+        }
+        
+        /* 导航指示器 */
+        .nav-indicators {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .nav-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            border: 2px solid var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-indicator.active {
+            background-color: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        /* 动画样式 */
+        @keyframes fadeInSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hidden-anim {
+            opacity: 0;
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        .visible-anim {
+            animation: fadeInSlideUp 1s ease-out forwards;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .vertical-feature-section, .vertical-feature-section:nth-child(even) {
+                flex-direction: column;
+                text-align: center;
+            }
+             .vertical-feature-image {
+                height: 300px;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                padding: 15px 0;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0 10px 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .resource-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-indicators {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="../index.html" class="logo">
+                <img src="school_logo.png" alt="校徽" class="school-logo">
+                <div class="logo-text">
+                    <h1>大数据分析实践课程平台 </h1>
+                    <span>辅助学习资源中心</span>
+                </div>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#overview">资源概览</a></li>
+                    <li><a href="#reference-papers">参考论文</a></li>
+                    <li><a href="#teaching-videos">教学视频</a></li>
+                    <li><a href="#mind-maps">思维导图</a></li>
+                    <li><a href="#tutorials">配置教程</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="nav-indicators">
+        <div class="nav-indicator active" data-section="overview"></div>
+        <div class="nav-indicator" data-section="reference-papers"></div>
+        <div class="nav-indicator" data-section="teaching-videos"></div>
+        <div class="nav-indicator" data-section="mind-maps"></div>
+        <div class="nav-indicator" data-section="tutorials"></div>
+    </div>
+
+    <div class="page-container">
+        <section class="page-section" id="overview">
+            <div class="content-container">
+                <h2 class="section-title">辅助学习资源概览</h2>
+                <div class="vertical-feature-section">
+                    <div class="vertical-feature-text">
+                        <h3>全方位学习支持</h3>
+                        <p>我们提供多样化的辅助学习资源，包括学术参考论文、精品教学视频、结构化思维导图和详细的配置教程，满足您在学习过程中的各种需求，帮助您更高效地掌握知识和技能。</p>
+                        <p>所有资源均由专业教师团队精心挑选和制作，与课程内容紧密结合，形成完整的学习支持体系。</p>
+                        <a href="#reference-papers" class="btn">开始浏览资源</a>
+                    </div>
+                    <div class="vertical-feature-image">
+                        <img src="辅助概览.png" alt="辅助学习资源概览">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page-section" id="reference-papers">
+            <div class="content-container">
+                <h2 class="section-title">参考论文</h2>
+                <div class="resource-cards">
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            大数据分析基础理论
+                        </div>
+                        <div class="resource-content">
+                            <h3>大数据分析基础理论与方法</h3>
+                            <div class="resource-meta">
+                                <span>核心文献</span>
+                                <span>2022</span>
+                            </div>
+                            <p>详细介绍大数据分析的基本理论框架、常用算法及应用场景，适合初学者入门。</p>
+                            <p class="resource-info">25篇核心论文+10篇扩展阅读</p>
+                            <div class="resource-actions">
+                                <a href="#" class="btn btn-outline">下载论文集</a>
+                                <div class="resource-stats">
+                                    <span class="stats-icon">📚</span>
+                                    <span>2.5k下载</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            机器学习应用研究
+                        </div>
+                        <div class="resource-content">
+                            <h3>机器学习在数据分析中的应用</h3>
+                            <div class="resource-meta">
+                                <span>专题文献</span>
+                                <span>2023</span>
+                            </div>
+                            <p>收集了机器学习算法在大数据分析领域的最新研究成果和应用案例。</p>
+                            <p class="resource-info">18篇核心论文+8篇案例研究</p>
+                            <div class="resource-actions">
+                                <a href="#" class="btn btn-outline">下载论文集</a>
+                                <div class="resource-stats">
+                                    <span class="stats-icon">📚</span>
+                                    <span>1.8k下载</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            行业实践案例
+                        </div>
+                        <div class="resource-content">
+                            <h3>大数据分析行业实践案例</h3>
+                            <div class="resource-meta">
+                                <span>案例研究</span>
+                                <span>2023</span>
+                            </div>
+                            <p>包含金融、医疗、电商等多个行业的大数据分析实践案例及研究论文。</p>
+                            <p class="resource-info">22篇案例论文+行业报告</p>
+                            <div class="resource-actions">
+                                <a href="#" class="btn btn-outline">下载论文集</a>
+                                <div class="resource-stats">
+                                    <span class="stats-icon">📚</span>
+                                    <span>3.2k下载</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page-section" id="teaching-videos">
+            <div class="content-container">
+                <h2 class="section-title">教学视频</h2>
+                <div class="vertical-feature-section">
+                    <div class="vertical-feature-text">
+                        <h3>基础概念讲解</h3>
+                        <p>由资深教师录制的基础概念讲解视频，涵盖大数据分析的核心概念、基本原理和关键技术点。</p>
+                        <ul>
+                            <li>每个视频聚焦一个核心知识点</li>
+                            <li>配套PPT下载</li>
+                            <li>支持倍速播放和离线观看</li>
+                        </ul>
+                        <a href="#" class="btn">查看全部基础视频</a>
+                    </div>
+                    <div class="vertical-feature-image" style="width: 100%; height: 350px; background: #000; display: flex; align-items: center; justify-content: center;">
+                <video 
+                    controls 
+                    width="100%" 
+                    height="100%" 
+                    style="object-fit: cover;"  <!-- 填充容器，避免黑边 -->
+                    poster="basic_video_cover.png"  <!-- 视频加载前显示封面图 -->
+                    preload="metadata"  <!-- 仅加载元数据，加快首屏显示 -->
+                    muted  <!-- 默认静音 -->
+                    loop   <!-- 循环播放 -->
+                >
+                    <source src="基础概念讲解.mp4" type="video/mp4">
+                    </div>
+                </div>
+                
+                <div class="vertical-feature-section">
+                    <div class="vertical-feature-text">
+                        <h3>实战操作演示</h3>
+                        <p>实操性极强的演示视频，展示数据分析工具的具体操作步骤和实际应用过程。</p>
+                        <ul>
+                            <li>包含Python等主流工具</li>
+                            <li>完整展示案例分析全过程</li>
+                            <li>配套有数据集和代码下载</li>
+                        </ul>
+                        <a href="#" class="btn">查看全部实战视频</a>
+                    </div>
+                    <div class="vertical-feature-image" style="width: 100%; height: 350px; background: #000; display: flex; align-items: center; justify-content: center;">
+                        <video 
+                            controls 
+                            width="100%" 
+                            height="100%" 
+                            style="object-fit: cover;"  <!-- 填充容器，避免黑边（优先保证画面显示） -->
+                            poster="video_cover.png"  <!-- 关键：视频加载前显示封面图，替代黑色框 -->
+                            preload="metadata"  <!-- 仅加载视频元数据，加快首屏显示 -->
+                            muted  <!-- 默认静音 -->
+                            loop   <!-- 循环播放 -->
+                        >
+                <source src="实战操作.mp4" type="video/mp4">
+            
+        </video>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+       <section class="page-section" id="mind-maps">
+    <div class="content-container">
+        <h2 class="section-title">思维导图</h2>
+        <div class="resource-cards">
+            <div class="resource-card">
+                <div class="resource-image">
+                    课程知识体系
+                </div>
+                <div class="resource-content">
+                    <h3>课程知识体系总览</h3>
+                    <div class="resource-meta">
+                        <span>全局视图</span>
+                        <span>更新于2023.09</span>
+                    </div>
+                    <p>展示整个课程的知识框架和知识点之间的关联关系，帮助建立系统的知识结构。</p>
+                    <p class="resource-info">可交互式思维导图+PDF版本下载</p>
+                    <div class="resource-actions">
+                        <a href="#" class="btn btn-outline">查看思维导图</a>
+                        <div class="resource-stats">
+                            <span class="stats-icon">🔍</span>
+                            <span>4.1k浏览</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="resource-card">
+                <div class="resource-image">
+                    算法分类体系
+                </div>
+                <div class="resource-content">
+                    <h3>数据分析算法分类</h3>
+                    <div class="resource-meta">
+                        <span>专题视图</span>
+                        <span>更新于2023.11</span>
+                    </div>
+                    <p>系统梳理各类数据分析算法的分类、特点、适用场景及相互关系。</p>
+                    <p class="resource-info">可交互式思维导图+对比表格</p>
+                    <div class="resource-actions">
+                        <a href="#" class="btn btn-outline">查看思维导图</a>
+                        <div class="resource-stats">
+                            <span class="stats-icon">🔍</span>
+                            <span>3.7k浏览</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="resource-card">
+                <div class="resource-image">
+                    项目实战流程
+                </div>
+                <div class="resource-content">
+                    <h3>数据分析项目实战流程</h3>
+                    <div class="resource-meta">
+                        <span>流程视图</span>
+                        <span>更新于2023.10</span>
+                    </div>
+                    <p>详细展示数据分析项目从需求分析到结果呈现的完整流程和关键节点。</p>
+                    <p class="resource-info">可交互式流程图+步骤说明</p>
+                    <div class="resource-actions">
+                        <a href="#" class="btn btn-outline">查看思维导图</a>
+                        <div class="resource-stats">
+                            <span class="stats-icon">🔍</span>
+                            <span>2.9k浏览</span>
+                        </div>
+                    </div>
+                </div>
+            </div><div class="resource-card">
+                <div class="resource-image">
+                    占位
+                </div>
+                <div class="resource-content">
+                    <h3>占位</h3>
+                    <div class="resource-meta">
+                        <span>占位</span>
+                        <span>占位</span>
+                    </div>
+                    <p>占位</p>
+                    <p class="resource-info">占位</p>
+                    <div class="resource-actions">
+                        <a href="#" class="btn btn-outline">占位</a>
+                        <div class="resource-stats">
+                            <span class="stats-icon">🔍</span>
+                            <span>占位</span>
+                        </div>
+                    </div>
+                </div>
+            </div><div class="resource-card">
+                <div class="resource-image">
+                    占位
+                </div>
+                <div class="resource-content">
+                    <h3>占位</h3>
+                    <div class="resource-meta">
+                        <span>占位</span>
+                        <span>占位</span>
+                    </div>
+                    <p>占位</p>
+                    <p class="resource-info">占位</p>
+                    <div class="resource-actions">
+                        <a href="#" class="btn btn-outline">占位</a>
+                        <div class="resource-stats">
+                            <span class="stats-icon">🔍</span>
+                            <span>占位</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 新增的自定义思维导图区域 -->
+            <div class="resource-card">
+                <div class="resource-image">
+                    自定义思维导图
+                </div>
+                <div class="resource-content">
+                    <h3>自定义思维导图</h3>
+                    <div class="resource-meta">
+                        <span>个性化工具</span>
+                        <span>实时更新</span>
+                    </div>
+                    <p>提供个性化思维导图编辑工具，可根据学习需求自定义知识结构和关联关系。</p>
+                    <p class="resource-info">在线编辑+保存分享+导出功能</p>
+                    <div class="resource-actions">
+                        <a href="CMindMap.html" class="btn btn-outline" target="_blank">使用自定义工具</a>
+                        <div class="resource-stats">
+                            <span class="stats-icon">✏️</span>
+                            <span>1.5k使用</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+        <section class="page-section" id="tutorials">
+            <div class="content-container">
+                <h2 class="section-title">配置教程</h2>
+                <div class="vertical-feature-section">
+                    <div class="vertical-feature-text">
+                        <h3>开发环境配置</h3>
+                        <p>详细介绍数据分析所需的各种开发环境配置步骤，包括本地环境和云端环境的搭建方法。</p>
+                        <h4>包含的环境配置</h4>
+                        <ul>
+                            <li>Python数据分析环境（Anaconda）配置</li>
+                            <li>R语言开发环境配置</li>
+                            <li>Jupyter Notebook使用配置</li>
+                            <li>大数据分析工具（Spark）环境配置</li>
+                        </ul>
+                        <a href="ConfigurationTutorial.html" class="btn"target="_blank">查看环境配置教程</a>
+                    </div>
+                    <div class="vertical-feature-image">
+                        <img src="环境配置.png" alt="开发环境配置">
+                    </div>
+                </div>
+                
+                <div class="vertical-feature-section">
+                    <div class="vertical-feature-text">
+                        <h3>工具使用教程</h3>
+                        <p>针对各类数据分析工具的详细使用教程，从入门到高级应用，帮助快速掌握工具使用技巧。</p>
+                        <h4>包含的工具教程</h4>
+                        <ul>
+                            <li>Pandas、NumPy数据处理库使用</li>
+                            <li>Matplotlib、Seaborn数据可视化</li>
+                            <li>Scikit-learn机器学习库应用</li>
+                            <li>Tableau、Power BI数据分析工具</li>
+                        </ul>
+                        <a href="ToolTutorial.html" class="btn"target="_blank">查看工具使用教程</a>
+                    </div>
+                    <div class="vertical-feature-image">
+                        <img src="pandas.png" alt="工具使用教程">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 获取导航元素
+        const indicators = document.querySelectorAll('.nav-indicator');
+        const headerLinks = document.querySelectorAll('nav a[href^="#"]');
+        const header = document.querySelector('header');
+        const headerHeight = header.offsetHeight;
+
+        // 处理右侧导航指示器点击
+        indicators.forEach(indicator => {
+            indicator.addEventListener('click', function() {
+                const sectionId = this.getAttribute('data-section');
+                scrollToSection(sectionId);
+            });
+        });
+
+        // 处理顶部导航链接点击（新增这部分逻辑）
+        headerLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault(); // 阻止默认锚点跳转
+                const sectionId = this.getAttribute('href').substring(1); // 获取#后的ID
+                scrollToSection(sectionId);
+            });
+        });
+
+        // 统一滚动函数
+        function scrollToSection(sectionId) {
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                // 计算滚动位置（目标位置 - 头部高度）
+                const scrollPosition = targetSection.offsetTop - headerHeight+130;
+                
+                // 执行滚动
+                window.scrollTo({
+                    top: scrollPosition,
+                    behavior: 'smooth'
+                });
+                
+                // 更新激活状态
+                indicators.forEach(ind => ind.classList.remove('active'));
+                document.querySelector(`.nav-indicator[data-section="${sectionId}"]`).classList.add('active');
+            }
+        }
+
+        // 滚动时更新导航状态
+        window.addEventListener('scroll', function() {
+            const scrollPosition = window.scrollY + headerHeight + 100;
+            
+            document.querySelectorAll('.page-section').forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionId = section.getAttribute('id');
+                const indicator = document.querySelector(`.nav-indicator[data-section="${sectionId}"]`);
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + section.offsetHeight) {
+                    indicators.forEach(ind => ind.classList.remove('active'));
+                    indicator.classList.add('active');
+                }
+            });
+            const videos = document.querySelectorAll('video');
+    
+    // 为每个视频添加鼠标悬停事件
+    videos.forEach(video => {
+        // 鼠标悬停时播放视频
+        video.addEventListener('mouseenter', function() {
+            this.play();
+        });
+        
+        // 鼠标离开时暂停视频
+        video.addEventListener('mouseleave', function() {
+            this.pause();
+            this.currentTime = 0;
+        });
+    });
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>环境配置教程 - 大数据分析实践课程平台</title>
+    <style>
+        :root {
+            --primary-color: #980a0e;
+            --secondary-color: #7a080b;
+            --accent-color: #f0a500;
+            --light-color: #f8fafc;
+            --dark-color: #1e293b;
+            --text-color: #334155;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            overflow-x: hidden;
+            background-color: #f1f5f9;
+        }
+        
+        /* 页面容器 */
+        .page-container {
+            position: relative;
+            width: 100%;
+            z-index: 1;
+            margin-top: 100px;
+        }
+        
+        /* 页面区块 */
+        .page-section {
+            width: 100%;
+            max-width: 1300px;
+            margin: 40px auto;
+            padding: 60px 40px;
+            background-color: rgba(249, 250, 251, 0.95);
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+        
+        /* 内容容器 */
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+        }
+        
+        /* 头部样式 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 校徽样式 */
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .school-logo {
+            height: 50px;
+            margin-right: 15px;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0;
+            color: white;
+        }
+        
+        .logo span {
+            font-size: 0.9rem;
+            color: var(--light-color);
+            display: block;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 25px;
+        }
+        
+        nav a {
+            color: white;
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 5px;
+            opacity: 0.9;
+            text-decoration: none;
+        }
+        nav a:hover {
+            opacity: 1;
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover:after {
+            width: 100%;
+        }
+        
+        /* 通用样式 */
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: color 0.3s;
+        }
+        
+        a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1, h2, h3, h4 {
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            grid-column: 1 / -1;
+        }
+        
+        h3 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-top: 2rem;
+        }
+        
+        h4 {
+            font-size: 1.4rem;
+            margin-top: 1.5rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 4rem;
+            grid-column: 1 / -1;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+        }
+        
+        /* 教程内容样式 */
+        .tutorial-sidebar {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            max-height: calc(100vh - 150px);
+            overflow-y: auto;
+        }
+        
+        .tutorial-sidebar h3 {
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-color);
+            margin-bottom: 20px;
+            margin-top: 0;
+        }
+        
+        .tutorial-nav {
+            list-style: none;
+        }
+        
+        .tutorial-nav li {
+            margin-bottom: 10px;
+        }
+        
+        .tutorial-nav a {
+            display: block;
+            padding: 8px 10px;
+            border-radius: var(--border-radius);
+            transition: all 0.3s;
+        }
+        
+        .tutorial-nav a:hover, .tutorial-nav a.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .tutorial-main {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            width: 100%;
+        }
+        
+        .tutorial-section {
+            margin-bottom: 60px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            scroll-margin-top: 160px;
+        }
+        
+        .tutorial-section:last-child {
+            border-bottom: none;
+        }
+        
+        .code-block {
+            background-color: #f8fafc;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            overflow-x: auto;
+        }
+        
+        .installation-steps {
+            margin-left: 20px;
+            margin-bottom: 2rem;
+        }
+        
+        .installation-steps li {
+            margin-bottom: 1.5rem;
+        }
+        
+        .note-box {
+            background-color: #fff3cd;
+            border-left: 4px solid var(--accent-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+        
+        .note-box strong {
+            color: #856404;
+        }
+        
+        .screenshot {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .screenshot img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .content-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .tutorial-sidebar {
+                position: static;
+                max-height: none;
+                margin-bottom: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                padding: 15px 0;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0 10px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="../index.html" class="logo">
+                <img src="school_logo.png" alt="校徽" class="school-logo">
+                <div class="logo-text">
+                    <h1>大数据分析实践课程平台 </h1>
+                    <span>辅助学习资源中心</span>
+                </div>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="assist.html">返回资源中心</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-container">
+        <section class="page-section">
+            <div class="content-container">
+                <h2 class="section-title">开发环境配置教程</h2>
+                
+                <!-- 侧边栏导航 -->
+                <div class="tutorial-sidebar">
+                    <h3>环境配置导航</h3>
+                    <ul class="tutorial-nav">
+                        <li><a href="#overview" class="active">概述</a></li>
+                        <li><a href="#python">Python环境</a></li>
+                        <li><a href="#r-language">R语言环境</a></li>
+                        <li><a href="#jupyter">Jupyter配置</a></li>
+                        <li><a href="#spark">Spark环境</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 主内容区域 -->
+                <div class="tutorial-main">
+                    <div id="overview" class="tutorial-section">
+                        <h3>环境配置概述</h3>
+                        <p>本教程将详细介绍大数据分析所需的各类开发环境配置步骤，包括Python、R语言、Jupyter Notebook和Spark等工具的安装与配置方法。</p>
+                        
+                        <h4>为什么需要配置这些环境？</h4>
+                        <p>数据分析实践课程需要多种工具支持：</p>
+                        <ul class="installation-steps">
+                            <li><strong>Python</strong>：数据分析的核心编程语言，拥有丰富的数据处理库</li>
+                            <li><strong>R语言</strong>：统计分析领域的专业语言，适合复杂统计建模</li>
+                            <li><strong>Jupyter Notebook</strong>：交互式编程环境，便于代码演示和报告生成</li>
+                            <li><strong>Spark</strong>：大数据处理框架，适合处理大规模数据集</li>
+                        </ul>
+                        
+                        <div class="note-box">
+                            <strong>注意：</strong>建议按照教程顺序进行配置，Python环境是其他许多工具的基础依赖。对于初学者，可先完成Python和Jupyter的配置，再根据课程进度配置其他工具。
+                        </div>
+                        
+                        <h4>配置前的准备</h4>
+                        <p>配置环境前，请确保：</p>
+                        <ul class="installation-steps">
+                            <li>计算机已连接互联网</li>
+                            <li>有足够的存储空间（至少10GB）</li>
+                            <li>具有管理员权限（以便安装软件）</li>
+                            <li>Windows系统建议使用Windows 10及以上版本，macOS建议使用10.14及以上版本</li>
+                        </ul>
+                    </div>
+                    
+                    <div id="python" class="tutorial-section">
+                        <h3>Python环境配置（Anaconda）</h3>
+                        <p>Anaconda是一个开源的Python发行版本，包含了conda、Python等180多个科学包及其依赖项，非常适合数据分析。</p>
+                        
+                        <h4>安装步骤</h4>
+                        <ol class="installation-steps">
+                            <li>
+                                <strong>下载Anaconda安装包</strong>
+                                <p>访问Anaconda官方网站（<a href="https://www.anaconda.com/products/distribution" target="_blank" rel="noopener noreferrer">https://www.anaconda.com/products/distribution</a>），根据你的操作系统选择对应的安装包。</p>
+                                <p>建议选择Python 3.9或3.10版本（兼容性更好）。</p>
+                                
+                            </li>
+                            
+                            <li>
+                                <strong>运行安装程序</strong>
+                                <p>双击下载的安装包，按照向导进行安装：</p>
+                                <ul>
+                                    <li>Windows系统：默认设置即可，建议勾选"Add Anaconda3 to my PATH environment variable"</li>
+                                    <li>macOS系统：将Anaconda拖入Applications文件夹</li>
+                                    <li>Linux系统：在终端中运行 <code>bash Anaconda3-xxxx.sh</code> 并按照提示操作</li>
+                                </ul>
+                                <div class="note-box">
+                                    <strong>注意：</strong>如果Windows系统未勾选添加环境变量，需要手动将Anaconda的安装路径添加到系统环境变量PATH中。
+                                </div>
+                            </li>
+                            
+                            <li>
+                                <strong>验证安装</strong>
+                                <p>安装完成后，打开命令行终端（Windows：cmd或PowerShell；macOS/Linux：Terminal），输入以下命令：</p>
+                                <div class="code-block">
+                                    conda --version
+                                </div>
+                                <p>如果显示类似 <code>conda 4.12.0</code> 的版本信息，则说明安装成功。</p>
+                            </li>
+                            
+                            <li>
+                                <strong>创建虚拟环境</strong>
+                                <p>为避免不同项目之间的依赖冲突，建议创建专门的数据分析环境：</p>
+                                <div class="code-block">
+                                    # 创建名为data_analysis的虚拟环境<br>
+                                    conda create -n data_analysis python=3.9<br><br>
+                                    
+                                    # 激活环境（Windows）<br>
+                                    conda activate data_analysis<br><br>
+                                    
+                                    # 激活环境（macOS/Linux）<br>
+                                    source activate data_analysis<br><br>
+                                </div>
+                            </li>
+                            
+                            <li>
+                                <strong>安装常用数据分析库</strong>
+                                <p>在激活的环境中安装必要的库：</p>
+                                <div class="code-block">
+                                    # 安装数据处理库<br>
+                                    conda install pandas numpy scipy<br><br>
+                                    
+                                    # 安装可视化库<br>
+                                    conda install matplotlib seaborn plotly<br><br>
+                                    
+                                    # 安装机器学习库<br>
+                                    conda install scikit-learn
+                                </div>
+                            </li>
+                        </ol>
+                        
+                        <a href="#" class="btn">下载详细安装手册</a>
+                    </div>
+                    
+                    <div id="r-language" class="tutorial-section">
+                        <h3>R语言环境配置</h3>
+                        <p>R语言是用于统计分析、绘图的编程语言和操作环境，在数据分析领域应用广泛。</p>
+                        
+                        <h4>安装步骤</h4>
+                        <ol class="installation-steps">
+                            <li>
+                                <strong>安装R语言</strong>
+                                <p>访问R语言官方网站（<a href="https://www.r-project.org/" target="_blank" rel="noopener noreferrer">https://www.r-project.org/</a>），点击"CRAN"链接，选择一个就近的镜像站点，下载适合你操作系统的安装包并安装。</p>
+                                
+                            </li>
+                            
+                            <li>
+                                <strong>安装RStudio</strong>
+                                <p>RStudio是R语言的集成开发环境（IDE），提供更友好的界面：</p>
+                                <ul>
+                                    <li>访问RStudio官网（<a href="https://www.rstudio.com/products/rstudio/download/" target="_blank" rel="noopener noreferrer">https://www.rstudio.com/products/rstudio/download/</a>）</li>
+                                    <li>下载免费的RStudio Desktop版本</li>
+                                    <li>运行安装包，按照向导完成安装</li>
+                                </ul>
+                            </li>
+                            
+                            <li>
+                                <strong>安装常用R包</strong>
+                                <p>打开RStudio，在控制台中输入以下命令安装常用包：</p>
+                                <div class="code-block">
+                                    # 安装tidyverse包集合（数据处理和可视化）<br>
+                                    install.packages("tidyverse")<br><br>
+                                    
+                                    # 安装数据可视化包<br>
+                                    install.packages("ggplot2")<br><br>
+                                    
+                                    # 安装交互式可视化包<br>
+                                    install.packages("plotly")<br><br>
+                                    
+                                    # 安装机器学习包<br>
+                                    install.packages("caret")
+                                </div>
+                                <div class="note-box">
+                                    <strong>注意：</strong>首次安装时会提示选择CRAN镜像，建议选择中国境内的镜像（如清华大学、中国科学技术大学镜像）以提高下载速度。
+                                </div>
+                            </li>
+                            
+                            <li>
+                                <strong>验证安装</strong>
+                                <p>在RStudio控制台中输入以下命令验证：</p>
+                                <div class="code-block">
+                                    # 加载包<br>
+                                    library(tidyverse)<br>
+                                    library(ggplot2)<br><br>
+                                    
+                                    # 查看版本<br>
+                                    packageVersion("tidyverse")<br>
+                                </div>
+                                <p>如果没有报错，说明安装成功。</p>
+                            </li>
+                        </ol>
+                        
+                        <a href="#" class="btn">下载R语言配置指南</a>
+                    </div>
+                    
+                    <div id="jupyter" class="tutorial-section">
+                        <h3>Jupyter Notebook配置</h3>
+                        <p>Jupyter Notebook是一个开源的Web应用程序，允许你创建包含实时代码、方程、可视化和文本的文档，非常适合数据分析展示。</p>
+                        
+                        <h4>配置步骤</h4>
+                        <ol class="installation-steps">
+                            <li>
+                                <strong>安装Jupyter Notebook</strong>
+                                <p>如果已安装Anaconda，Jupyter通常已经包含在内。如果没有，可以使用以下命令安装：</p>
+                                <div class="code-block">
+                                    # 使用conda安装<br>
+                                    conda install jupyter<br><br>
+                                    
+                                    # 或使用pip安装<br>
+                                    pip install jupyter
+                                </div>
+                            </li>
+                            
+                            <li>
+                                <strong>启动Jupyter Notebook</strong>
+                                <p>在命令行终端中输入以下命令：</p>
+                                <div class="code-block">
+                                    jupyter notebook
+                                </div>
+                                <p>命令执行后，Jupyter Notebook会自动在默认浏览器中打开。如果没有自动打开，可以在终端中找到类似 <code>http://localhost:8888/?token=...</code> 的链接，复制到浏览器中打开。</p>
+                            </li>
+                            
+                            <li>
+                                <strong>配置工作目录</strong>
+                                <p>设置默认工作目录，方便管理文件：</p>
+                                <ol>
+                                    <li>在终端中输入以下命令生成配置文件：</li>
+                                </ol>
+                                <div class="code-block">
+                                    jupyter notebook --generate-config
+                                </div>
+                                <ol start="2">
+                                    <li>找到生成的配置文件（通常位于用户目录下的 <code>.jupyter/jupyter_notebook_config.py</code>）</li>
+                                    <li>用文本编辑器打开，找到并修改以下行：</li>
+                                </ol>
+                                <div class="code-block">
+                                    # c.NotebookApp.notebook_dir = ''<br>
+                                    # 修改为你的工作目录（示例）：<br>
+                                    c.NotebookApp.notebook_dir = 'D:/data_analysis/notebooks'<br>
+                                </div>
+                            </li>
+                            
+                            <li>
+                                <strong>安装扩展插件</strong>
+                                <p>安装有用的扩展以增强功能：</p>
+                                <div class="code-block">
+                                    # 安装扩展管理器<br>
+                                    pip install jupyter_contrib_nbextensions<br>
+                                    jupyter contrib nbextension install --user<br><br>
+                                    
+                                    # 安装配置界面<br>
+                                    pip install jupyter_nbextensions_configurator<br>
+                                    jupyter nbextensions_configurator enable --user
+                                </div>
+                                <p>重启Jupyter后，推荐启用的扩展：</p>
+                                <ul>
+                                    <li>Table of Contents (2) - 生成笔记本目录</li>
+                                    <li>Codefolding - 代码折叠功能</li>
+                                    <li>ExecuteTime - 显示代码执行时间</li>
+                                    <li>Autopep8 - 自动格式化Python代码</li>
+                                </ul>
+                            </li>
+                        </ol>
+                        
+                        <a href="#" class="btn">下载Jupyter高级配置教程</a>
+                    </div>
+                    
+                    <div id="spark" class="tutorial-section">
+                        <h3>Spark大数据环境配置</h3>
+                        <p>Apache Spark是一个快速的集群计算框架，适用于大规模数据处理，支持Python、Java、Scala等多种编程语言。</p>
+                        
+                        <h4>安装步骤</h4>
+                        <ol class="installation-steps">
+                            <li>
+                                <strong>安装Java开发环境</strong>
+                                <p>Spark需要Java环境支持，首先安装JDK：</p>
+                                <ul>
+                                    <li>访问Oracle官网下载JDK 8或11版本（<a href="https://www.oracle.com/java/technologies/downloads/" target="_blank" rel="noopener noreferrer">https://www.oracle.com/java/technologies/downloads/</a>）</li>
+                                    <li>安装后配置环境变量：</li>
+                                    <li>创建JAVA_HOME变量，值为JDK安装路径</li>
+                                    <li>在Path变量中添加 %JAVA_HOME%\bin（Windows）或 $JAVA_HOME/bin（macOS/Linux）</li>
+                                </ul>
+                                <p>验证Java安装：</p>
+                                <div class="code-block">
+                                    java -version
+                                    javac -version
+                                </div>
+                            </li>
+                            
+                            <li>
+                                <strong>下载并安装Spark</strong>
+                                <ul>
+                                    <li>访问Spark官网（<a href="https://spark.apache.org/downloads.html" target="_blank" rel="noopener noreferrer">https://spark.apache.org/downloads.html</a>）</li>
+                                    <li>选择最新稳定版本，Hadoop版本选择"Pre-built for Apache Hadoop 2.7+"</li>
+                                    <li>下载后解压到本地目录（如 D:\spark 或 ~/spark）</li>
+                                </ul>
+                                
+                            </li>
+                            
+                            <li>
+                                <strong>配置Spark环境变量</strong>
+                                <p>设置环境变量：</p>
+                                <ul>
+                                    <li>创建SPARK_HOME变量，值为Spark解压路径</li>
+                                    <li>在Path变量中添加 %SPARK_HOME%\bin（Windows）或 $SPARK_HOME/bin（macOS/Linux）</li>
+                                </ul>
+                                <p>验证Spark安装：</p>
+                                <div class="code-block">
+                                    # 启动Spark Shell
+                                    spark-shell
+                                    
+                                    # 启动PySpark（Python API）
+                                    pyspark
+                                </div>
+                            </li>
+                            
+                            <li>
+                                <strong>配置Jupyter连接Spark</strong>
+                                <p>让Jupyter Notebook能够使用PySpark：</p>
+                                <div class="code-block">
+                                    # Windows系统（在命令行中执行）
+                                    set PYSPARK_DRIVER_PYTHON=jupyter<br>
+                                    set PYSPARK_DRIVER_PYTHON_OPTS=notebook<br><br>
+                                    
+                                    # macOS/Linux系统<br>
+                                    export PYSPARK_DRIVER_PYTHON=jupyter<br>
+                                    export PYSPARK_DRIVER_PYTHON_OPTS=notebook<br><br>
+                                    
+                                    # 启动PySpark Notebook<br>
+                                    pyspark
+                                </div>
+                            </li>
+                        </ol>
+                        
+                        <div class="note-box">
+                            <strong>注意：</strong>Spark对硬件要求较高，建议在配置较好的计算机上安装。对于学习目的，单机模式已足够，无需配置集群。
+                        </div>
+                        
+                        <a href="#" class="btn">下载Spark详细配置手册</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 获取关键元素
+        const navLinks = document.querySelectorAll('.tutorial-nav a');
+        const sections = document.querySelectorAll('.tutorial-section');
+        const header = document.querySelector('header');
+        const headerHeight = header.offsetHeight;
+        const sidebar = document.querySelector('.tutorial-sidebar');
+        
+        // 计算每个区块的位置信息
+        function getSectionPositions() {
+            return Array.from(sections).map(section => {
+                const rect = section.getBoundingClientRect();
+                return {
+                    id: section.id,
+                    top: rect.top + window.scrollY,
+                    bottom: rect.bottom + window.scrollY,
+                    element: section
+                };
+            });
+        }
+        
+        // 初始计算区块位置
+        let sectionPositions = getSectionPositions();
+        
+        // 窗口大小变化时重新计算位置
+        window.addEventListener('resize', () => {
+            sectionPositions = getSectionPositions();
+        });
+        
+        // 导航点击事件
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    // 计算滚动目标位置（考虑header高度）
+                    const targetPosition = targetSection.offsetTop - headerHeight+60;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 滚动监听逻辑
+        function handleScroll() {
+            const scrollY = window.scrollY;
+            // 可视区域顶部（考虑header高度）
+            const viewportTop = scrollY + headerHeight + 30;
+            // 可视区域底部
+            const viewportBottom = scrollY + window.innerHeight - 100;
+            
+            let activeSectionId = null;
+            
+            // 找到当前可视区域内的区块
+            sectionPositions.forEach(section => {
+                if (
+                    (section.top <= viewportTop && section.bottom >= viewportTop) ||
+                    (section.top >= viewportTop && section.bottom <= viewportBottom)
+                ) {
+                    activeSectionId = section.id;
+                }
+            });
+            
+            // 如果没有找到，使用第一个顶部小于可视区域底部的区块
+            if (!activeSectionId) {
+                for (let i = sectionPositions.length - 1; i >= 0; i--) {
+                    if (sectionPositions[i].top <= viewportBottom) {
+                        activeSectionId = sectionPositions[i].id;
+                        break;
+                    }
+                }
+            }
+            
+            // 更新导航高亮
+            if (activeSectionId) {
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('href') === `#${activeSectionId}`);
+                });
+                
+                // 确保当前导航项在侧边栏可见
+                const activeLink = document.querySelector(`.tutorial-nav a[href="#${activeSectionId}"]`);
+                if (activeLink && sidebar) {
+                    const sidebarRect = sidebar.getBoundingClientRect();
+                    const linkRect = activeLink.getBoundingClientRect();
+                    
+                    if (
+                        linkRect.top < sidebarRect.top || 
+                        linkRect.bottom > sidebarRect.bottom
+                    ) {
+                        activeLink.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'nearest'
+                        });
+                    }
+                }
+            }
+        }
+        
+        // 初始执行一次
+        handleScroll();
+        
+        // 滚动时执行（使用节流优化性能）
+        let isScrolling = false;
+        window.addEventListener('scroll', () => {
+            if (!isScrolling) {
+                window.requestAnimationFrame(() => {
+                    handleScroll();
+                    isScrolling = false;
+                });
+                isScrolling = true;
+            }
+        });
+    });
+    </script>
+</body>
+</html>

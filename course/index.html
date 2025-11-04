@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>视频课程列表</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        h1 { color: #333; }
+        ul { list-style: none; padding: 0; }
+        li { margin-bottom: 10px; }
+        a { 
+            text-decoration: none; 
+            color: #007bff; 
+            font-size: 18px; 
+            transition: color 0.2s;
+        }
+        a:hover { color: #0056b3; }
+    </style>
+</head>
+<body>
+
+    <h1>课程视频列表</h1>
+    
+    <ul>
+        <!-- 
+            这里的关键是 <a> 标签的 href 属性。
+            我们为每个视频都设置了正确的 ?id=...
+        -->
+        <li>
+            <a href="player.html?id=vid001" target="_blank">
+                Lecture 01 (Data Science Lifecycle, Study Design)
+            </a>
+        </li>
+        <li>
+            <a href="player.html?id=vid002" target="_blank">
+                Lecture 02 (pandas Part 1)
+            </a>
+        </li>
+        <li>
+            <a href="player.html?id=vid003" target="_blank">
+                Transformers, the tech behind LLMs
+            </a>
+        </li>
+        <li>
+            <a href="player.html?id=vid004" target="_blank">
+                What REALLY is Data Science? Told by a Data Scientist
+            </a>
+        </li>
+        <li>
+            <a href="player.html?id=vid005" target="_blank">
+                Learn Machine Learning Like a GENIUS and Not Waste Time
+            </a>
+        </li>
+    </ul>
+
+</body>
+</html>

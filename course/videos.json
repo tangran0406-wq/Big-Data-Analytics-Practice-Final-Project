@@ -1,0 +1,56 @@
+[
+    {   
+        "id": "vid001",
+        "title": "Lecture 01 (Data Science Lifecycle, Study Design)",
+        "author": "Sam Lau",
+        "embedUrl": "https://www.youtube.com/embed/JtwBwogRZkI?si=HQTLwZD0L3xQeoqX"
+    },
+    {
+        "id": "vid002",
+        "title": "Lecture 02 (pandas Part 1)",
+        "author": "Sam Lau",
+        "embedUrl": "https://www.youtube.com/embed/7ns-k29aMgE?si=RCyIrEqTplq-Vpab"
+    },
+    {
+        "id": "vid003",
+        "title": "Lecture 03 (pandas Part 2)",
+        "author": "Sam Lau",
+        "embedUrl": "https://www.youtube.com/embed/RwsyYhSQSoU?si=uy06ZG7Sl1CSWl3o"
+    },
+    {
+        "id": "vid004",
+        "title": "Lecture 04 (Data Cleaning)",
+        "author": "Sam Lau",
+        "embedUrl": "https://www.youtube.com/embed/kNgUMhSsJt4?si=dQePxjYaia3xKnhX"
+    },
+    {
+        "id": "vid005",
+        "title": "Lecture 05 (Visualization using seaborn)",
+        "author": "Sam Lau",
+        "embedUrl": "https://www.youtube.com/embed/Wtlz_Ib2j10?si=mZqs4EVAaO4tR0wZ"
+    },
+    {
+        "id": "vid006",
+        "title": "Lecture 06 (Visualization Principles)",
+        "author": "Sam Lau",
+        "embedUrl": "https://www.youtube.com/embed/SiVLrxGfUEU?si=K92EfeIJ7wrLWXiO"
+    },
+    {
+        "id": "vid007",
+        "title": "Lecture 07 (EDA, Text)",
+        "author": "Sam Lau",
+        "embedUrl": "https://www.youtube.com/embed/ZypKpOG0PKI?si=8hnAaghav1mLWOeT"
+    },
+    {
+        "id": "vid008",
+        "title": "Lecture 08 (SQL)",
+        "author": "Sam Lau",
+        "embedUrl": "https://www.youtube.com/embed/RIOrt9_cof8?si=jGDF_FTz_bWsQkBR"
+    },
+    {
+        "id": "vid009",
+        "title": "Lecture 09 (Dimensionality Reduction)",
+        "author": "Sam Lau",
+        "embedUrl": "https://www.youtube.com/embed/Pd_XyqzkCZU?si=vhOwpEqvrHZBs1aR"
+    }
+]

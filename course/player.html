@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频播放</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ============================================= -->
+    <!--   ↓↓↓ 将这段Header代码粘贴在这里 ↓↓↓        -->
+    <!-- ============================================= -->
+    <header>
+        <div class="header-container">
+          <div class="logo">
+            <!-- --- 修改点：<a> 标签现在只包裹图片 --- -->
+            <a href="../index.html">
+              <img src="../assets/school_logo.png" alt="校徽" class="school-logo">
+            </a>
+            <!-- --- 修改点：logo-text 现在在链接外部 --- -->
+            <div class="logo-text">
+              <h1>大数据分析实践课程平台</h1>
+              <span>依托教育改革，AI驱动全链路智能化</span>
+            </div>
+          </div>
+          <nav>
+            <ul>
+              <!-- 【重要】链接已为您修正为 ../index.html#... -->
+              <li><a href="../introduction/introdiction.html">课程介绍</a></li>
+              <li><a href="../index.html#content">课程内容</a></li>
+              <li><a href="../assist/assist.html">辅助学习</a></li>
+              <li><a href="../interaction/interaction.html">互动区</a></li>
+            </ul>
+          </nav>
+        </div>
+    </header>
+    <!-- ============================================= -->
+    <!--   ↑↑↑ Header 代码结束 ↑↑↑                   -->
+    <!-- ============================================= -->
+
+    <div class="container">
+        <!-- 左侧视频播放区域 -->
+        <!-- 左侧视频播放区域 -->
+        <div class="main-video-section">
+            <div class="video-player-wrapper">
+                <iframe 
+                    id="main-video-player" 
+                    width="100%" 
+                    height="100%" 
+                    src="" 
+                    title="YouTube video player" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+
+            <h1 id="main-video-title">正在加载...</h1>
+            <!-- 新增：作者信息栏 -->
+            <div class="author-section">
+                <img src="assets/teacher.jpg" alt="作者头像" class="author-avatar">
+                <div id="main-video-author-name" class="author-name">...</div>
+            </div>
+            
+            
+            <!-- 注意：我们已经删除了原来的 <p id="main-video-author"> 元素 -->
+        </div>
+
+        <!-- 右侧视频推荐列表 -->
+        <div class="video-list-section">
+            <h2>接下来播放</h2>
+            <div id="video-list-container" class="scrollable-list">
+                <!-- 视频列表将由JavaScript动态生成 -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

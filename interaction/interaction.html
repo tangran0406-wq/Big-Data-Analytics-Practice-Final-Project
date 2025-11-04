@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>互动交流区 - 大数据分析实践课程平台</title>
+    <style>
+        :root {
+            --primary-color: #980a0e;
+            --secondary-color: #7a080b;
+            --accent-color: #f0a500;
+            --light-color: #f8fafc;
+            --dark-color: #1e293b;
+            --text-color: #334155;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            overflow-x: hidden;
+            background-color: #f1f5f9;
+        }
+        
+        /* 页面容器 */
+        .page-container {
+            position: relative;
+            width: 100%;
+            z-index: 1;
+            margin-top: 80px; /* 为固定头部留出空间 */
+        }
+        
+        /* 页面区块 */
+        .page-section {
+            min-height: 100vh;
+            width: 100%;
+            max-width: 1300px;
+            margin: 40px auto;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background-color: rgba(249, 250, 251, 0.95);
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+        
+        /* 内容容器 */
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* 头部样式 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 校徽样式 */
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .school-logo {
+            height: 50px;
+            margin-right: 15px;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0;
+            color: white;
+        }
+        
+        .logo span {
+            font-size: 0.9rem;
+            color: var(--light-color);
+            display: block;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 25px;
+        }
+        
+        nav a {
+            color: white;
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 5px;
+            opacity: 0.9;
+            text-decoration: none;
+        }
+        nav a:hover {
+            opacity: 1;
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover:after {
+            width: 100%;
+        }
+        
+        nav a.active {
+            opacity: 1;
+        }
+        
+        nav a.active:after {
+            width: 100%;
+        }
+        
+        /* 通用样式 */
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: color 0.3s;
+        }
+        
+        a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            line-height: 1.2;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        h3 {
+            font-size: 1.8rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 4rem;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+        }
+        
+        /* 互动区样式 */
+        .interaction-tabs {
+            display: flex;
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 30px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        
+        .interaction-tabs::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .tab-button {
+            padding: 15px 25px;
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-color);
+            cursor: pointer;
+            position: relative;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-button.active {
+            color: var(--primary-color);
+        }
+        
+        .tab-button.active:after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+        
+        .tab-button:hover:not(.active) {
+            color: var(--primary-color);
+            background-color: rgba(152, 10, 14, 0.05);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* 评价区样式 */
+        .reviews-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .review-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .review-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .review-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .review-info h4 {
+            margin-bottom: 5px;
+        }
+        
+        .review-meta {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        
+        .review-stars {
+            color: var(--accent-color);
+            margin: 10px 0;
+        }
+        
+        /* 问答区样式 */
+        .question-list {
+            margin-bottom: 40px;
+        }
+        
+        .question-item {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.2s ease;
+        }
+        
+        .question-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .question-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .question-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+        
+        .question-meta {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        
+        .question-tags {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+        
+        .question-tag {
+            background-color: #f1f5f9;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-color);
+        }
+        
+        .question-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            color: #64748b;
+        }
+        
+        .question-action {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .question-action:hover {
+            color: var(--primary-color);
+        }
+        
+        .answer-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .answer-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        
+        /* 作业上传区样式 */
+        .assignment-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .assignment-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .assignment-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .assignment-deadline {
+            display: inline-block;
+            background-color: #fff3f4;
+            color: var(--primary-color);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .assignment-requirements {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+        
+        .assignment-requirements li {
+            margin-bottom: 8px;
+        }
+        
+        .upload-area {
+            border: 2px dashed #e2e8f0;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            text-align: center;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-area:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(152, 10, 14, 0.03);
+        }
+        
+        .upload-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .upload-input {
+            display: none;
+        }
+        
+        /* 交流区样式 */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 500px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            background-color: white;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .message {
+            margin-bottom: 20px;
+            max-width: 70%;
+        }
+        
+        .message.incoming {
+            margin-right: auto;
+        }
+        
+        .message.outgoing {
+            margin-left: auto;
+        }
+        
+        .message-content {
+            padding: 12px 18px;
+            border-radius: 18px;
+        }
+        
+        .message.incoming .message-content {
+            background-color: #f1f5f9;
+            border-top-left-radius: 4px;
+        }
+        
+        .message.outgoing .message-content {
+            background-color: var(--primary-color);
+            color: white;
+            border-top-right-radius: 4px;
+        }
+        
+        .message-meta {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 5px;
+            padding: 0 18px;
+        }
+        
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            background-color: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        
+        .chat-input input:focus {
+            border-color: var(--primary-color);
+        }
+        
+        .chat-input button {
+            margin-left: 15px;
+            padding: 12px 20px;
+            border-radius: 25px;
+        }
+        
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* 导航指示器 */
+        .nav-indicators {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .nav-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            border: 2px solid var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-indicator.active {
+            background-color: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        /* 动画样式 */
+        @keyframes fadeInSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hidden-anim {
+            opacity: 0;
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        .visible-anim {
+            animation: fadeInSlideUp 1s ease-out forwards;
+        }
+
+        /* 登录相关样式 */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        
+        .login-modal {
+            background-color: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 400px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .login-modal h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .login-error {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 15px;
+            display: none;
+        }
+        
+        .assignment-card .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* 反馈提示样式 */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 5px;
+            padding: 15px 25px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            z-index: 3000;
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        /* 组队信息表单样式 */
+        #team-form {
+            display: none;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .reviews-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                padding: 15px 0;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0 10px 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .nav-indicators {
+                display: none;
+            }
+            
+            .message {
+                max-width: 90%;
+            }
+            
+            .page-section {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="sddx.png" alt="山东大学" class="school-logo">
+                <div class="logo-text">
+                    <h1>大数据分析实践课程平台 </h1>
+                    <span>依托教育改革，AI驱动全链路智能化</span>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">主界面</a></li>
+                    <li><a href="../introduction/introdiction.html">课程介绍</a></li>
+                    <li><a href="../index.html#content">课程内容</a></li>
+                    <li><a href="../index.html#assist">辅助学习</a></li>
+                    <li><a href="#" class="active">互动区</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="nav-indicators">
+        <div class="nav-indicator active" data-section="reviews"></div>
+        <div class="nav-indicator" data-section="questions"></div>
+        <div class="nav-indicator" data-section="assignments"></div>
+        <div class="nav-indicator" data-section="discussion"></div>
+    </div>
+
+    <!-- 登录弹窗 -->
+    <div class="login-overlay" id="loginOverlay" style="display: none;">
+        <div class="login-modal">
+            <h3>请登录后提交作业</h3>
+            <div class="login-error" id="loginError">用户名或密码错误</div>
+            <div class="form-group">
+                <label for="username">用户名</label>
+                <input type="text" id="username" class="form-control" placeholder="请输入学号">
+            </div>
+            <div class="form-group">
+                <label for="password">密码</label>
+                <input type="password" id="password" class="form-control" placeholder="请输入密码">
+            </div>
+            <div class="form-group">
+                <button class="btn" style="width: 100%;" id="loginBtn">登录</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 通知提示 -->
+    <div class="notification" id="notification"></div>
+
+    <div class="page-container">
+        <section class="page-section" id="interaction">
+            <div class="content-container">
+                <h2 class="section-title">互动交流区</h2>
+                
+                <!-- 互动区标签页 -->
+                <div class="interaction-tabs">
+                    <button class="tab-button active" data-tab="reviews">课程评价</button>
+                    <button class="tab-button" data-tab="questions">问题讨论</button>
+                    <button class="tab-button" data-tab="assignments">作业上传</button>
+                    <button class="tab-button" data-tab="discussion">同学交流</button>
+                </div>
+                
+                <!-- 课程评价 -->
+                <div class="tab-content active" id="reviews">
+                    <h3>课程评价与学习经验</h3>
+                    <p>来自已修完本课程的学长学姐的真实评价和学习建议，帮助你更好地规划学习路径。</p>
+                    
+                    <div class="reviews-container" id="reviewsContainer">
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="review-avatar">张</div>
+                                <div class="review-info">
+                                    <h4>张明 - 计算机学院</h4>
+                                    <div class="review-meta">2022级 · 已修完课程</div>
+                                </div>
+                            </div>
+                            <div class="review-stars">★★★★★</div>
+                            <p>这门课程实践性非常强，老师讲解清晰，实验安排循序渐进。建议多花时间在实际操作上，特别是期末项目，对提升综合能力很有帮助。</p>
+                            <p>学习资源很丰富，尤其是参考论文部分，对深入理解知识点非常有帮助。</p>
+                        </div>
+                        
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="review-avatar">李</div>
+                                <div class="review-info">
+                                    <h4>李华 - 数据科学学院</h4>
+                                    <div class="review-meta">2021级 · 已修完课程</div>
+                                </div>
+                            </div>
+                            <div class="review-stars">★★★★☆</div>
+                            <p>课程内容很实用，贴近行业需求。难点主要在机器学习算法的实际应用部分，建议提前预习相关算法原理，多和同学讨论。</p>
+                            <p>教学视频质量很高，遇到不懂的地方反复观看很有帮助。</p>
+                        </div>
+                        
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="review-avatar">王</div>
+                                <div class="review-info">
+                                    <h4>王芳 - 信息学院</h4>
+                                    <div class="review-meta">2022级 · 已修完课程</div>
+                                </div>
+                            </div>
+                            <div class="review-stars">★★★★★</div>
+                            <p>老师很负责任，课后答疑及时。思维导图对梳理知识体系帮助很大，建议每周都对照思维导图复习。</p>
+                            <p>实验报告的要求比较严格，认真对待能学到很多规范的数据处理流程。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button class="btn btn-outline" id="loadMoreReviews">查看更多评价</button>
+                    </div>
+                </div>
+                
+                <!-- 问题讨论区 -->
+                <div class="tab-content" id="questions">
+                    <h3>知识点与实验难点提问</h3>
+                    <p>在这里可以提问关于课程知识点、实验难点的问题，老师和同学会为你解答。</p>
+                    
+                    <div class="form-group">
+                        <button class="btn" id="ask-question-btn">我要提问</button>
+                    </div>
+                    
+                    <div id="question-form" style="display: none; margin-bottom: 40px; padding: 20px; background: white; border-radius: var(--border-radius); box-shadow: var(--box-shadow);">
+                        <h4>提出你的问题</h4>
+                        <div class="form-group">
+                            <label for="question-title">问题标题</label>
+                            <input type="text" id="question-title" class="form-control" placeholder="请简要描述你的问题">
+                        </div>
+                        <div class="form-group">
+                            <label for="question-category">问题分类</label>
+                            <select id="question-category" class="form-control">
+                                <option value="">请选择分类</option>
+                                <option value="knowledge">知识点疑问</option>
+                                <option value="experiment">实验难点</option>
+                                <option value="assignment">作业问题</option>
+                                <option value="other">其他问题</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="question-content">问题详情</label>
+                            <textarea id="question-content" class="form-control" placeholder="请详细描述你的问题，包括你已经尝试过的解决方法等"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn" id="submit-question">提交问题</button>
+                            <button class="btn btn-outline" style="margin-left: 10px;" id="cancel-question">取消</button>
+                        </div>
+                    </div>
+                    
+                    <div class="question-list" id="questionList">
+                        <div class="question-item">
+                            <div class="question-header">
+                                <div class="question-author">
+                                    <div class="question-avatar">赵</div>
+                                    <div>
+                                        <h4>赵伟</h4>
+                                        <div class="question-meta">2小时前</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3>如何理解PCA降维的原理和应用场景？</h3>
+                            <div class="question-tags">
+                                <span class="question-tag">知识点疑问</span>
+                                <span class="question-tag">机器学习</span>
+                                <span class="question-tag">PCA</span>
+                            </div>
+                            <p>在学习降维算法时，对PCA的数学原理理解不够透彻，尤其是特征值和特征向量的作用。另外，想知道在实际项目中，PCA通常应用在哪些场景？有什么需要注意的地方？</p>
+                            <div class="question-actions">
+                                <div class="question-action">
+                                    <span>💬</span> 5个回答
+                                </div>
+                                <div class="question-action">
+                                    <span>👍</span> 12
+                                </div>
+                            </div>
+                            
+                            <div class="answer-section">
+                                <div class="answer-item">
+                                    <div class="question-author">
+                                        <div class="question-avatar">刘</div>
+                                        <div>
+                                            <h4>刘老师（授课教师）</h4>
+                                            <div class="question-meta">1小时前</div>
+                                        </div>
+                                    </div>
+                                    <p>PCA的核心思想是找到数据中方差最大的方向，以此来减少特征维度同时保留主要信息。特征值表示对应特征向量方向上的方差大小，我们通常选择特征值较大的前k个特征向量来构建新的特征空间。</p>
+                                    <p>应用场景主要有：数据可视化（高维数据降维到2D/3D）、去除噪声、加速后续算法训练等。使用时要注意数据需要标准化，并且PCA是线性降维方法，对非线性数据效果有限。</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="question-item">
+                            <div class="question-header">
+                                <div class="question-author">
+                                    <div class="question-avatar">陈</div>
+                                    <div>
+                                        <h4>陈明</h4>
+                                        <div class="question-meta">昨天 15:30</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3>实验三的Spark环境总是启动失败，该如何解决？</h3>
+                            <div class="question-tags">
+                                <span class="question-tag">实验难点</span>
+                                <span class="question-tag">Spark</span>
+                                <span class="question-tag">环境配置</span>
+                            </div>
+                            <p>按照教程配置了Spark环境，但启动时总是报"java.net.BindException: 地址已在使用"的错误。尝试过重启电脑，还是不行。有人遇到过类似问题吗？该怎么解决？</p>
+                            <div class="question-actions">
+                                <div class="question-action">
+                                    <span>💬</span> 3个回答
+                                </div>
+                                <div class="question-action">
+                                    <span>👍</span> 8
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button class="btn btn-outline">查看更多问题</button>
+                    </div>
+                </div>
+                
+                <!-- 作业上传区 -->
+                <div class="tab-content" id="assignments">
+                    <h3>作业与实验提交</h3>
+                    <p>在这里可以查看作业要求并上传你的作业和实验报告。请注意各项作业的截止时间。</p>
+                    
+                    <div class="assignment-container">
+                        <div class="assignment-card">
+                            <h3>实验一：数据预处理</h3>
+                            <span class="assignment-deadline">截止日期：2023-11-15 23:59</span>
+                            <p>完成基本的数据清洗、转换和集成操作，掌握Pandas库的基本使用方法。</p>
+                            <ul class="assignment-requirements">
+                                <li>处理缺失值和异常值</li>
+                                <li>进行数据转换和标准化</li>
+                                <li>完成至少两种数据集成操作</li>
+                                <li>提交Jupyter Notebook文件和实验报告</li>
+                            </ul>
+                            <div class="upload-area" id="upload-experiment-1">
+                                <div class="upload-icon">📂</div>
+                                <p>点击或拖拽文件到此处上传</p>
+                                <p class="text-muted">支持 .ipynb, .pdf, .doc, .docx 格式</p>
+                                <input type="file" class="upload-input" id="experiment-1-file" multiple>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn submit-assignment" data-assignment="experiment-1">提交作业</button>
+                            </div>
+                        </div>
+                        
+                        <div class="assignment-card">
+                            <h3>作业二：数据分析报告</h3>
+                            <span class="assignment-deadline">截止日期：2023-11-30 23:59</span>
+                            <p>基于提供的数据集，完成一次完整的数据分析流程，并撰写分析报告。</p>
+                            <ul class="assignment-requirements">
+                                <li>包含数据探索性分析</li>
+                                <li>至少应用两种分析方法</li>
+                                <li>提供可视化结果和解读</li>
+                                <li>提交分析报告和相关代码</li>
+                            </ul>
+                            <div class="upload-area" id="upload-assignment-2">
+                                <div class="upload-icon">📂</div>
+                                <p>点击或拖拽文件到此处上传</p>
+                                <p class="text-muted">支持 .zip, .rar, .pdf, .doc, .docx 格式</p>
+                                <input type="file" class="upload-input" id="assignment-2-file" multiple>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn submit-assignment" data-assignment="assignment-2">提交作业</button>
+                            </div>
+                        </div>
+                        
+                        <div class="assignment-card">
+                            <h3>期末项目</h3>
+                            <span class="assignment-deadline">截止日期：2023-12-25 23:59</span>
+                            <p>选择一个实际问题，设计并实现一个完整的大数据分析解决方案。</p>
+                            <ul class="assignment-requirements">
+                                <li>提交项目计划书（11月20日前）</li>
+                                <li>包含完整的分析流程和代码</li>
+                                <li>提供项目演示视频（5-10分钟）</li>
+                                <li>提交项目报告和答辩PPT</li>
+                            </ul>
+                            <div class="upload-area" id="upload-project">
+                                <div class="upload-icon">📂</div>
+                                <p>点击或拖拽文件到此处上传</p>
+                                <p class="text-muted">支持 .zip, .rar 格式（包含所有材料）</p>
+                                <input type="file" class="upload-input" id="project-file" multiple>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn submit-assignment" data-assignment="project">提交项目</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 同学交流区 -->
+                <div class="tab-content" id="discussion">
+                    <h3>同学交流区</h3>
+                    <p>在这里可以和同学们交流学习心得、分享学习资源、组队完成项目等。</p>
+                    
+                    <div class="chat-container">
+                        <div class="chat-messages">
+                            <div class="message incoming">
+                                <div class="message-content">
+                                    有没有同学完成了实验二？我在模型评估部分遇到了一些问题。
+                                </div>
+                                <div class="message-meta">李小明 · 10:23</div>
+                            </div>
+                            
+                            <div class="message outgoing">
+                                <div class="message-content">
+                                    我刚做完，你是遇到了什么问题？是评估指标选择还是代码实现？
+                                </div>
+                                <div class="message-meta">我 · 10:25</div>
+                            </div>
+                            
+                            <div class="message incoming">
+                                <div class="message-content">
+                                    主要是不知道该用哪些评估指标比较合适，我的数据是不平衡的，准确率好像不太准。
+                                </div>
+                                <div class="message-meta">李小明 · 10:27</div>
+                            </div>
+                            
+                            <div class="message incoming">
+                                <div class="message-content">
+                                    对于不平衡数据，应该用精确率、召回率和F1分数更合适，ROC-AUC也是个不错的选择。
+                                </div>
+                                <div class="message-meta">王小红 · 10:29</div>
+                            </div>
+                            
+                            <div class="message incoming">
+                                <div class="message-content">
+                                    我这里有一份关于模型评估指标的笔记，谁需要的话可以私下找我要~
+                                </div>
+                                <div class="message-meta">张大山 · 10:32</div>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-input">
+                            <input type="text" placeholder="输入消息...">
+                            <button class="btn">发送</button>
+                        </div>
+                    </div>
+                    
+                    <h3>学习小组与项目组队</h3>
+                    <p>寻找学习伙伴或项目队友？在这里发布组队信息吧！</p>
+                    
+                    <div class="form-group">
+                        <button class="btn" id="publishTeamBtn">发布组队信息</button>
+                    </div>
+                    
+                    <!-- 组队信息表单 -->
+                    <div id="team-form">
+                        <h4>发布组队信息</h4>
+                        <div class="form-group">
+                            <label for="team-title">标题</label>
+                            <input type="text" id="team-title" class="form-control" placeholder="例如：寻找期末项目队友">
+                        </div>
+                        <div class="form-group">
+                            <label for="team-type">类型</label>
+                            <select id="team-type" class="form-control">
+                                <option value="study">学习小组</option>
+                                <option value="project">项目组队</option>
+                                <option value="competition">竞赛组队</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="team-content">详情</label>
+                            <textarea id="team-content" class="form-control" placeholder="请描述你的需求、现有成员情况、希望招募的成员技能等"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="team-contact">联系方式</label>
+                            <input type="text" id="team-contact" class="form-control" placeholder="QQ/微信/邮箱等">
+                        </div>
+                        <div class="form-group">
+                            <button class="btn" id="submit-team">发布</button>
+                            <button class="btn btn-outline" style="margin-left: 10px;" id="cancel-team">取消</button>
+                        </div>
+                    </div>
+                    
+                    <div class="question-list" id="teamList">
+                        <div class="question-item">
+                            <div class="question-header">
+                                <div class="question-author">
+                                    <div class="question-avatar">周</div>
+                                    <div>
+                                        <h4>周小天</h4>
+                                        <div class="question-meta">3天前</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3>寻找期末项目队友（已有2人，还差1-2人）</h3>
+                            <div class="question-tags">
+                                <span class="question-tag">项目组队</span>
+                                <span class="question-tag">数据分析</span>
+                            </div>
+                            <p>我们目前有2人，都是计算机专业，有Python和机器学习基础。想做一个关于用户行为分析的项目，希望找有数据可视化或深度学习经验的同学加入。有意者请留言或私信我。</p>
+                            <div class="question-actions">
+                                <div class="question-action">
+                                    <span>💬</span> 8个回复
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 标签页切换功能
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // 移除所有活跃状态
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // 添加当前活跃状态
+                button.classList.add('active');
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+                
+                // 更新导航指示器
+                updateNavIndicator(tabId);
+            });
+        });
+        
+        // 问题提问表单显示/隐藏及提交功能
+        const askQuestionBtn = document.getElementById('ask-question-btn');
+        const questionForm = document.getElementById('question-form');
+        const cancelQuestionBtn = document.getElementById('cancel-question');
+        const submitQuestionBtn = document.getElementById('submit-question');
+        const questionList = document.getElementById('questionList');
+        
+        if (askQuestionBtn && questionForm && cancelQuestionBtn) {
+            askQuestionBtn.addEventListener('click', () => {
+                questionForm.style.display = 'block';
+                askQuestionBtn.style.display = 'none';
+            });
+            
+            cancelQuestionBtn.addEventListener('click', () => {
+                resetQuestionForm();
+            });
+            
+            submitQuestionBtn.addEventListener('click', () => {
+                const title = document.getElementById('question-title').value.trim();
+                const category = document.getElementById('question-category').value;
+                const content = document.getElementById('question-content').value.trim();
+                
+                if (!title || !category || !content) {
+                    showNotification('请填写完整的问题信息', 'error');
+                    return;
+                }
+                
+                // 创建新问题元素
+                const now = new Date();
+                const timeString = `${now.getMonth() + 1}月${now.getDate()}日 ${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
+                const categoryText = {
+                    'knowledge': '知识点疑问',
+                    'experiment': '实验难点',
+                    'assignment': '作业问题',
+                    'other': '其他问题'
+                }[category];
+                
+                const newQuestion = document.createElement('div');
+                newQuestion.className = 'question-item';
+                newQuestion.innerHTML = `
+                    <div class="question-header">
+                        <div class="question-author">
+                            <div class="question-avatar">我</div>
+                            <div>
+                                <h4>我</h4>
+                                <div class="question-meta">刚刚</div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3>${title}</h3>
+                    <div class="question-tags">
+                        <span class="question-tag">${categoryText}</span>
+                    </div>
+                    <p>${content}</p>
+                    <div class="question-actions">
+                        <div class="question-action">
+                            <span>💬</span> 0个回答
+                        </div>
+                        <div class="question-action">
+                            <span>👍</span> 0
+                        </div>
+                    </div>
+                `;
+                
+                // 添加到问题列表顶部
+                questionList.insertBefore(newQuestion, questionList.firstChild);
+                
+                // 显示成功提示
+                showNotification('问题提交成功，等待老师和同学解答');
+                
+                // 重置表单
+                resetQuestionForm();
+            });
+        }
+        
+        // 重置问题表单
+        function resetQuestionForm() {
+            document.getElementById('question-title').value = '';
+            document.getElementById('question-category').value = '';
+            document.getElementById('question-content').value = '';
+            questionForm.style.display = 'none';
+            askQuestionBtn.style.display = 'inline-block';
+        }
+        
+        // 上传区域功能
+        const uploadAreas = document.querySelectorAll('.upload-area');
+        
+        uploadAreas.forEach(area => {
+            const inputId = area.getAttribute('id').replace('upload-', '');
+            const fileInput = document.getElementById(`${inputId}-file`);
+            
+            area.addEventListener('click', () => {
+                fileInput.click();
+            });
+            
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    const fileName = e.target.files[0].name;
+                    const filesCount = e.target.files.length > 1 ? `及其他 ${e.target.files.length - 1} 个文件` : '';
+                    area.innerHTML = `
+                        <div class="upload-icon">✓</div>
+                        <p>已选择：${fileName} ${filesCount}</p>
+                        <p class="text-muted">点击更换文件</p>
+                    `;
+                }
+            });
+            
+            // 拖拽功能
+            area.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                area.style.borderColor = 'var(--primary-color)';
+            });
+            
+            area.addEventListener('dragleave', () => {
+                area.style.borderColor = '#e2e8f0';
+            });
+            
+            area.addEventListener('drop', (e) => {
+                e.preventDefault();
+                area.style.borderColor = '#e2e8f0';
+                
+                if (e.dataTransfer.files.length > 0) {
+                    const fileName = e.dataTransfer.files[0].name;
+                    const filesCount = e.dataTransfer.files.length > 1 ? `及其他 ${e.dataTransfer.files.length - 1} 个文件` : '';
+                    area.innerHTML = `
+                        <div class="upload-icon">✓</div>
+                        <p>已选择：${fileName} ${filesCount}</p>
+                        <p class="text-muted">点击更换文件</p>
+                    `;
+                }
+            });
+        });
+        
+        // 导航指示器功能
+        const indicators = document.querySelectorAll('.nav-indicator');
+        const header = document.querySelector('header');
+        const headerHeight = header.offsetHeight;
+        
+        indicators.forEach(indicator => {
+            indicator.addEventListener('click', function() {
+                const sectionId = this.getAttribute('data-section');
+                switchTab(sectionId);
+            });
+        });
+        
+        function switchTab(tabId) {
+            // 切换标签页
+            tabButtons.forEach(btn => {
+                if (btn.getAttribute('data-tab') === tabId) {
+                    btn.click();
+                }
+            });
+            
+            // 滚动到顶部
+            window.scrollTo({
+                top: document.getElementById('interaction').offsetTop - headerHeight,
+                behavior: 'smooth'
+            });
+        }
+        
+        function updateNavIndicator(tabId) {
+            indicators.forEach(ind => ind.classList.remove('active'));
+            document.querySelector(`.nav-indicator[data-section="${tabId}"]`).classList.add('active');
+        }
+        
+        // 滚动监听
+        window.addEventListener('scroll', function() {
+            const scrollPosition = window.scrollY + headerHeight + 100;
+            const interactionSection = document.getElementById('interaction');
+            
+            if (scrollPosition >= interactionSection.offsetTop && 
+                scrollPosition < interactionSection.offsetTop + interactionSection.offsetHeight) {
+                // 保持当前激活的指示器状态
+                const activeTab = document.querySelector('.tab-content.active').id;
+                updateNavIndicator(activeTab);
+            }
+        });
+        
+        // 聊天功能
+        const chatInput = document.querySelector('.chat-input input');
+        const chatButton = document.querySelector('.chat-input button');
+        const chatMessages = document.querySelector('.chat-messages');
+        
+        if (chatInput && chatButton && chatMessages) {
+            chatButton.addEventListener('click', sendMessage);
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            function sendMessage() {
+                const message = chatInput.value.trim();
+                if (message) {
+                    const now = new Date();
+                    const timeString = `${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
+                    
+                    const messageElement = document.createElement('div');
+                    messageElement.className = 'message outgoing';
+                    messageElement.innerHTML = `
+                        <div class="message-content">${message}</div>
+                        <div class="message-meta">我 · ${timeString}</div>
+                    `;
+                    
+                    chatMessages.appendChild(messageElement);
+                    chatInput.value = '';
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    
+                    // 模拟回复
+                    setTimeout(() => {
+                        const replies = [
+                            "谢谢你的分享！",
+                            "我也遇到过类似的问题，后来解决了。",
+                            "这个想法很棒，我觉得可以试试。",
+                            "能详细说说吗？我不太明白。",
+                            "好的，我会考虑的。",
+                            "我这里有相关资料，需要的话可以分享给你。",
+                            "这个问题我也想知道答案，关注一下。"
+                        ];
+                        const randomReply = replies[Math.floor(Math.random() * replies.length)];
+                        const names = ["李同学", "王小明", "张小红", "赵同学", "陈老师"];
+                        const randomName = names[Math.floor(Math.random() * names.length)];
+                        
+                        const replyElement = document.createElement('div');
+                        replyElement.className = 'message incoming';
+                        replyElement.innerHTML = `
+                            <div class="message-content">${randomReply}</div>
+                            <div class="message-meta">${randomName} · ${timeString}</div>
+                        `;
+                        
+                        chatMessages.appendChild(replyElement);
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }, 1000);
+                }
+            }
+        }
+        
+        // 登录相关功能
+        const loginOverlay = document.getElementById('loginOverlay');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginError = document.getElementById('loginError');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        let isLoggedIn = false; // 登录状态标记
+        
+        // 点击提交作业按钮时检查登录状态
+        document.querySelectorAll('.submit-assignment').forEach(button => {
+            button.addEventListener('click', () => {
+                if (!isLoggedIn) {
+                    // 未登录则显示登录弹窗
+                    loginOverlay.style.display = 'flex';
+                    loginError.style.display = 'none'; // 隐藏错误提示
+                    usernameInput.value = '';
+                    passwordInput.value = '';
+                } else {
+                    // 已登录则执行提交操作
+                    const assignment = button.getAttribute('data-assignment');
+                    const fileInput = document.getElementById(`${assignment}-file`);
+                    
+                    if (fileInput.files.length === 0) {
+                        showNotification('请先选择要上传的文件', 'error');
+                        return;
+                    }
+                    
+                    showNotification('作业提交成功，等待老师批阅');
+                }
+            });
+        });
+        
+        // 登录按钮点击事件
+        loginBtn.addEventListener('click', () => {
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
+            
+            // 简单验证 (实际应用中应与后端交互验证)
+            if (username && password) {
+                // 模拟登录成功
+                isLoggedIn = true;
+                loginOverlay.style.display = 'none';
+                showNotification('登录成功');
+            } else {
+                // 显示错误提示
+                loginError.style.display = 'block';
+            }
+        });
+        
+        // 点击弹窗外部关闭登录窗口
+        loginOverlay.addEventListener('click', (e) => {
+            if (e.target === loginOverlay) {
+                loginOverlay.style.display = 'none';
+            }
+        });
+        
+        // 支持回车键登录
+        passwordInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                loginBtn.click();
+            }
+        });
+        
+        // 通知提示功能
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            
+            // 设置通知类型样式
+            notification.className = 'notification';
+            if (type === 'error') {
+                notification.style.backgroundColor = '#f44336';
+            } else {
+                notification.style.backgroundColor = '#4CAF50';
+            }
+            
+            // 显示通知
+            notification.classList.add('show');
+            
+            // 3秒后隐藏通知
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // 查看更多评价功能
+        const loadMoreReviewsBtn = document.getElementById('loadMoreReviews');
+        const reviewsContainer = document.getElementById('reviewsContainer');
+        let reviewsLoaded = false;
+        
+        if (loadMoreReviewsBtn && reviewsContainer) {
+            loadMoreReviewsBtn.addEventListener('click', () => {
+                if (!reviewsLoaded) {
+                    // 添加更多评价
+                    const moreReviews = `
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="review-avatar">刘</div>
+                                <div class="review-info">
+                                    <h4>刘洋 - 软件学院</h4>
+                                    <div class="review-meta">2021级 · 已修完课程</div>
+                                </div>
+                            </div>
+                            <div class="review-stars">★★★★☆</div>
+                            <p>课程难度适中，但需要投入较多时间练习。建议多参与课堂讨论，老师会分享很多实用的行业经验。</p>
+                            <p>期末项目最好提前开始准备，选择自己感兴趣的方向，这样能学到更多东西。</p>
+                        </div>
+                        
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="review-avatar">孙</div>
+                                <div class="review-info">
+                                    <h4>孙怡 - 数学学院</h4>
+                                    <div class="review-meta">2022级 · 已修完课程</div>
+                                </div>
+                            </div>
+                            <div class="review-stars">★★★★★</div>
+                            <p>作为数学专业的学生，这门课帮助我很好地将理论知识应用到实际中。老师很耐心，对非计算机专业的学生很友好。</p>
+                            <p>配置教程非常详细，即使是编程基础薄弱的同学也能顺利完成实验。</p>
+                        </div>
+                    `;
+                    
+                    reviewsContainer.insertAdjacentHTML('beforeend', moreReviews);
+                    showNotification('已加载更多评价');
+                    loadMoreReviewsBtn.textContent = '收起评价';
+                    reviewsLoaded = true;
+                } else {
+                    // 收起额外评价
+                    const extraReviews = reviewsContainer.querySelectorAll('.review-card:nth-child(n+4)');
+                    extraReviews.forEach(review => review.remove());
+                    loadMoreReviewsBtn.textContent = '查看更多评价';
+                    reviewsLoaded = false;
+                }
+            });
+        }
+        
+        // 组队信息发布功能
+        const publishTeamBtn = document.getElementById('publishTeamBtn');
+        const teamForm = document.getElementById('team-form');
+        const cancelTeamBtn = document.getElementById('cancel-team');
+        const submitTeamBtn = document.getElementById('submit-team');
+        const teamList = document.getElementById('teamList');
+        
+        if (publishTeamBtn && teamForm && cancelTeamBtn && submitTeamBtn) {
+            publishTeamBtn.addEventListener('click', () => {
+                teamForm.style.display = 'block';
+                publishTeamBtn.style.display = 'none';
+            });
+            
+            cancelTeamBtn.addEventListener('click', () => {
+                resetTeamForm();
+            });
+            
+            submitTeamBtn.addEventListener('click', () => {
+                const title = document.getElementById('team-title').value.trim();
+                const type = document.getElementById('team-type').value;
+                const content = document.getElementById('team-content').value.trim();
+                const contact = document.getElementById('team-contact').value.trim();
+                
+                if (!title || !content || !contact) {
+                    showNotification('请填写完整的组队信息', 'error');
+                    return;
+                }
+                
+                // 创建新组队信息
+                const now = new Date();
+                const timeString = `${now.getMonth() + 1}月${now.getDate()}日 ${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
+                const typeText = {
+                    'study': '学习小组',
+                    'project': '项目组队',
+                    'competition': '竞赛组队'
+                }[type];
+                
+                const newTeam = document.createElement('div');
+                newTeam.className = 'question-item';
+                newTeam.innerHTML = `
+                    <div class="question-header">
+                        <div class="question-author">
+                            <div class="question-avatar">我</div>
+                            <div>
+                                <h4>我</h4>
+                                <div class="question-meta">刚刚</div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3>${title}</h3>
+                    <div class="question-tags">
+                        <span class="question-tag">${typeText}</span>
+                    </div>
+                    <p>${content}</p>
+                    <p><strong>联系方式：</strong>${contact}</p>
+                    <div class="question-actions">
+                        <div class="question-action">
+                            <span>💬</span> 0个回复
+                        </div>
+                    </div>
+                `;
+                
+                // 添加到组队列表顶部
+                teamList.insertBefore(newTeam, teamList.firstChild);
+                
+                // 显示成功提示
+                showNotification('组队信息发布成功');
+                
+                // 重置表单
+                resetTeamForm();
+            });
+        }
+        
+        // 重置组队表单
+        function resetTeamForm() {
+            document.getElementById('team-title').value = '';
+            document.getElementById('team-type').value = 'study';
+            document.getElementById('team-content').value = '';
+            document.getElementById('team-contact').value = '';
+            teamForm.style.display = 'none';
+            publishTeamBtn.style.display = 'inline-block';
+        }
+    });
+    </script>
+</body>
+</html>

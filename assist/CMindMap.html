@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh-CN"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>可交互自定义思维导图 - 大数据分析实践课程平台</title>
+    <style>
+        :root {
+            --primary-color: #980a0e;
+            --secondary-color: #7a080b;
+            --accent-color: #f0a500;
+            --light-color: #f8fafc;
+            --dark-color: #1e293b;
+            --text-color: #334155;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: var(--text-color);
+            overflow-x: hidden;
+            background-color: #f1f5f9;
+            padding: 0; /* 移除默认内边距 */
+        }
+        
+        /* 头部导航样式 - 与assist.html完全一致 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #980a0e;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .school-logo {
+            height: 50px; /* 与assist.html保持一致 */
+            margin-right: 15px;
+        }
+        
+        .logo-text h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0;
+            color: white; /* 文字颜色改为白色 */
+        }
+        
+        .logo-text span {
+            font-size: 0.9rem;
+            color: var(--light-color);
+            display: block;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+        }
+        .page-content {
+          max-width: 1200px;
+          margin: 120px auto 40px; /* 将顶部边距从100px增加到120px */
+          padding: 0 40px;
+          width: 100%;
+        }
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: color 0.3s;
+        }
+        
+        a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary {
+            background-color: #3498db;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-success {
+            background-color: #2ecc71;
+        }
+        
+        .btn-success:hover {
+            background-color: #27ae60;
+        }
+        
+        .btn-danger {
+            background-color: #e74c3c;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        
+        .mindmap-container {
+            width: 100%;
+            height: 70vh;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            background-color: white;
+            padding: 20px;
+            overflow: auto;
+            box-shadow: var(--box-shadow);
+        }
+        
+        #mermaidContainer {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform-origin: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin: 100px auto 20px; /* 新增顶部margin，与header高度匹配 */
+    padding: 15px;
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    max-width: 1200px; /* 与内容区保持一致宽度 */
+    width: calc(100% - 80px); /* 减去左右padding */
+    position: relative; /* 确保在正常文档流中 */
+    z-index: 100; /* 低于header但高于其他内容 */
+}
+        
+        .node-editor {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+        }
+        
+        .node-editor input {
+            width: 100%;
+            padding: 8px 12px;
+            margin: 10px 0 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .editor-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .theme-selector {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            text-align: center;
+            margin: 20px 0;
+            font-size: 16px;
+        }
+        
+        .retry-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* 长文本节点处理样式 */
+        .mermaid text {
+            dominant-baseline: middle;
+            text-anchor: middle;
+            pointer-events: none;
+        }
+    </style>
+    <!-- 预连接CDN域名优化加载 -->
+    <link rel="preconnect" href="https://cdn.staticfile.org">
+    <!-- 异步加载mermaid库并绑定加载事件 -->
+    <script src="https://cdn.staticfile.org/mermaid/10.2.4/mermaid.min.js" async onload="initMindMap()" onerror="handleMermaidError()"></script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="../index.html" class="logo">
+                <img src="school_logo.png" alt="校徽" class="school-logo">
+                <div class="logo-text">
+                    <h1>大数据分析实践课程平台</h1>
+                    <span>辅助学习资源中心</span>
+                </div>
+            </a>
+        </div>
+    </header>
+  
+    <div class="controls">
+      <button id="zoomIn" class="btn">放大</button>
+      <button id="zoomOut" class="btn">缩小</button>
+      <button id="resetView" class="btn">重置视图</button>
+      <button id="addRootChild" class="btn btn-primary">+ 添加根节点子项</button>
+      <button id="deleteSelected" class="btn btn-danger">删除选中节点</button>
+      <select id="themeSelector" class="theme-selector">
+        <option value="neutral">默认主题</option>
+        <option value="dark">深色主题</option>
+        <option value="forest">森林主题</option>
+      </select>
+      <button id="exportData" class="btn btn-success">导出数据</button>
+    </div>
+  
+  <div class="mindmap-container">
+    <div id="mermaidContainer">
+      <div id="loadingIndicator">思维导图加载中...</div>
+      <div id="errorContainer" class="error-message" style="display: none;">
+        <div id="errorText"></div>
+        <button id="retryLoad" class="retry-btn">重试加载</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="node-editor" id="nodeEditor">
+    <h3>编辑节点</h3>
+    <input type="text" id="nodeTextInput" placeholder="输入节点内容">
+    <div class="editor-buttons">
+      <button id="cancelEdit" class="btn">取消</button>
+      <button id="saveEdit" class="btn btn-success">保存</button>
+      <button id="addChildNode" class="btn btn-primary">添加子节点</button>
+    </div>
+  </div>
+
+  <script>
+    function initMindMap() {
+      let mindmapStructure = {
+        id: 'root',
+        text: '中心主题',
+        children: [
+          { id: 'a', text: '分支主题1', children: [] },
+          { id: 'b', text: '分支主题2', children: [] },
+          { id: 'c', text: '分支主题3', children: [] }
+        ]
+      };
+      
+      let selectedNode = null;
+      let scale = 1;
+      let currentMermaidId = 0;
+      
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: 'neutral',
+        mindmap: {
+          layout: 'radial',
+          nodeSpacing: 120,
+          levelDistance: 250
+        },
+        securityLevel: 'loose',
+        logLevel: 3
+      });
+
+      function structureToMermaid(structure) {
+        const lines = ['mindmap'];
+        lines.push(`  ${structure.id}((${structure.text}))`);
+        
+        function buildHierarchy(parentId, children, level = 2) {
+          if (!children || children.length === 0) return;
+          
+          const indent = '  '.repeat(level);
+          
+          children.forEach((child, index) => {
+            const nodeId = `${parentId}_${index}`;
+            const safeText = child.text.replace(/[()\[\]{};,"']/g, ' ').trim();
+            lines.push(`${indent}${nodeId}[${safeText}]`);
+            
+            if (child.children && child.children.length > 0) {
+              buildHierarchy(nodeId, child.children, level + 1);
+            }
+          });
+        }
+        
+        buildHierarchy(structure.id, structure.children);
+        return lines.join('\n');
+      }
+
+      async function renderMindMap() {
+        const container = document.getElementById('mermaidContainer');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const errorContainer = document.getElementById('errorContainer');
+        const errorText = document.getElementById('errorText');
+        
+        loadingIndicator.style.display = 'block';
+        errorContainer.style.display = 'none';
+        
+        try {
+          const oldMermaid = container.querySelector('.mermaid');
+          if (oldMermaid) oldMermaid.remove();
+          
+          const mermaidCode = structureToMermaid(mindmapStructure);
+          console.log("生成的mermaid代码:\n", mermaidCode);
+          
+          currentMermaidId++;
+          const newContainer = document.createElement('div');
+          newContainer.id = `mermaid-${currentMermaidId}`;
+          newContainer.className = 'mermaid';
+          newContainer.textContent = mermaidCode;
+          container.appendChild(newContainer);
+          
+          loadingIndicator.style.display = 'none';
+          
+          await mermaid.run({
+            nodes: [newContainer]
+          });
+          
+          attachNodeClickEvents();
+          
+        } catch (error) {
+          console.error("渲染失败:", error);
+          loadingIndicator.style.display = 'none';
+          errorContainer.style.display = 'block';
+          errorText.textContent = `渲染失败: ${error.message.substring(0, 100)}...`;
+        }
+      }
+      
+      // 改进的节点点击事件绑定 - 解决内容隐藏问题
+      function attachNodeClickEvents() {
+        setTimeout(() => {
+          // 选择所有节点组
+          const nodeGroups = document.querySelectorAll('.mermaid svg g[class*="node"]');
+          
+          nodeGroups.forEach(group => {
+            // 找到节点的文本元素
+            const textElements = group.querySelectorAll('text');
+            if (textElements.length === 0) return;
+            
+            // 组合所有文本部分
+            let fullText = '';
+            textElements.forEach(textEl => {
+              fullText += textEl.textContent.trim() + ' ';
+            });
+            fullText = fullText.trim();
+            
+            // 找到节点的主要形状元素（矩形/圆形等）
+            const shapeElement = group.querySelector('rect, circle, ellipse, polygon, path');
+            if (!shapeElement) return;
+            
+            // 确保形状元素可以响应点击
+            shapeElement.style.cursor = 'pointer';
+            shapeElement.style.pointerEvents = 'auto';
+            
+            // 绑定点击事件到形状元素而非覆盖层
+            shapeElement.addEventListener('click', (e) => {
+              e.stopPropagation();
+              selectedNode = findNodeByText(mindmapStructure, fullText);
+              
+              if (selectedNode) {
+                document.getElementById('nodeTextInput').value = selectedNode.text;
+                document.getElementById('nodeEditor').style.display = 'block';
+              }
+            });
+            
+            // 添加悬停效果
+            group.addEventListener('mouseover', () => {
+              if (shapeElement) {
+                // 保存原始样式
+                shapeElement._originalFill = shapeElement.getAttribute('fill');
+                shapeElement.setAttribute('fill', 'rgba(52, 152, 219, 0.2)');
+              }
+            });
+            
+            group.addEventListener('mouseout', () => {
+              if (shapeElement && shapeElement._originalFill) {
+                // 恢复原始样式
+                shapeElement.setAttribute('fill', shapeElement._originalFill);
+              }
+            });
+          });
+        }, 500);
+      }
+
+      function findNodeByText(node, text) {
+        const cleanText = text.replace(/\s+/g, ' ').trim();
+        const cleanNodeText = node.text.replace(/\s+/g, ' ').trim();
+        
+        if (cleanNodeText === cleanText || 
+            cleanNodeText.includes(cleanText) || 
+            cleanText.includes(cleanNodeText)) {
+          return node;
+        }
+        
+        if (node.children) {
+          for (const child of node.children) {
+            const found = findNodeByText(child, text);
+            if (found) return found;
+          }
+        }
+        return null;
+      }
+      
+      function generateId() {
+        return 'node_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
+      }
+      
+      function addChildToNode(parentNode, text = '新节点') {
+        if (!parentNode.children) parentNode.children = [];
+        parentNode.children.push({
+          id: generateId(),
+          text: text,
+          children: []
+        });
+        renderMindMap();
+      }
+      
+      function deleteNode(nodeToDelete) {
+        if (!nodeToDelete || nodeToDelete.id === 'root') {
+          alert('不能删除根节点');
+          return;
+        }
+        
+        function findAndRemove(parent, targetId) {
+          if (parent.children) {
+            for (let i = 0; i < parent.children.length; i++) {
+              if (parent.children[i].id === targetId) {
+                parent.children.splice(i, 1);
+                return true;
+              }
+              if (findAndRemove(parent.children[i], targetId)) {
+                return true;
+              }
+            }
+          }
+          return false;
+        }
+        
+        findAndRemove(mindmapStructure, nodeToDelete.id);
+        selectedNode = null;
+        renderMindMap();
+      }
+
+      // 绑定控制事件
+      document.getElementById('zoomIn').addEventListener('click', () => {
+        scale += 0.1;
+        document.getElementById('mermaidContainer').style.transform = `scale(${scale})`;
+      });
+      
+      document.getElementById('zoomOut').addEventListener('click', () => {
+        if (scale > 0.5) {
+          scale -= 0.1;
+          document.getElementById('mermaidContainer').style.transform = `scale(${scale})`;
+        }
+      });
+      
+      document.getElementById('resetView').addEventListener('click', () => {
+        scale = 1;
+        document.getElementById('mermaidContainer').style.transform = `scale(${scale})`;
+      });
+      
+      document.getElementById('themeSelector').addEventListener('change', (e) => {
+        mermaid.initialize({ theme: e.target.value });
+        renderMindMap();
+      });
+      
+      document.getElementById('addRootChild').addEventListener('click', () => {
+        addChildToNode(mindmapStructure, '新根分支');
+      });
+      
+      document.getElementById('saveEdit').addEventListener('click', () => {
+        if (selectedNode) {
+          const newText = document.getElementById('nodeTextInput').value.trim();
+          if (newText) {
+            selectedNode.text = newText;
+            document.getElementById('nodeEditor').style.display = 'none';
+            renderMindMap();
+          } else {
+            alert('节点内容不能为空');
+          }
+        }
+      });
+      
+      document.getElementById('cancelEdit').addEventListener('click', () => {
+        document.getElementById('nodeEditor').style.display = 'none';
+      });
+      
+      document.getElementById('addChildNode').addEventListener('click', () => {
+        if (selectedNode) {
+          const newText = prompt('请输入新子节点内容:', '新子节点');
+          if (newText && newText.trim()) {
+            addChildToNode(selectedNode, newText.trim());
+            document.getElementById('nodeEditor').style.display = 'none';
+          }
+        }
+      });
+      
+      document.getElementById('deleteSelected').addEventListener('click', () => {
+        if (selectedNode) {
+          if (confirm(`确定要删除"${selectedNode.text}"吗？`)) {
+            deleteNode(selectedNode);
+            document.getElementById('nodeEditor').style.display = 'none';
+          }
+        } else {
+          alert('请先点击选择一个节点');
+        }
+      });
+      
+      document.getElementById('exportData').addEventListener('click', () => {
+        const dataStr = JSON.stringify(mindmapStructure, null, 2);
+        const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+        const link = document.createElement('a');
+        link.href = dataUri;
+        link.download = 'mindmap-data_' + new Date().toISOString().slice(0,10) + '.json';
+        link.click();
+      });
+      
+      document.addEventListener('click', (e) => {
+        const editor = document.getElementById('nodeEditor');
+        if (!editor.contains(e.target) && !e.target.closest('g[class*="node"]')) {
+          editor.style.display = 'none';
+        }
+      });
+
+      // 初始渲染
+      renderMindMap();
+    }
+
+    function handleMermaidError() {
+    const loading = document.getElementById('loadingIndicator');
+    const error = document.getElementById('errorContainer');
+    loading.style.display = 'none';
+    error.style.display = 'block';
+    document.getElementById('errorText').textContent = '思维导图库加载失败，请重试';
+  }
+
+  // 若 mermaid 已缓存，可能先于 onload 执行，需兜底检查
+  if (typeof mermaid !== 'undefined') {
+    window.addEventListener('load', initMindMap);
+  }
+  </script>
+</body>
+</html>

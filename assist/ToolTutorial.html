@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工具使用教程 - 大数据分析实践课程平台</title>
+    <style>
+        :root {
+            --primary-color: #980a0e;
+            --secondary-color: #7a080b;
+            --accent-color: #f0a500;
+            --light-color: #f8fafc;
+            --dark-color: #1e293b;
+            --text-color: #334155;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            overflow-x: hidden;
+            background-color: #f1f5f9;
+        }
+        
+        /* 页面容器 */
+        .page-container {
+            position: relative;
+            width: 100%;
+            z-index: 1;
+            margin-top: 100px;
+        }
+        
+        /* 页面区块 */
+        .page-section {
+            width: 100%;
+            max-width: 1300px;
+            margin: 40px auto;
+            padding: 60px 40px;
+            background-color: rgba(249, 250, 251, 0.95);
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+        
+        /* 内容容器 - 调整为包含所有内容 */
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+        }
+        
+        /* 头部样式 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 校徽样式 */
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .school-logo {
+            height: 50px;
+            margin-right: 15px;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0;
+            color: white;
+        }
+        
+        .logo span {
+            font-size: 0.9rem;
+            color: var(--light-color);
+            display: block;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 25px;
+        }
+        
+        nav a {
+            color: white;
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 5px;
+            opacity: 0.9;
+            text-decoration: none;
+        }
+        nav a:hover {
+            opacity: 1;
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover:after {
+            width: 100%;
+        }
+        
+        /* 通用样式 */
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: color 0.3s;
+        }
+        
+        a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1, h2, h3, h4 {
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        h3 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-top: 2rem;
+        }
+        
+        h4 {
+            font-size: 1.4rem;
+            margin-top: 1.5rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 4rem;
+            grid-column: 1 / -1; /* 横跨两列 */
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+        }
+        
+        /* 教程内容样式 - 移除原有的tutorial-content容器 */
+        .tutorial-sidebar {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            max-height: calc(100vh - 150px);
+            overflow-y: auto;
+        }
+        
+        .tutorial-sidebar h3 {
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-color);
+            margin-bottom: 20px;
+        }
+        
+        .tutorial-nav {
+            list-style: none;
+        }
+        
+        .tutorial-nav li {
+            margin-bottom: 10px;
+        }
+        
+        .tutorial-nav a {
+            display: block;
+            padding: 8px 10px;
+            border-radius: var(--border-radius);
+            transition: all 0.3s;
+        }
+        
+        .tutorial-nav a:hover, .tutorial-nav a.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .tutorial-main {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            width: 100%;
+        }
+        
+        .tutorial-section {
+            margin-bottom: 60px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            scroll-margin-top: 160px; /* 关键：滚动定位预留空间 */
+        }
+        
+        .tutorial-section:last-child {
+            border-bottom: none;
+        }
+        
+        .code-block {
+            background-color: #f8fafc;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            overflow-x: auto;
+        }
+        
+        .tool-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .feature-card {
+            background-color: #f8fafc;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .content-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .tutorial-sidebar {
+                position: static;
+                max-height: none;
+                margin-bottom: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                padding: 15px 0;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0 10px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="../index.html" class="logo">
+                <img src="school_logo.png" alt="校徽" class="school-logo">
+                <div class="logo-text">
+                    <h1>大数据分析实践课程平台 </h1>
+                    <span>辅助学习资源中心</span>
+                </div>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="assist.html">返回资源中心</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-container">
+        <section class="page-section">
+            <div class="content-container">
+                <h2 class="section-title">工具使用教程</h2>
+                
+                <!-- 侧边栏直接放在content-container内 -->
+                <div class="tutorial-sidebar">
+                    <h3>工具导航</h3>
+                    <ul class="tutorial-nav">
+                        <li><a href="#pandas" class="active">Pandas 数据处理</a></li>
+                        <li><a href="#numpy">NumPy 数值计算</a></li>
+                        <li><a href="#matplotlib">Matplotlib 可视化</a></li>
+                        <li><a href="#seaborn">Seaborn 高级可视化</a></li>
+                        <li><a href="#scikit-learn">Scikit-learn 机器学习</a></li>
+                        <li><a href="#tableau">Tableau 数据分析</a></li>
+                        <li><a href="#powerbi">Power BI 数据可视化</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 主内容区域直接放在content-container内 -->
+                <div class="tutorial-main">
+                    <div id="pandas" class="tutorial-section">
+                        <h3>Pandas 数据处理库</h3>
+                        <p>Pandas 是 Python 中用于数据处理和分析的强大库，提供了高效的 DataFrame 数据结构和丰富的数据操作功能。</p>
+                        
+                        <h4>核心功能</h4>
+                        <div class="tool-features">
+                            <div class="feature-card">
+                                <h4>数据结构</h4>
+                                <p>提供 Series（一维）和 DataFrame（二维）数据结构，灵活存储和处理各类数据。</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>数据清洗</h4>
+                                <p>提供缺失值处理、重复值去除、数据转换等完整的数据清洗功能。</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>数据操作</h4>
+                                <p>支持数据筛选、排序、分组、合并等多种数据操作，满足复杂分析需求。</p>
+                            </div>
+                        </div>
+                         <h4>快速入门</h4>
+                        <div class="tutorial-image">
+                            <img src="pandas_demo.png" alt="Pandas 数据处理示例">
+                        </div>
+                        <h4>基本操作示例</h4>
+                        <div class="code-block">
+                            import pandas as pd<br><br>
+                            
+                            # 创建示例数据<br>
+                            data = {<br>
+                                '姓名': ['张三', '李四', '王五', '赵六'],<br>
+                                '年龄': [22, 25, 23, 24],<br>
+                                '专业': ['计算机', '数学', '统计学', '计算机']<br>
+                            }<br><br>
+                            
+                            # 创建DataFrame<br>
+                            df = pd.DataFrame(data)<br>
+                            print(df)
+                        </div>
+                        <p>数据筛选操作：</p>
+                        <div class="code-block">
+                            # 筛选计算机专业的学生<br>
+                            cs_students = df[df['专业'] == '计算机']<br>
+                            print(cs_students)<br><br>
+                            
+                            # 筛选年龄大于23岁的学生<br>
+                            older_students = df[df['年龄'] > 23]<br>
+                            print(older_students)<br>
+                        </div>
+                        <a href="#" class="btn">下载完整Pandas教程</a>
+                    </div>
+                    
+                    <div id="numpy" class="tutorial-section">
+                        <h3>NumPy 数值计算库</h3>
+                        <p>NumPy 是 Python 科学计算的基础库，提供了高性能的多维数组对象和数学函数库。</p>
+                        <h4>核心功能</h4>
+                        <div class="tool-features">
+                            <div class="feature-card">
+                                <h4>多维数组</h4>
+                                <p>ndarray 数据结构，支持高效的数值运算和广播功能。</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>数学函数</h4>
+                                <p>提供大量数学运算函数，包括线性代数、傅里叶变换等。</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>随机数生成</h4>
+                                <p>强大的随机数生成工具，支持多种概率分布。</p>
+                            </div>
+                        </div>
+                         <h4>快速入门</h4>
+                        <div class="tutorial-image">
+                            <img src="numpy_demo.png" alt="Pandas 数据处理示例">
+                        </div>
+                        <h4>基本操作示例</h4>
+                        <div class="code-block">
+                            import numpy as np<br><br>
+                            
+                            # 创建数组<br>
+                            arr = np.array([1, 2, 3, 4, 5])<br>
+                            print(arr)<br><br>
+                            
+                            # 数组运算<br>
+                            print(arr + 10)<br>
+                            print(arr * 2)<br>
+                        </div>
+                        
+                        <a href="#" class="btn">下载完整NumPy教程</a>
+                    </div>
+                    
+                    <div id="matplotlib" class="tutorial-section">
+                        <h3>Matplotlib 数据可视化库</h3>
+                        <p>Matplotlib 是 Python 中最常用的数据可视化库，支持绘制各种静态、动态图表。</p>
+                        
+                        <a href="#" class="btn">下载完整Matplotlib教程</a>
+                    </div>
+                    
+                    <div id="seaborn" class="tutorial-section">
+                        <h3>Seaborn 高级可视化库</h3>
+                        <p>Seaborn 基于 Matplotlib 构建，提供了更美观的默认样式和更高级的统计可视化功能。</p>
+                        <a href="#" class="btn">下载完整Seaborn教程</a>
+                    </div>
+                    
+                    <div id="scikit-learn" class="tutorial-section">
+                        <h3>Scikit-learn 机器学习库</h3>
+                        <p>Scikit-learn 是 Python 中最流行的机器学习库，提供了简单高效的工具用于数据挖掘。</p>
+                        <a href="#" class="btn">下载完整Scikit-learn教程</a>
+                    </div>
+                    
+                    <div id="tableau" class="tutorial-section">
+                        <h3>Tableau 数据分析工具</h3>
+                        <p>Tableau 是一款强大的商业智能工具，支持拖放式操作，可快速创建交互式仪表盘。</p>
+                        <a href="#" class="btn">下载完整Tableau教程</a>
+                    </div>
+                    
+                    <div id="powerbi" class="tutorial-section">
+                        <h3>Power BI 数据可视化工具</h3>
+                        <p>Power BI 是微软推出的商业分析工具，可将数据转换为交互式可视化和仪表盘。</p>
+                        <a href="#" class="btn">下载完整Power BI教程</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取关键元素
+            const navLinks = document.querySelectorAll('.tutorial-nav a');
+            const sections = document.querySelectorAll('.tutorial-section');
+            const header = document.querySelector('header');
+            const headerHeight = header.offsetHeight;
+            const sidebar = document.querySelector('.tutorial-sidebar');
+            
+            // 计算每个区块的位置信息
+            function getSectionPositions() {
+                return Array.from(sections).map(section => {
+                    const rect = section.getBoundingClientRect();
+                    return {
+                        id: section.id,
+                        top: rect.top + window.scrollY, // 绝对顶部位置
+                        bottom: rect.bottom + window.scrollY, // 绝对底部位置
+                        element: section
+                    };
+                });
+            }
+            
+            // 初始计算区块位置
+            let sectionPositions = getSectionPositions();
+            
+            // 窗口大小变化时重新计算位置
+            window.addEventListener('resize', () => {
+                sectionPositions = getSectionPositions();
+            });
+            
+            // 导航点击事件
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    
+                    if (targetSection) {
+                        // 计算滚动目标位置（考虑header高度）
+                        const targetPosition = targetSection.offsetTop - headerHeight - 20;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // 滚动监听逻辑
+            function handleScroll() {
+                const scrollY = window.scrollY;
+                // 可视区域顶部（考虑header高度）
+                const viewportTop = scrollY + headerHeight + 30;
+                // 可视区域底部
+                const viewportBottom = scrollY + window.innerHeight - 100;
+                
+                let activeSectionId = null;
+                
+                // 找到当前可视区域内的区块
+                sectionPositions.forEach(section => {
+                    // 区块顶部进入可视区域，或区块完全在可视区域内
+                    if (
+                        (section.top <= viewportTop && section.bottom >= viewportTop) ||
+                        (section.top >= viewportTop && section.bottom <= viewportBottom)
+                    ) {
+                        activeSectionId = section.id;
+                    }
+                });
+                
+                // 如果没有找到，使用第一个顶部小于可视区域底部的区块
+                if (!activeSectionId) {
+                    for (let i = sectionPositions.length - 1; i >= 0; i--) {
+                        if (sectionPositions[i].top <= viewportBottom) {
+                            activeSectionId = sectionPositions[i].id;
+                            break;
+                        }
+                    }
+                }
+                
+                // 更新导航高亮
+                if (activeSectionId) {
+                    navLinks.forEach(link => {
+                        link.classList.toggle('active', link.getAttribute('href') === `#${activeSectionId}`);
+                    });
+                    
+                    // 确保当前导航项在侧边栏可见
+                    const activeLink = document.querySelector(`.tutorial-nav a[href="#${activeSectionId}"]`);
+                    if (activeLink && sidebar) {
+                        const sidebarRect = sidebar.getBoundingClientRect();
+                        const linkRect = activeLink.getBoundingClientRect();
+                        
+                        // 如果链接不在侧边栏可视范围内，滚动到可见位置
+                        if (
+                            linkRect.top < sidebarRect.top || 
+                            linkRect.bottom > sidebarRect.bottom
+                        ) {
+                            activeLink.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'nearest'
+                            });
+                        }
+                    }
+                }
+            }
+            
+            // 初始执行一次
+            handleScroll();
+            
+            // 滚动时执行（使用节流优化性能）
+            let isScrolling = false;
+            window.addEventListener('scroll', () => {
+                if (!isScrolling) {
+                    window.requestAnimationFrame(() => {
+                        handleScroll();
+                        isScrolling = false;
+                    });
+                    isScrolling = true;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

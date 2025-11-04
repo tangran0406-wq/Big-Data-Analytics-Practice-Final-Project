@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>大数据分析实践课程平台</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <!-- 顶部导航 -->
+  <header>
+    <div class="header-container">
+      <div class="logo">
+        <img src="./assets/school_logo.png" alt="校徽" class="school-logo">
+        <div class="logo-text">
+          <h1>大数据分析实践课程平台 </h1>
+          <span>依托教育改革，AI驱动全链路智能化</span>
+        </div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="introduction/introdiction.html">课程介绍</a></li>
+          <li><a href="#content">课程内容</a></li>
+          <li><a href="assist/assist.html">辅助学习</a></li>
+          <li><a href="interaction/interaction.html">互动区</a></li>
+
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 顶部大图（Hero） -->
+  <section class="hero" id="top">
+
+  </section>
+  <section id="content" class="section" aria-labelledby="h-content">
+
+    <!-- 原有内容 -->
+
+
+
+    <div class="container">
+      <main>
+
+        <!-- 1) 课程内容：左轮播 + 右侧四项 -->
+        <section id="content" class="section" aria-labelledby="h-content">
+
+          <!-- 左上角贴纸标题 -->
+          <div class="chip-title"><span>课程内容</span></div>
+
+          <div class="content-frame">
+            <!-- 左：轮播 -->
+            <div class="slider" aria-label="课程图片轮播">
+              <ul class="slides">
+                <li class="slide is-active"><img src="./assets/content-1.jpg" alt="课堂剪影 1" /></li>
+                <li class="slide"><img src="./assets/content-2.jpg" alt="课堂剪影 2" /></li>
+                <li class="slide"><img src="./assets/content-3.jpg" alt="课堂剪影 3" /></li>
+                <li class="slide"><img src="./assets/content-4.jpg" alt="课堂剪影 4" /></li>
+              </ul>
+              <button class="nav prev" aria-label="上一张"><i class="ri-arrow-left-s-line"></i></button>
+              <button class="nav next" aria-label="下一张"><i class="ri-arrow-right-s-line"></i></button>
+              <div class="dots" aria-hidden="true"></div>
+            </div>
+
+            <!-- 右：四项侧栏 -->
+            <!-- 右：四项侧栏 -->
+            <aside class="content-sidebar" aria-label="课程内容栏目">
+              
+              <!-- 链接到 ppt 文件夹下的 index.html -->
+              <a class="side-item" href="PPT/index.html">
+                <i class="ri-slideshow-3-line" aria-hidden="true"></i> 课程 PPT
+              </a>
+
+              <!-- 链接到 video 文件夹下的 index.html -->
+              <a class="side-item" href="course/player.html?id=vid001">
+                <i class="ri-video-line" aria-hidden="true"></i> 课程视频
+              </a>
+
+              <!-- 链接到 ebook 文件夹下的 index.html -->
+              <a class="side-item" href="ebooks/index.html">
+                <i class="ri-book-2-line" aria-hidden="true"></i> 电子书
+              </a>
+
+              <!-- 链接到 experience 文件夹下的 index.html -->
+              <a class="side-item" href="shareExp/redirect.html">
+                <i class="ri-user-smile-line" aria-hidden="true"></i> 经验分享
+              </a>
+
+            </aside>
+          </div>
+        </section>
+
+        <!-- 2) 辅助学习：只保留“参考论文”一个框，下面直接论文图片+标题网格 -->
+        <section id="assist" class="section" aria-labelledby="h-assist">
+
+          <!-- 左上角贴纸标题 -->
+          <div class="chip-title"><span>辅助学习</span></div>
+
+          <div class="card">
+            <div class="body">
+              <a href="assist/assist.html#reference-papers">
+                <h3 class="section-title">
+                  <i class="ri-article-line" aria-hidden="true"></i> 参考论文       
+                </h3>
+              </a>
+              <div class="paper-grid">
+                <a class="paper" href="./papers/paper-01.pdf" target="_blank" rel="noopener">
+                  <img src="./assets/paper-01.png" alt="论文封面 1" />
+                  <div class="title">A Recursive Subdivision Technique for Sampling Multi-class Scatterplots</div>
+                </a>
+
+                <a class="paper" href="./papers/paper-02.pdf" target="_blank" rel="noopener">
+                  <img src="./assets/paper-02.png" alt="论文封面 2" />
+                  <div class="title">Crowdsourcing Graphical Perception: Using Mechanical Turk to Assess Visualization
+                    Design</div>
+                </a>
+
+                <a class="paper" href="./papers/paper-03.pdf" target="_blank" rel="noopener">
+                  <img src="./assets/paper-03.png" alt="论文封面 3" />
+                  <div class="title">Prompting for Discovery: Flexible Sense-Making for AI Art-Making with DreamSheets
+                  </div>
+                </a>
+
+                <a class="paper" href="./papers/paper-04.pdf" target="_blank" rel="noopener">
+                  <img src="./assets/paper-04.png" alt="论文封面 4" />
+                  <div class="title">Table-GPT: Table Fine-tuned GPT for Diverse Table Tasks</div>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 教学视频（整卡） -->
+          <div class="card" id="teach-videos">
+            <div class="body">
+              <a href="assist/assist.html#teaching-videos">
+                <h3 class="section-title">
+                  <i class="ri-movie-line" aria-hidden="true"></i> 教学视频
+                </h3>
+              </a>
+
+              <div class="video-grid">
+                <figure class="video-card">
+                  <video controls preload="metadata" src="./videos/20240914 孙老师费老师介绍项目.mp4"></video>
+                  <figcaption>孙老师 & 费老师：项目介绍</figcaption>
+                </figure>
+
+                <figure class="video-card">
+                  <video controls preload="metadata" src="./videos/项目经验分析.mp4"></video>
+                  <figcaption>项目经验分析</figcaption>
+                </figure>
+
+                <figure class="video-card">
+                  <video controls preload="metadata" src="./videos/canis讲解-裁剪版.mp4"></video>
+                  <figcaption>Canis 讲解（裁剪版）</figcaption>
+                </figure>
+              </div>
+            </div>
+          </div>
+
+          <!-- 思维导图（整卡） -->
+          <div class="card">
+            <div class="body">
+              <a href="assist/assist.html#mind-maps">
+                <h3 class="section-title">
+                  <i class="ri-mind-map" aria-hidden="true"></i> 思维导图
+                </h3>
+              </a>
+              <!-- 显示图片 + 提供下载 -->
+              <figure class="mindmap">
+                <img src="./assets/大数据分析-思维导图.png" alt="大数据分析 · 思维导图" loading="lazy" />
+                <figcaption style="margin-top:8px;">
+                  <a href="./assets/大数据分析-思维导图.png" download></a>
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+
+
+          <!-- 配置教程（整卡） -->
+          <div class="card">
+            <div class="body">
+              <a href="assist/assist.html#tutorials">
+                <h3 class="section-title">
+                  <i class="ri-tools-line" aria-hidden="true"></i> 配置教程
+                </h3>
+              </a>
+              <div class="res-placeholder">在这里放软件安装与环境配置教程</div>
+            </div>
+          </div>
+
+        </section>
+
+<!-- 3) 互动区 -->
+        <section id="community" class="section" aria-labelledby="h-community" 
+         onclick="window.location.href='interaction/interaction.html'">
+
+  <!-- 左上角贴纸标题 -->
+  <div class="chip-title"><span>互动区</span></div>
+
+  <div class="grid cols-3">
+    <!-- 课程评价 -->
+    <div class="card">
+      <div class="body">
+        <h3>课程评价</h3>
+        <div id="rating" class="stars" aria-label="课程评分" style="font-size:0">
+          <i class="ri-star-line" data-star="1" aria-hidden="true"></i>
+          <i class="ri-star-line" data-star="2" aria-hidden="true"></i>
+          <i class="ri-star-line" data-star="3" aria-hidden="true"></i>
+          <i class="ri-star-line" data-star="4" aria-hidden="true"></i>
+          <i class="ri-star-line" data-star="5" aria-hidden="true"></i>
+        </div>
+        <textarea class="input" id="reviewText" rows="3" placeholder="写下你的收获或建议…"></textarea>
+        <div class="actions">
+          <button id="saveReview" class="btn"><i class="ri-save-2-line"></i> 提交评价（本地保存）</button>
+        </div>
+        <div id="reviews" class="filelist"></div>
+      </div>
+    </div>
+
+    <!-- 知识点、实验难点提问 -->
+    <div class="card">
+      <div class="body">
+        <h3>知识点、实验难点提问</h3>
+        <input id="qaInput" class="input" placeholder="例如：第 3 次实验环境变量如何配置？" />
+        <div class="actions">
+          <button id="addQuestion" class="btn gray"><i class="ri-question-line"></i> 发布提问</button>
+        </div>
+        <div id="qaList" class="filelist"></div>
+      </div>
+    </div>
+
+    <!-- 上传作业 -->
+    <div class="card">
+      <div class="body">
+        <h3>上传作业 / 实验 · 同学交流</h3>
+        <div id="drop" class="uploader">
+          拖放文件到此，或
+          <label for="fileInput" class="btn" style="margin-left:8px;cursor:pointer;">选择文件</label>
+        </div>
+        <input type="file" id="fileInput" multiple style="display:none" />
+        <div id="fileList" class="filelist"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+      </main>
+    </div>
+
+    <footer>
+      <div class="container foot">
+        <a href="#top" class="btn gray"><i class="ri-arrow-up-line"></i> 返回顶部</a>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
