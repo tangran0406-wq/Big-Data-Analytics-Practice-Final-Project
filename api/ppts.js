@@ -1,5 +1,5 @@
 // api/ppts.js
-import { admin } from "./_supabase";
+import { getAdmin } from "./_supabase";
 
 const allowCORS = (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", req.headers.origin || "*");
@@ -12,15 +12,15 @@ export default async function handler(req, res) {
     allowCORS(req, res);
     if (req.method === "OPTIONS") return res.status(204).end();
 
+    const admin = getAdmin();
+
     if (req.method === "GET") {
       const { data, error } = await admin
         .from("ppts")
         .select("*")
         .order("created_at", { ascending: false });
-      if (error) {
-        console.error("[/api/ppts][GET] supabase error:", error);
-        return res.status(500).json({ error: String(error.message || error) });
-      }
+
+      if (error) return res.status(500).json({ error: error.message });
       return res.status(200).json({ data: data ?? [] });
     }
 
@@ -40,17 +40,13 @@ export default async function handler(req, res) {
         .select("*")
         .single();
 
-      if (error) {
-        console.error("[/api/ppts][POST] supabase error:", error);
-        return res.status(500).json({ error: String(error.message || error) });
-      }
+      if (error) return res.status(500).json({ error: error.message });
       return res.status(200).json({ data });
     }
 
     res.setHeader("Allow", "GET, POST, OPTIONS");
     return res.status(405).json({ error: "Method Not Allowed" });
   } catch (e) {
-    console.error("[/api/ppts] fatal:", e);
     return res.status(500).json({ error: String(e?.message || e) });
   }
 }
