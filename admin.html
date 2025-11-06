@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>PPT 管理后台</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 600px; margin: 40px auto; padding: 0 20px; }
+  h1 { font-size: 20px; margin-bottom: 16px; }
+  input, button { padding: 8px; font-size: 14px; margin-top: 6px; }
+  input { width: 100%; box-sizing: border-box; }
+  button { cursor: pointer; margin-top: 12px; width: 100%; }
+  .item { padding: 10px 0; border-bottom: 1px solid #ddd; }
+  .muted { color: #666; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<h1>PPT 上传后台（无需再改 GitHub）</h1>
+
+<form id="add-form" onsubmit="return addPPT(event)">
+  <label>标题：</label>
+  <input name="title" required>
+
+  <label>课程（可选）：</label>
+  <input name="course">
+
+  <label>文件链接 URL：</label>
+  <input name="file_url" required>
+
+  <label>封面图 URL（可选）：</label>
+  <input name="cover_url">
+
+  <button>提交（添加到数据库）</button>
+</form>
+
+<hr style="margin: 30px 0;">
+
+<h2>当前资料列表</h2>
+<div id="list"></div>
+
+<script>
+async function loadList(){
+  const res = await fetch('/api/ppts');
+  const { data=[] } = await res.json();
+  const list = document.getElementById('list');
+  list.innerHTML = data.length ? "" : "<p class='muted'>暂无资料</p>";
+  data.forEach(p=>{
+    const div = document.createElement('div');
+    div.className = 'item';
+    div.innerHTML = `
+      <div><b>${p.title}</b></div>
+      ${p.course ? `<div class="muted">课程：${p.course}</div>` : ""}
+      <a href="${p.file_url}" target="_blank">查看文件</a>
+    `;
+    list.appendChild(div);
+  });
+}
+
+async function addPPT(e){
+  e.preventDefault();
+  const f = e.target;
+  const body = {
+    title: f.title.value.trim(),
+    course: f.course.value.trim(),
+    file_url: f.file_url.value.trim(),
+    cover_url: f.cover_url.value.trim(),
+  };
+  const r = await fetch('/api/ppts', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify(body)
+  });
+  const j = await r.json();
+  if(r.ok){
+    alert("✅ 添加成功！");
+    f.reset();
+    loadList();
+  } else {
+    alert("❌ 添加失败：" + (j.error || r.statusText));
+  }
+}
+
+loadList();
+</script>
+
+</body>
+</html>
