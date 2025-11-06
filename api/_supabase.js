@@ -1,10 +1,18 @@
+// api/_supabase.js
 import { createClient } from "@supabase/supabase-js";
 
 const url = process.env.SUPABASE_URL;
 const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-if (!url || !serviceKey) {
-  throw new Error("Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY");
+if (!url) {
+  throw new Error("[_supabase] Missing env SUPABASE_URL");
+}
+if (!serviceKey) {
+  throw new Error("[_supabase] Missing env SUPABASE_SERVICE_ROLE_KEY");
 }
 
-export const admin = createClient(url, serviceKey, { auth: { persistSession: false } });
+// 后端 admin 客户端（禁止持久化 session）
+export const admin = createClient(url, serviceKey, {
+  auth: { persistSession: false, autoRefreshToken: false },
+  global: { headers: { "X-Client-Info": "vercel-api" } },
+});
