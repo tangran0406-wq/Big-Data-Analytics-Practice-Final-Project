@@ -1,0 +1,2921 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>互动交流区 - 大数据分析实践课程平台</title>
+    <style>
+        :root {
+            --primary-color: #980a0e;
+            --secondary-color: #7a080b;
+            --accent-color: #f0a500;
+            --light-color: #f8fafc;
+            --dark-color: #1e293b;
+            --text-color: #334155;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            overflow-x: hidden;
+            background-color: #f1f5f9;
+        }
+        
+        /* 页面容器 */
+        .page-container {
+            position: relative;
+            width: 100%;
+            z-index: 1;
+            margin-top: 80px; /* 为固定头部留出空间 */
+        }
+        
+        /* 页面区块 */
+        .page-section {
+            min-height: 100vh;
+            width: 100%;
+            max-width: 1300px;
+            margin: 40px auto;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background-color: rgba(249, 250, 251, 0.95);
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+        
+        /* 内容容器 */
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* 头部样式 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 校徽样式 */
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .school-logo {
+            height: 50px;
+            margin-right: 15px;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0;
+            color: white;
+        }
+        
+        .logo span {
+            font-size: 0.9rem;
+            color: var(--light-color);
+            display: block;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 25px;
+        }
+        
+        nav a {
+            color: white;
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 5px;
+            opacity: 0.9;
+            text-decoration: none;
+        }
+        nav a:hover {
+            opacity: 1;
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover:after {
+            width: 100%;
+        }
+        
+        nav a.active {
+            opacity: 1;
+        }
+        
+        nav a.active:after {
+            width: 100%;
+        }
+        
+        /* 通用样式 */
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: color 0.3s;
+        }
+        
+        a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            line-height: 1.2;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        h3 {
+            font-size: 1.8rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 4rem;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+        }
+        
+        /* 互动区样式 */
+        .interaction-tabs {
+            display: flex;
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 30px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        
+        .interaction-tabs::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .tab-button {
+            padding: 15px 25px;
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-color);
+            cursor: pointer;
+            position: relative;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-button.active {
+            color: var(--primary-color);
+        }
+        
+        .tab-button.active:after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+        
+        .tab-button:hover:not(.active) {
+            color: var(--primary-color);
+            background-color: rgba(152, 10, 14, 0.05);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* 评价区样式 */
+        .reviews-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .review-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .review-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .review-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .review-info h4 {
+            margin-bottom: 5px;
+        }
+        
+        .review-meta {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        
+        .review-stars {
+            color: var(--accent-color);
+            margin: 10px 0;
+        }
+        
+        /* 问答区样式 */
+        .question-list {
+            margin-bottom: 40px;
+        }
+        
+        .question-item {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.2s ease;
+        }
+        
+        .question-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .question-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .question-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+        
+        .question-meta {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        
+        .question-tags {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+        
+        .question-tag {
+            background-color: #f1f5f9;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-color);
+        }
+        
+        .question-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            color: #64748b;
+        }
+        
+        .question-action {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .question-action:hover {
+            color: var(--primary-color);
+        }
+        
+        .answer-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .answer-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        
+        /* 作业上传区样式 */
+        .assignment-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .assignment-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .assignment-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .assignment-deadline {
+            display: inline-block;
+            background-color: #fff3f4;
+            color: var(--primary-color);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .assignment-requirements {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+        
+        .assignment-requirements li {
+            margin-bottom: 8px;
+        }
+        
+        .upload-area {
+            border: 2px dashed #e2e8f0;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            text-align: center;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-area:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(152, 10, 14, 0.03);
+        }
+        
+        .upload-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .upload-input {
+            display: none;
+        }
+        
+        /* 聊天样式 */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 400px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            background-color: white;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .message {
+            margin-bottom: 20px;
+            max-width: 70%;
+        }
+        
+        .message.incoming {
+            margin-right: auto;
+        }
+        
+        .message.outgoing {
+            margin-left: auto;
+        }
+        
+        .message-content {
+            padding: 12px 18px;
+            border-radius: 18px;
+        }
+        
+        .message.incoming .message-content {
+            background-color: #f1f5f9;
+            border-top-left-radius: 4px;
+        }
+        
+        .message.outgoing .message-content {
+            background-color: var(--primary-color);
+            color: white;
+            border-top-right-radius: 4px;
+        }
+        
+        .message-meta {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 5px;
+            padding: 0 18px;
+        }
+        
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            background-color: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        
+        .chat-input input:focus {
+            border-color: var(--primary-color);
+        }
+        
+        .chat-input button {
+            margin-left: 15px;
+            padding: 12px 20px;
+            border-radius: 25px;
+        }
+        
+        /* 项目发布与组队样式 */
+        .project-team-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        @media (max-width: 992px) {
+            .project-team-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .project-publish, .team-recruit {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .project-list, .team-list {
+            margin-top: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .project-item, .team-item {
+            padding: 15px;
+            border-bottom: 1px solid #f1f5f9;
+            transition: background-color 0.3s ease;
+        }
+        
+        .project-item:hover, .team-item:hover {
+            background-color: #f8fafc;
+        }
+        
+        .project-meta, .team-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .project-contact, .team-contact {
+            margin-top: 10px;
+            font-weight: 500;
+        }
+        
+        /* 团队进程样式 */
+        .team-progress {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 40px;
+        }
+        
+        .progress-toolbar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .team-selector {
+            padding: 10px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+        
+        .calendar-container {
+            border: 1px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+        
+        .calendar-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+        }
+        
+        .calendar-day {
+            padding: 10px;
+            border-bottom: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+            min-height: 100px;
+        }
+        
+        .calendar-day:nth-child(7n) {
+            border-right: none;
+        }
+        
+        .calendar-day-header {
+            text-align: center;
+            font-weight: 500;
+            background-color: #f8fafc;
+            padding: 10px;
+            border-bottom: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+        }
+        
+        .calendar-day-header:nth-child(7n) {
+            border-right: none;
+        }
+        
+        .task-item {
+            background-color: #f1f5f9;
+            border-radius: 4px;
+            padding: 5px;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .task-item:hover {
+            background-color: #e2e8f0;
+        }
+        
+        .task-completed {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+        
+        .add-task-form {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8fafc;
+            border-radius: var(--border-radius);
+        }
+        
+        /* 学习评测样式 */
+        .assessment-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        @media (max-width: 992px) {
+            .assessment-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .student-profile {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+        }
+        
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+        
+        .profile-info {
+            margin-bottom: 20px;
+        }
+        
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .skill-tag {
+            background-color: #f1f5f9;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .skill-tag.proficient {
+            background-color: #dcfce7;
+            color: #166534;
+            border: 1px solid #22c55e;
+        }
+        
+        .skill-tag.intermediate {
+            background-color: #fff9c4;
+            color: #78350f;
+            border: 1px solid #facc15;
+        }
+        
+        .skill-tag.basic {
+            background-color: #ffe4e6;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+        
+        .assessment-results {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .result-section {
+            margin-bottom: 30px;
+        }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .score-chart {
+            height: 250px;
+            background-color: #f8fafc;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chart-bar {
+            position: absolute;
+            bottom: 0;
+            width: 60px;
+            background-color: var(--primary-color);
+            border-radius: 4px 4px 0 0;
+            transition: height 1s ease;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            color: white;
+            font-weight: 500;
+            padding-bottom: 5px;
+        }
+        
+        .recommendation-list {
+            padding-left: 20px;
+        }
+        
+        .recommendation-list li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 10px;
+        }
+        
+        .recommendation-list li:before {
+            content: '•';
+            color: var(--primary-color);
+            font-weight: bold;
+            position: absolute;
+            left: -10px;
+        }
+        
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* 导航指示器 */
+        .nav-indicators {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .nav-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            border: 2px solid var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-indicator.active {
+            background-color: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        /* 动画样式 */
+        @keyframes fadeInSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hidden-anim {
+            opacity: 0;
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        .visible-anim {
+            animation: fadeInSlideUp 1s ease-out forwards;
+        }
+
+        /* 登录相关样式 */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        
+        .login-modal {
+            background-color: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 400px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .login-modal h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .login-error {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 15px;
+            display: none;
+        }
+        
+        .assignment-card .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* 反馈提示样式 */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 5px;
+            padding: 15px 25px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            z-index: 3000;
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        /* 组队信息表单样式 */
+        #team-form, #project-form {
+            display: none;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .reviews-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                padding: 15px 0;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0 10px 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .nav-indicators {
+                display: none;
+            }
+            
+            .message {
+                max-width: 90%;
+            }
+            
+            .page-section {
+                padding: 40px 20px;
+            }
+            
+            .calendar-day {
+                min-height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="../index.html" class="logo">
+                <img src="sddx.png" alt="山东大学" class="school-logo">
+                <div class="logo-text">
+                    <h1>大数据分析实践课程平台 </h1>
+                    <span>依托教育改革，AI驱动全链路智能化</span>
+                </div>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">主界面</a></li>
+                    <li><a href="../introduction/introdiction.html">课程介绍</a></li>
+                    <li><a href="../index.html#content">课程内容</a></li>
+                    <li><a href="../index.html#assist">辅助学习</a></li>
+                    <li><a href="#" class="active">互动区</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="nav-indicators">
+        <div class="nav-indicator active" data-section="reviews"></div>
+        <div class="nav-indicator" data-section="questions"></div>
+        <div class="nav-indicator" data-section="assignments"></div>
+        <div class="nav-indicator" data-section="project-team"></div>
+        <div class="nav-indicator" data-section="team-progress"></div>
+        <div class="nav-indicator" data-section="assessment"></div>
+    </div>
+
+    <!-- 登录弹窗 -->
+    <div class="login-overlay" id="loginOverlay" style="display: none;">
+        <div class="login-modal">
+            <h3>请登录后提交作业</h3>
+            <div class="login-error" id="loginError">用户名或密码错误</div>
+            <div class="form-group">
+                <label for="username">用户名</label>
+                <input type="text" id="username" class="form-control" placeholder="请输入学号">
+            </div>
+            <div class="form-group">
+                <label for="password">密码</label>
+                <input type="password" id="password" class="form-control" placeholder="请输入密码">
+            </div>
+            <div class="form-group" style="display: flex; gap: 10px;">
+        <button class="btn" style="flex: 1;" id="loginBtn">登录</button>
+        <button class="btn btn-outline" style="flex: 1;" id="cancelLoginBtn">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 通知提示 -->
+    <div class="notification" id="notification"></div>
+
+    <div class="page-container">
+        <section class="page-section" id="interaction">
+            <div class="content-container">
+                <h2 class="section-title">互动交流区</h2>
+                
+                <!-- 互动区标签页 -->
+                <div class="interaction-tabs">
+                    <button class="tab-button active" data-tab="reviews">课程评价</button>
+                    <button class="tab-button" data-tab="questions">问题讨论</button>
+                    <button class="tab-button" data-tab="assignments">作业上传</button>
+                    <button class="tab-button" data-tab="project-team">项目发布与组队</button>
+                    <button class="tab-button" data-tab="team-progress">团队进程</button>
+                    <button class="tab-button" data-tab="assessment">学习评测</button>
+                </div>
+                
+                <!-- 课程评价 -->
+                <div class="tab-content active" id="reviews">
+                    <h3>课程评价与学习经验</h3>
+                    <p>来自已修完本课程的学长学姐的真实评价和学习建议，帮助你更好地规划学习路径。</p>
+                    
+                    <div class="reviews-container" id="reviewsContainer">
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="review-avatar">张</div>
+                                <div class="review-info">
+                                    <h4>张明 - 计算机学院</h4>
+                                    <div class="review-meta">2022级 · 已修完课程</div>
+                                </div>
+                            </div>
+                            <div class="review-stars">★★★★★</div>
+                            <p>这门课程实践性非常强，老师讲解清晰，实验安排循序渐进。建议多花时间在实际操作上，特别是期末项目，对提升综合能力很有帮助。</p>
+                            <p>学习资源很丰富，尤其是参考论文部分，对深入理解知识点非常有帮助。</p>
+                        </div>
+                        
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="review-avatar">李</div>
+                                <div class="review-info">
+                                    <h4>李华 - 数据科学学院</h4>
+                                    <div class="review-meta">2021级 · 已修完课程</div>
+                                </div>
+                            </div>
+                            <div class="review-stars">★★★★☆</div>
+                            <p>课程内容很实用，贴近行业需求。难点主要在机器学习算法的实际应用部分，建议提前预习相关算法原理，多和同学讨论。</p>
+                            <p>教学视频质量很高，遇到不懂的地方反复观看很有帮助。</p>
+                        </div>
+                        
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="review-avatar">王</div>
+                                <div class="review-info">
+                                    <h4>王芳 - 信息学院</h4>
+                                    <div class="review-meta">2022级 · 已修完课程</div>
+                                </div>
+                            </div>
+                            <div class="review-stars">★★★★★</div>
+                            <p>老师很负责任，课后答疑及时。思维导图对梳理知识体系帮助很大，建议每周都对照思维导图复习。</p>
+                            <p>实验报告的要求比较严格，认真对待能学到很多规范的数据处理流程。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button class="btn btn-outline" id="loadMoreReviews">查看更多评价</button>
+                    </div>
+                </div>
+                
+                <!-- 问题讨论区 -->
+                <div class="tab-content" id="questions">
+                    <h3>知识点与实验难点提问</h3>
+                    <p>在这里可以提问关于课程知识点、实验难点的问题，老师和同学会为你解答。实时聊天功能可快速交流疑问。</p>
+                    
+                    <!-- 实时聊天区域 -->
+                    <div class="chat-container">
+                        <div class="chat-messages" id="questionChatMessages">
+                            <div class="message incoming">
+                                <div class="message-content">
+                                    有没有同学完成了实验二？我在模型评估部分遇到了一些问题。
+                                </div>
+                                <div class="message-meta">李小明 · 10:23</div>
+                            </div>
+                            
+                            <div class="message outgoing">
+                                <div class="message-content">
+                                    我刚做完，你是遇到了什么问题？是评估指标选择还是代码实现？
+                                </div>
+                                <div class="message-meta">我 · 10:25</div>
+                            </div>
+                            
+                            <div class="message incoming">
+                                <div class="message-content">
+                                    主要是不知道该用哪些评估指标比较合适，我的数据是不平衡的，准确率好像不太准。
+                                </div>
+                                <div class="message-meta">李小明 · 10:27</div>
+                            </div>
+                            
+                            <div class="message incoming">
+                                <div class="message-content">
+                                    对于不平衡数据，应该用精确率、召回率和F1分数更合适，ROC-AUC也是个不错的选择。
+                                </div>
+                                <div class="message-meta">王小红 · 10:29</div>
+                            </div>
+                            
+                            <div class="message incoming">
+                                <div class="message-content">
+                                    我这里有一份关于模型评估指标的笔记，谁需要的话可以私下找我要~
+                                </div>
+                                <div class="message-meta">张大山 · 10:32</div>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-input">
+                            <input type="text" placeholder="输入消息快速交流...">
+                            <button class="btn">发送</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button class="btn" id="ask-question-btn">我要提问</button>
+                    </div>
+                    
+                    <div id="question-form" style="display: none; margin-bottom: 40px; padding: 20px; background: white; border-radius: var(--border-radius); box-shadow: var(--box-shadow);">
+                        <h4>提出你的问题</h4>
+                        <div class="form-group">
+                            <label for="question-title">问题标题</label>
+                            <input type="text" id="question-title" class="form-control" placeholder="请简要描述你的问题">
+                        </div>
+                        <div class="form-group">
+                            <label for="question-category">问题分类</label>
+                            <select id="question-category" class="form-control">
+                                <option value="">请选择分类</option>
+                                <option value="knowledge">知识点疑问</option>
+                                <option value="experiment">实验难点</option>
+                                <option value="assignment">作业问题</option>
+                                <option value="other">其他问题</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="question-content">问题详情</label>
+                            <textarea id="question-content" class="form-control" placeholder="请详细描述你的问题，包括你已经尝试过的解决方法等"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn" id="submit-question">提交问题</button>
+                            <button class="btn btn-outline" style="margin-left: 10px;" id="cancel-question">取消</button>
+                        </div>
+                    </div>
+                    
+                    <div class="question-list" id="questionList">
+                        <div class="question-item">
+                            <div class="question-header">
+                                <div class="question-author">
+                                    <div class="question-avatar">赵</div>
+                                    <div>
+                                        <h4>赵伟</h4>
+                                        <div class="question-meta">2小时前</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3>如何理解PCA降维的原理和应用场景？</h3>
+                            <div class="question-tags">
+                                <span class="question-tag">知识点疑问</span>
+                                <span class="question-tag">机器学习</span>
+                                <span class="question-tag">PCA</span>
+                            </div>
+                            <p>在学习降维算法时，对PCA的数学原理理解不够透彻，尤其是特征值和特征向量的作用。另外，想知道在实际项目中，PCA通常应用在哪些场景？有什么需要注意的地方？</p>
+                            <div class="question-actions">
+                                <div class="question-action">
+                                    <span>💬</span> 5个回答
+                                </div>
+                                <div class="question-action">
+                                    <span>👍</span> 12
+                                </div>
+                            </div>
+                            
+                            <div class="answer-section">
+                                <div class="answer-item">
+                                    <div class="question-author">
+                                        <div class="question-avatar">刘</div>
+                                        <div>
+                                            <h4>刘老师（授课教师）</h4>
+                                            <div class="question-meta">1小时前</div>
+                                        </div>
+                                    </div>
+                                    <p>PCA的核心思想是找到数据中方差最大的方向，以此来减少特征维度同时保留主要信息。特征值表示对应特征向量方向上的方差大小，我们通常选择特征值较大的前k个特征向量来构建新的特征空间。</p>
+                                    <p>应用场景主要有：数据可视化（高维数据降维到2D/3D）、去除噪声、加速后续算法训练等。使用时要注意数据需要标准化，并且PCA是线性降维方法，对非线性数据效果有限。</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="question-item">
+                            <div class="question-header">
+                                <div class="question-author">
+                                    <div class="question-avatar">陈</div>
+                                    <div>
+                                        <h4>陈明</h4>
+                                        <div class="question-meta">昨天 15:30</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3>实验三的Spark环境总是启动失败，该如何解决？</h3>
+                            <div class="question-tags">
+                                <span class="question-tag">实验难点</span>
+                                <span class="question-tag">Spark</span>
+                                <span class="question-tag">环境配置</span>
+                            </div>
+                            <p>按照教程配置了Spark环境，但启动时总是报"java.net.BindException: 地址已在使用"的错误。尝试过重启电脑，还是不行。有人遇到过类似问题吗？该怎么解决？</p>
+                            <div class="question-actions">
+                                <div class="question-action">
+                                    <span>💬</span> 3个回答
+                                </div>
+                                <div class="question-action">
+                                    <span>👍</span> 8
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button class="btn btn-outline">查看更多问题</button>
+                    </div>
+                </div>
+                
+                <!-- 作业上传区 -->
+                <div class="tab-content" id="assignments">
+                    <h3>作业与实验提交</h3>
+                    <p>在这里可以查看作业要求并上传你的作业和实验报告。请注意各项作业的截止时间。</p>
+                    
+                    <div class="assignment-container">
+                        <div class="assignment-card">
+                            <h3>实验一：数据预处理</h3>
+                            <span class="assignment-deadline">截止日期：2023-11-15 23:59</span>
+                            <p>完成基本的数据清洗、转换和集成操作，掌握Pandas库的基本使用方法。</p>
+                            <ul class="assignment-requirements">
+                                <li>处理缺失值和异常值</li>
+                                <li>进行数据转换和标准化</li>
+                                <li>完成至少两种数据集成操作</li>
+                                <li>提交Jupyter Notebook文件和实验报告</li>
+                            </ul>
+                            <div class="upload-area" id="upload-experiment-1">
+                                <div class="upload-icon">📂</div>
+                                <p>点击或拖拽文件到此处上传</p>
+                                <p class="text-muted">支持 .ipynb, .pdf, .doc, .docx 格式</p>
+                                <input type="file" class="upload-input" id="experiment-1-file" multiple>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn submit-assignment" data-assignment="experiment-1">提交作业</button>
+                            </div>
+                        </div>
+                        
+                        <div class="assignment-card">
+                            <h3>作业二：数据分析报告</h3>
+                            <span class="assignment-deadline">截止日期：2023-11-30 23:59</span>
+                            <p>基于提供的数据集，完成一次完整的数据分析流程，并撰写分析报告。</p>
+                            <ul class="assignment-requirements">
+                                <li>包含数据探索性分析</li>
+                                <li>至少应用两种分析方法</li>
+                                <li>提供可视化结果和解读</li>
+                                <li>提交分析报告和相关代码</li>
+                            </ul>
+                            <div class="upload-area" id="upload-assignment-2">
+                                <div class="upload-icon">📂</div>
+                                <p>点击或拖拽文件到此处上传</p>
+                                <p class="text-muted">支持 .zip, .rar, .pdf, .doc, .docx 格式</p>
+                                <input type="file" class="upload-input" id="assignment-2-file" multiple>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn submit-assignment" data-assignment="assignment-2">提交作业</button>
+                            </div>
+                        </div>
+                        
+                        <div class="assignment-card">
+                            <h3>期末项目</h3>
+                            <span class="assignment-deadline">截止日期：2023-12-25 23:59</span>
+                            <p>选择一个实际问题，设计并实现一个完整的大数据分析解决方案。</p>
+                            <ul class="assignment-requirements">
+                                <li>提交项目计划书（11月20日前）</li>
+                                <li>包含完整的分析流程和代码</li>
+                                <li>提供项目演示视频（5-10分钟）</li>
+                                <li>提交项目报告和答辩PPT</li>
+                            </ul>
+                            <div class="upload-area" id="upload-project">
+                                <div class="upload-icon">📂</div>
+                                <p>点击或拖拽文件到此处上传</p>
+                                <p class="text-muted">支持 .zip, .rar 格式（包含所有材料）</p>
+                                <input type="file" class="upload-input" id="project-file" multiple>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn submit-assignment" data-assignment="project">提交项目</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 项目发布与组队 -->
+                <div class="tab-content" id="project-team">
+                    <h3>项目发布与组队</h3>
+                    <p>本学院或其他学院的老师可发布任务信息，学生可报名领取或联系合作；学生也可发布组队信息寻找学习伙伴。</p>
+                    
+                    <div class="project-team-container">
+                        <!-- 老师项目发布区 -->
+                        <div class="project-publish">
+                            <div class="result-header">
+                                <h4>老师项目发布</h4>
+                                <button class="btn btn-outline" id="publishProjectBtn">发布项目</button>
+                            </div>
+                            
+                            <!-- 项目发布表单 -->
+                            <div id="project-form">
+                                <h4>发布项目任务</h4>
+                                <div class="form-group">
+                                    <label for="project-title">项目标题</label>
+                                    <input type="text" id="project-title" class="form-control" placeholder="例如：用户行为数据分析研究">
+                                </div>
+                                <div class="form-group">
+                                    <label for="project-type">项目类型</label>
+                                    <select id="project-type" class="form-control">
+                                        <option value="research">科研项目</option>
+                                        <option value="practice">实践项目</option>
+                                        <option value="competition">竞赛项目</option>
+                                        <option value="other">其他项目</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="project-content">项目详情</label>
+                                    <textarea id="project-content" class="form-control" placeholder="请描述项目背景、任务要求、预期成果等"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="project-requirements">招募要求</label>
+                                    <textarea id="project-requirements" class="form-control" placeholder="请描述对学生技能、专业、人数等要求"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="project-contact">联系方式</label>
+                                    <input type="text" id="project-contact" class="form-control" placeholder="邮箱/电话">
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn" id="submit-project-btn">发布</button>
+                                    <button class="btn btn-outline" style="margin-left: 10px;" id="cancel-project">取消</button>
+                                </div>
+                            </div>
+                            
+                            <!-- 项目列表 -->
+                            <div class="project-list" id="projectList">
+    <div class="project-item">
+        <h4>电商平台用户购买行为预测模型</h4>
+        <div class="project-meta">
+            <span>李教授 - 计算机学院</span>
+            <span>2025-11-01</span>
+        </div>
+        <p>基于电商平台用户历史数据，构建用户购买行为预测模型，用于精准营销推荐。要求使用机器学习算法，准确率达到85%以上。</p>
+        <div class="project-tags question-tags">
+            <span class="question-tag">机器学习</span>
+            <span class="question-tag">预测模型</span>
+            <span class="question-tag">2-3人</span>
+        </div>
+        <div class="project-contact">联系方式：lij@example.edu.cn</div>
+    </div>
+    
+    <div class="project-item">
+        <h4>城市交通流量数据分析与可视化</h4>
+        <div class="project-meta">
+            <span>王老师 - 数据科学学院</span>
+            <span>2025-10-28</span>
+        </div>
+        <p>分析城市交通流量数据，识别拥堵热点区域，制作交互式可视化报表，为交通管理提供决策支持。需使用Python+ECharts实现。</p>
+        <div class="project-tags question-tags">
+            <span class="question-tag">数据可视化</span>
+            <span class="question-tag">数据分析</span>
+            <span class="question-tag">3-4人</span>
+        </div>
+        <div class="project-contact">联系方式：wangj@example.edu.cn</div>
+    </div>
+    
+    <div class="project-item">
+        <h4>医疗数据隐私保护算法研究</h4>
+        <div class="project-meta">
+            <span>张教授 - 信息学院</span>
+            <span>2025-10-25</span>
+        </div>
+        <p>针对电子病历数据，研究差分隐私、联邦学习等隐私保护算法，设计兼顾隐私性和数据可用性的解决方案。要求有一定的密码学基础。</p>
+        <div class="project-tags question-tags">
+            <span class="question-tag">隐私计算</span>
+            <span class="question-tag">机器学习</span>
+            <span class="question-tag">2人</span>
+        </div>
+        <div class="project-contact">联系方式：zhangp@example.edu.cn</div>
+    </div>
+    
+    <div class="project-item">
+        <h4>校园二手交易平台数据分析</h4>
+        <div class="project-meta">
+            <span>刘老师 - 管理学院</span>
+            <span>2025-10-20</span>
+        </div>
+        <p>基于校园二手交易平台的历史交易数据，分析商品流通规律、用户交易行为特征，为平台优化提供数据支撑。需完成数据清洗、建模和可视化。</p>
+        <div class="project-tags question-tags">
+            <span class="question-tag">数据分析</span>
+            <span class="question-tag">Python</span>
+            <span class="question-tag">2-3人</span>
+        </div>
+        <div class="project-contact">联系方式：liul@example.edu.cn</div>
+    </div>
+    
+    <div class="project-item">
+        <h4>AI辅助教学系统推荐算法优化</h4>
+        <div class="project-meta">
+            <span>陈老师 - 教育学院</span>
+            <span>2025-10-18</span>
+        </div>
+        <p>优化现有教学系统的课程推荐算法，结合学生学习行为、成绩数据，实现个性化课程推荐。需掌握协同过滤、深度学习推荐算法。</p>
+        <div class="project-tags question-tags">
+            <span class="question-tag">推荐系统</span>
+            <span class="question-tag">深度学习</span>
+            <span class="question-tag">3人</span>
+        </div>
+        <div class="project-contact">联系方式：chenj@example.edu.cn</div>
+    </div>
+</div>
+                        </div>
+                        
+                        <!-- 学生组队招募区 -->
+                        <div class="team-recruit">
+                            <div class="result-header">
+                                <h4>学生组队招募</h4>
+                                <button class="btn btn-outline" id="publishTeamBtn">发布组队信息</button>
+                            </div>
+                            
+                            <!-- 组队信息表单 -->
+                            <div id="team-form">
+                                <h4>发布组队信息</h4>
+                                <div class="form-group">
+                                    <label for="team-title">标题</label>
+                                    <input type="text" id="team-title" class="form-control" placeholder="例如：寻找期末项目队友">
+                                </div>
+                                <div class="form-group">
+                                    <label for="team-type">类型</label>
+                                    <select id="team-type" class="form-control">
+                                        <option value="study">学习小组</option>
+                                        <option value="project">项目组队</option>
+                                        <option value="competition">竞赛组队</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="team-content">详情</label>
+                                    <textarea id="team-content" class="form-control" placeholder="请描述你的需求、现有成员情况、希望招募的成员技能等"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="team-contact">联系方式</label>
+                                    <input type="text" id="team-contact" class="form-control" placeholder="QQ/微信/邮箱等">
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn" id="submit-team">发布</button>
+                                    <button class="btn btn-outline" style="margin-left: 10px;" id="cancel-team">取消</button>
+                                </div>
+                            </div>
+                            
+                            <!-- 组队列表 -->
+                            <div class="team-list" id="teamList">
+    <div class="team-item">
+        <h4>寻找期末项目队友（已有2人，还差1-2人）</h4>
+        <div class="team-meta">
+            <span>周小天 - 计算机学院</span>
+            <span>3天前</span>
+        </div>
+        <p>我们目前有2人，都是计算机专业，有Python和机器学习基础。想做一个关于用户行为分析的项目，希望找有数据可视化或深度学习经验的同学加入。</p>
+        <div class="team-tags question-tags">
+            <span class="question-tag">项目组队</span>
+            <span class="question-tag">数据分析</span>
+        </div>
+        <div class="team-contact">联系方式：QQ 123456789</div>
+    </div>
+    
+    <div class="team-item">
+        <h4>机器学习学习小组（零基础友好）</h4>
+        <div class="team-meta">
+            <span>陈晓 - 数学学院</span>
+            <span>1周前</span>
+        </div>
+        <p>组建机器学习学习小组，每周一起学习、讨论、刷题。计划从基础算法开始，逐步深入到实战项目。欢迎零基础的同学加入，一起进步！目前已有3人。</p>
+        <div class="team-tags question-tags">
+            <span class="question-tag">学习小组</span>
+            <span class="question-tag">机器学习</span>
+        </div>
+        <div class="team-contact">联系方式：微信 chenxiao123</div>
+    </div>
+    
+    <div class="team-item">
+        <h4>全国大学生数学建模竞赛组队（缺1名编程手）</h4>
+        <div class="team-meta">
+            <span>李明 - 自动化学院</span>
+            <span>5天前</span>
+        </div>
+        <div class="team-tags question-tags">
+            <span class="question-tag">竞赛组队</span>
+            <span class="question-tag">数学建模</span>
+            <span class="question-tag">编程</span>
+        </div>
+        <p>现有2人，分别负责建模和论文撰写，均有建模竞赛经验。寻找一名熟练掌握Python/Matlab，擅长数据处理和模型实现的同学，要求有责任心，能投入足够时间。</p>
+        <div class="team-contact">联系方式：QQ 987654321</div>
+    </div>
+    
+    <div class="team-item">
+        <h4>Spark大数据处理实验组队（2人组，还差1人）</h4>
+        <div class="team-meta">
+            <span>王浩 - 软件学院</span>
+            <span>2天前</span>
+        </div>
+        <p>课程实验要求2人组队完成Spark大数据处理任务，本人有Hadoop基础，希望找一名认真负责、能一起钻研技术的同学，共同完成实验报告和代码实现。</p>
+        <div class="team-tags question-tags">
+            <span class="question-tag">学习小组</span>
+            <span class="question-tag">Spark</span>
+            <span class="question-tag">大数据</span>
+        </div>
+        <div class="team-contact">联系方式：微信 wanghao456</div>
+    </div>
+    
+    <div class="team-item">
+        <h4>数据可视化课程设计组队（3人组，缺2人）</h4>
+        <div class="team-meta">
+            <span>赵婷 - 信息科学与工程学院</span>
+            <span>1天前</span>
+        </div>
+        <p>课程设计要求完成一个交互式数据可视化系统，本人擅长前端开发（Vue+ECharts），需要2名同学负责数据处理和后端接口开发，要求掌握Python和SQL。</p>
+        <div class="team-tags question-tags">
+            <span class="question-tag">项目组队</span>
+            <span class="question-tag">数据可视化</span>
+            <span class="question-tag">Web开发</span>
+        </div>
+        <div class="team-contact">联系方式：邮箱 zhaoting@example.com</div>
+    </div>
+</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 团队进程 -->
+                <div class="tab-content" id="team-progress">
+                    <h3>团队进程管理</h3>
+                    <p>团队可通过共享日历进行任务分工、跟踪项目进展、记录完成情况，实现高效协作。</p>
+                    
+                    <div class="team-progress">
+    <div class="progress-toolbar">
+        <div>
+            <label for="team-select">选择团队：</label>
+            <select id="team-select" class="team-selector">
+                <option value="">请选择你的团队</option>
+                <option value="team1">期末项目组 - 用户行为分析</option>
+                <option value="team2">机器学习学习小组</option>
+                <option value="team3">交通流量数据分析项目组</option>
+            </select>
+        </div>
+        <button class="btn" id="addTaskBtn">添加任务</button>
+        <button class="btn btn-outline" id="importTasksBtn">导入任务</button>
+    </div>
+    
+    <!-- 任务筛选器 -->
+    <div style="margin-bottom: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+        <button class="btn btn-outline" id="allTasksBtn" style="padding: 8px 16px;">全部任务</button>
+        <button class="btn btn-outline" id="pendingTasksBtn" style="padding: 8px 16px;">未完成</button>
+        <button class="btn btn-outline" id="completedTasksBtn" style="padding: 8px 16px;">已完成</button>
+        <div style="margin-left: auto;">
+            <input type="text" id="taskSearch" placeholder="搜索任务..." style="padding: 8px 12px; border-radius: var(--border-radius); border: 1px solid #e2e8f0;">
+        </div>
+    </div>
+    
+    <!-- 日历区域 -->
+    <div class="calendar-container">
+        <div class="calendar-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <button class="btn btn-outline" style="padding: 5px 10px; font-size: 0.9rem; border: 1px solid #e2e8f0; background: #fff; cursor: pointer;" id="prevMonthBtn">←</button>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <select id="calendarYearSelect" class="team-selector" style="padding: 5px; font-size: 0.9rem; border: 1px solid #e2e8f0; border-radius: var(--border-radius);">
+                    <option value="2024">2024年</option>
+                    <option value="2025" selected>2025年</option>
+                    <option value="2026">2026年</option>
+                </select>
+                <select id="calendarMonthSelect" class="team-selector" style="padding: 5px; font-size: 0.9rem; border: 1px solid #e2e8f0; border-radius: var(--border-radius);">
+                    <option value="0">1月</option>
+                    <option value="1">2月</option>
+                    <option value="2">3月</option>
+                    <option value="3">4月</option>
+                    <option value="4">5月</option>
+                    <option value="5">6月</option>
+                    <option value="6">7月</option>
+                    <option value="7">8月</option>
+                    <option value="8">9月</option>
+                    <option value="9">10月</option>
+                    <option value="10" selected>11月</option>
+                    <option value="11">12月</option>
+                </select>
+            </div>
+            <button class="btn btn-outline" style="padding: 5px 10px; font-size: 0.9rem; border: 1px solid #e2e8f0; background: #fff; cursor: pointer;" id="nextMonthBtn">→</button>
+        </div>
+        <div class="calendar-grid" id="calendarGrid">
+            <!-- 日历由JS动态生成 -->
+        </div>
+    </div>
+    
+    <!-- 任务统计卡片 -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
+        <div style="background: #f8fafc; padding: 15px; border-radius: var(--border-radius);">
+            <h4 style="margin-bottom: 10px; color: var(--text-color);">总任务数</h4>
+            <p style="font-size: 1.5rem; font-weight: bold; color: var(--primary-color);" id="totalTasksCount">7</p>
+        </div>
+        <div style="background: #f8fafc; padding: 15px; border-radius: var(--border-radius);">
+            <h4 style="margin-bottom: 10px; color: var(--text-color);">已完成</h4>
+            <p style="font-size: 1.5rem; font-weight: bold; color: #22c55e;" id="completedTasksCount">1</p>
+        </div>
+        <div style="background: #f8fafc; padding: 15px; border-radius: var(--border-radius);">
+            <h4 style="margin-bottom: 10px; color: var(--text-color);">未完成</h4>
+            <p style="font-size: 1.5rem; font-weight: bold; color: #f59e0b;" id="pendingTasksCount">6</p>
+        </div>
+        <div style="background: #f8fafc; padding: 15px; border-radius: var(--border-radius);">
+            <h4 style="margin-bottom: 10px; color: var(--text-color);">完成率</h4>
+            <p style="font-size: 1.5rem; font-weight: bold; color: var(--primary-color);" id="completionRate">14%</p>
+        </div>
+    </div>
+    
+    <!-- 添加任务表单 -->
+    <div class="add-task-form" id="addTaskForm" style="display: none;">
+        <h4 id="taskFormTitle">添加团队任务</h4>
+        <input type="hidden" id="editTaskId" value="">
+        <div class="form-group">
+            <label for="task-name">任务名称</label>
+            <input type="text" id="task-name" class="form-control" placeholder="请输入任务名称">
+        </div>
+        <div class="form-group">
+            <label for="task-assignee">负责人</label>
+            <input type="text" id="task-assignee" class="form-control" placeholder="任务负责人">
+        </div>
+        <div class="form-group">
+            <label for="task-date">截止日期</label>
+            <input type="date" id="task-date" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="task-desc">任务描述</label>
+            <textarea id="task-desc" class="form-control" placeholder="简要描述任务内容"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="task-status">任务状态</label>
+            <select id="task-status" class="form-control">
+                <option value="pending">未完成</option>
+                <option value="completed">已完成</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <button class="btn" id="submitTaskBtn">提交</button>
+            <button class="btn btn-outline" style="margin-left: 10px;" id="cancelTaskBtn">取消</button>
+        </div>
+    </div>
+    
+    <!-- 导入任务模板下载区 -->
+    <div style="margin-top: 15px; padding: 15px; background: #f8fafc; border-radius: var(--border-radius);">
+        <p style="margin-bottom: 10px;">📋 任务模板下载：</p>
+        <a href="#" class="btn btn-outline" style="margin-right: 10px;">下载Excel模板</a>
+        <span style="color: #64748b; font-size: 0.9rem;">支持批量导入任务，填写后上传即可</span>
+    </div>
+</div>
+                    </div>
+                </div>
+                
+                <!-- 新增：学习评测 -->
+                <div class="tab-content" id="assessment">
+                    <h3>学习评测与知识画像</h3>
+                    <p>基于课堂测试、平时实验等数据，构建个人知识画像，生成个性化评测结果和学习建议。</p>
+                    
+                   <div class="assessment-container">
+    <!-- 学生知识画像 -->
+    <div class="student-profile">
+        <div class="profile-avatar">我</div>
+        <div class="profile-info">
+            <h3>我的知识画像</h3>
+            <p>学号：2023001234</p>
+            <p>学院：计算机学院</p>
+            <p>年级：2023级</p>
+        </div>
+        
+        <h4>技能掌握情况</h4>
+        <!-- 新增颜色含义说明 -->
+        <div style="margin-bottom: 10px; font-size: 0.9rem; text-align: left;">
+            <p>颜色含义：</p>
+            <p>🟢 <span class="skill-tag proficient" style="display: inline-block;">熟练掌握</span></p>
+            <p>🟡 <span class="skill-tag intermediate" style="display: inline-block;">中等掌握</span></p>
+            <p>🔴 <span class="skill-tag basic" style="display: inline-block;">基础掌握</span></p>
+        </div>
+        <div class="skill-tags">
+            <span class="skill-tag proficient">Python编程 (92分)</span>
+            <span class="skill-tag proficient">Pandas数据处理 (88分)</span>
+            <span class="skill-tag intermediate">机器学习算法 (76分)</span>
+            <span class="skill-tag intermediate">数据可视化 (72分)</span>
+            <span class="skill-tag basic">Spark大数据处理 (63分)</span>
+            <span class="skill-tag basic">深度学习框架 (58分)</span>
+            <span class="skill-tag proficient">SQL数据库 (90分)</span>
+            <span class="skill-tag intermediate">统计分析 (75分)</span>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <h4>学习进度</h4>
+            <div style="background-color: #f1f5f9; border-radius: 20px; height: 10px; margin: 10px 0;">
+                <div style="background-color: var(--primary-color); width: 75%; height: 100%; border-radius: 20px;"></div>
+            </div>
+            <p>已完成 75% 的课程内容</p>
+        </div>
+    </div>
+    
+    <!-- 评测结果 -->
+    <div class="assessment-results">
+        <div class="result-section">
+            <div class="result-header">
+                <h4>综合评测得分</h4>
+                <span style="font-size: 1.5rem; font-weight: bold; color: var(--primary-color);">82分</span>
+            </div>
+            
+            <div class="score-chart" id="scoreChart">
+                <div class="chart-bar" style="left: 10%; height: 85%;">Python<br>92分</div>
+                <div class="chart-bar" style="left: 25%; height: 80%;">数据处理<br>88分</div>
+                <div class="chart-bar" style="left: 40%; height: 75%;">机器学习<br>76分</div>
+                <div class="chart-bar" style="left: 55%; height: 70%;">可视化<br>72分</div>
+                <div class="chart-bar" style="left: 70%; height: 60%;">大数据<br>63分</div>
+                <div class="chart-bar" style="left: 85%; height: 78%;">统计分析<br>75分</div>
+            </div>
+        </div>
+        
+        <div class="result-section">
+            <div class="result-header">
+                <h4>知识点掌握分析</h4>
+            </div>
+            
+            <h5>优势领域</h5>
+            <ul class="recommendation-list">
+                <li>Python编程基础扎实，代码实现能力强（92分）</li>
+                <li>数据预处理和清洗技能熟练（88分）</li>
+                <li>SQL数据库操作和查询能力优秀（90分）</li>
+            </ul>
+            
+            <h5>薄弱环节</h5>
+            <ul class="recommendation-list">
+                <li>Spark大数据处理框架使用不熟练（63分）</li>
+                <li>深度学习相关算法理解不够深入（58分）</li>
+                <li>复杂数据可视化图表制作能力不足（72分）</li>
+            </ul>
+        </div>
+        
+        <div class="result-section">
+            <div class="result-header">
+                <h4>个性化学习建议</h4>
+            </div>
+            
+            <ul class="recommendation-list">
+                <li>加强Spark实战练习，完成3个以上大数据处理案例</li>
+                <li>学习TensorFlow/PyTorch框架，尝试构建简单神经网络模型</li>
+                <li>学习Matplotlib/Seaborn高级可视化技巧，制作交互式图表</li>
+                <li>参与机器学习竞赛，提升算法应用和问题解决能力</li>
+                <li>推荐阅读《Spark快速大数据分析》和《深度学习入门》</li>
+            </ul>
+            
+            <div class="text-center" style="margin-top: 20px;">
+                <button class="btn btn-outline" id="generateReportBtn">生成详细评测报告</button>
+            </div>
+        </div>
+    </div>
+</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 标签页切换功能
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+    const navIndicators = document.querySelectorAll('.nav-indicator');
+    
+    // 导航指示器更新函数
+    function updateNavIndicator(tabId) {
+        navIndicators.forEach(indicator => {
+            indicator.classList.remove('active');
+            if (indicator.getAttribute('data-section') === tabId) {
+                indicator.classList.add('active');
+            }
+        });
+    }
+    
+    // 标签页点击事件
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // 移除所有活跃状态
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // 添加当前活跃状态
+            button.classList.add('active');
+            const tabId = button.getAttribute('data-tab');
+            const activeContent = document.getElementById(tabId);
+            if (activeContent) {
+                activeContent.classList.add('active');
+            }
+            
+            // 更新导航指示器
+            updateNavIndicator(tabId);
+        });
+    });
+    
+    // 问题提问表单显示/隐藏及提交功能
+    const askQuestionBtn = document.getElementById('ask-question-btn');
+    const questionForm = document.getElementById('question-form');
+    const cancelQuestionBtn = document.getElementById('cancel-question');
+    const submitQuestionBtn = document.getElementById('submit-question');
+    const questionList = document.getElementById('questionList');
+    const questionTitle = document.getElementById('question-title');
+    const questionCategory = document.getElementById('question-category');
+    const questionContent = document.getElementById('question-content');
+    
+    if (askQuestionBtn && questionForm && cancelQuestionBtn) {
+        askQuestionBtn.addEventListener('click', () => {
+            questionForm.style.display = 'block';
+        });
+        
+        cancelQuestionBtn.addEventListener('click', () => {
+            questionForm.style.display = 'none';
+            // 清空表单
+            questionTitle.value = '';
+            questionCategory.value = '';
+            questionContent.value = '';
+        });
+        
+        // 提交问题
+        if (submitQuestionBtn && questionTitle && questionCategory && questionContent && questionList) {
+            submitQuestionBtn.addEventListener('click', () => {
+                if (!questionTitle.value || !questionCategory.value || !questionContent.value) {
+                    alert('请填写完整问题信息');
+                    return;
+                }
+                
+                // 模拟添加新问题
+                const newQuestion = document.createElement('div');
+                newQuestion.className = 'question-item';
+                newQuestion.innerHTML = `
+                    <div class="question-header">
+                        <div class="question-author">
+                            <div class="question-avatar">我</div>
+                            <div>
+                                <h4>我</h4>
+                                <div class="question-meta">刚刚</div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3>${questionTitle.value}</h3>
+                    <div class="question-tags">
+                        <span class="question-tag">${questionCategory.options[questionCategory.selectedIndex].text}</span>
+                    </div>
+                    <p>${questionContent.value}</p>
+                    <div class="question-actions">
+                        <div class="question-action">
+                            <span>💬</span> 0个回答
+                        </div>
+                        <div class="question-action">
+                            <span>👍</span> 0
+                        </div>
+                    </div>
+                `;
+                
+                // 添加到问题列表顶部
+                questionList.insertBefore(newQuestion, questionList.firstChild);
+                
+                // 隐藏表单并清空
+                questionForm.style.display = 'none';
+                questionTitle.value = '';
+                questionCategory.value = '';
+                questionContent.value = '';
+                
+                // 显示通知
+                showNotification('问题提交成功！');
+            });
+        }
+    }
+
+// 实时聊天发送功能
+const chatInput = document.querySelector('.chat-input input');
+const chatSendBtn = document.querySelector('.chat-input button');
+const chatMessages = document.getElementById('questionChatMessages');
+
+if (chatInput && chatSendBtn && chatMessages) {
+    // 发送按钮点击事件
+    chatSendBtn.addEventListener('click', sendChatMessage);
+    
+    // 回车发送
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendChatMessage();
+    });
+
+    function sendChatMessage() {
+        const messageText = chatInput.value.trim();
+        if (!messageText) return;
+
+        // 获取当前时间
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const timeStr = `${hours}:${minutes}`;
+
+        // 创建新消息元素
+        const newMessage = document.createElement('div');
+        newMessage.className = 'message outgoing';
+        newMessage.innerHTML = `
+            <div class="message-content">${messageText}</div>
+            <div class="message-meta">我 · ${timeStr}</div>
+        `;
+
+        // 添加到聊天容器并滚动到底部
+        chatMessages.appendChild(newMessage);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        // 清空输入框
+        chatInput.value = '';
+
+        // 模拟对方回复（可选增强）
+        simulateReply(messageText, timeStr);
+    }
+
+    // 模拟AI/同学回复
+    function simulateReply(userMessage, sendTime) {
+        const replies = [
+            '你提的问题很有价值！我也遇到过类似情况，后来通过查看官方文档解决了~',
+            '这个问题我不太清楚，建议@老师问问看，老师回复很及时的',
+            '我这里有相关的学习资料，需要的话可以私信我分享给你',
+            '谢谢你的分享！这个解决方法很实用，我之前怎么没想到呢',
+            '我们可以组队讨论一下这个问题，人多思路广嘛'
+        ];
+
+        // 随机选择一个回复，3秒后显示
+        setTimeout(() => {
+            const randomReply = replies[Math.floor(Math.random() * replies.length)];
+            const replyNames = ['李同学', '王助教', '张学长', '陈同学'];
+            const randomName = replyNames[Math.floor(Math.random() * replyNames.length)];
+
+            const replyMessage = document.createElement('div');
+            replyMessage.className = 'message incoming';
+            replyMessage.innerHTML = `
+                <div class="message-content">${randomReply}</div>
+                <div class="message-meta">${randomName} · ${sendTime}</div>
+            `;
+
+            chatMessages.appendChild(replyMessage);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }, 3000);
+    }
+}
+    
+    // 项目发布表单交互
+    const publishProjectBtn = document.getElementById('publishProjectBtn');
+    const projectForm = document.getElementById('project-form');
+    const cancelProjectBtn = document.getElementById('cancel-project');
+    const submitProjectBtn = document.getElementById('submit-project-btn');
+    
+    if (publishProjectBtn && projectForm && cancelProjectBtn) {
+        publishProjectBtn.addEventListener('click', () => {
+            projectForm.style.display = 'block';
+        });
+        
+        cancelProjectBtn.addEventListener('click', () => {
+            projectForm.style.display = 'none';
+            // 清空表单（可根据需要添加表单元素ID）
+        });
+        
+        if (submitProjectBtn) {
+            submitProjectBtn.addEventListener('click', () => {
+                // 模拟提交逻辑
+                projectForm.style.display = 'none';
+                showNotification('项目发布成功！');
+            });
+        }
+    }
+    
+    // 组队信息表单交互
+    const publishTeamBtn = document.getElementById('publishTeamBtn');
+    const teamForm = document.getElementById('team-form');
+    const cancelTeamBtn = document.getElementById('cancel-team');
+    const submitTeamBtn = document.getElementById('submit-team');
+    
+    if (publishTeamBtn && teamForm && cancelTeamBtn) {
+        publishTeamBtn.addEventListener('click', () => {
+            teamForm.style.display = 'block';
+        });
+        
+        cancelTeamBtn.addEventListener('click', () => {
+            teamForm.style.display = 'none';
+            // 清空表单（可根据需要添加表单元素ID）
+        });
+        
+        if (submitTeamBtn) {
+            submitTeamBtn.addEventListener('click', () => {
+                // 模拟提交逻辑
+                teamForm.style.display = 'none';
+                showNotification('组队信息发布成功！');
+            });
+        }
+    }
+    
+    // 团队任务添加表单交互
+    const addTaskBtn = document.getElementById('addTaskBtn');
+    const addTaskForm = document.getElementById('addTaskForm');
+    const cancelTaskBtn = document.getElementById('cancelTaskBtn');
+    const submitTaskBtn = document.getElementById('submitTaskBtn');
+    
+    if (addTaskBtn && addTaskForm && cancelTaskBtn) {
+        addTaskBtn.addEventListener('click', () => {
+            addTaskForm.style.display = 'block';
+        });
+        
+        cancelTaskBtn.addEventListener('click', () => {
+            addTaskForm.style.display = 'none';
+            // 清空表单（可根据需要添加表单元素ID）
+        });
+        
+        if (submitTaskBtn) {
+            submitTaskBtn.addEventListener('click', () => {
+                // 模拟提交逻辑
+                addTaskForm.style.display = 'none';
+                showNotification('任务添加成功！');
+            });
+        }
+    }
+    
+    // 作业上传区域交互（点击触发文件选择）
+    const uploadAreas = document.querySelectorAll('.upload-area');
+    uploadAreas.forEach(area => {
+        area.addEventListener('click', () => {
+            const fileInput = area.querySelector('.upload-input');
+            if (fileInput) {
+                fileInput.click();
+            }
+        });
+        
+        // 显示已选择的文件（可选增强）
+        const fileInput = area.querySelector('.upload-input');
+        if (fileInput) {
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    const fileName = e.target.files[0].name;
+                    showNotification(`已选择文件：${fileName}`);
+                }
+            });
+        }
+    });
+    
+    // 作业提交按钮交互（模拟登录校验）
+    const submitAssignmentBtns = document.querySelectorAll('.submit-assignment');
+    const loginOverlay = document.getElementById('loginOverlay');
+    const loginBtn = document.getElementById('loginBtn');
+    const loginError = document.getElementById('loginError');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    
+    submitAssignmentBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // 模拟未登录状态，弹出登录框
+            if (loginOverlay) {
+                loginOverlay.style.display = 'flex';
+                loginError.style.display = 'none';
+            }
+        });
+    });
+    
+    // 登录按钮交互（模拟登录）
+    if (loginBtn && usernameInput && passwordInput && loginError && loginOverlay) {
+        loginBtn.addEventListener('click', () => {
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
+            
+            // 模拟登录校验（实际项目需对接后端）
+            if (username && password) {
+                loginOverlay.style.display = 'none';
+                showNotification('登录成功，作业提交中...');
+                
+                // 模拟提交成功
+                setTimeout(() => {
+                    showNotification('作业提交成功！');
+                }, 1500);
+            } else {
+                loginError.style.display = 'block';
+            }
+        });
+    }
+    
+// 查看更多评价功能
+const loadMoreReviewsBtn = document.getElementById('loadMoreReviews');
+const reviewsContainer = document.getElementById('reviewsContainer');
+
+if (loadMoreReviewsBtn && reviewsContainer) {
+    loadMoreReviewsBtn.addEventListener('click', () => {
+        // 模拟加载更多评价数据
+        const moreReviews = [
+            {
+                name: '刘阳',
+                college: '软件学院',
+                grade: '2021级',
+                star: '★★★★☆',
+                content: '课程的项目驱动教学模式非常好，能让我们在实践中掌握知识。建议基础薄弱的同学提前预习Python和数据分析基础，会更轻松。',
+                extra: '老师提供的案例都很贴近实际工作场景，对找实习帮助很大。'
+            },
+            {
+                name: '陈雨',
+                college: '信息科学与工程学院',
+                grade: '2022级',
+                star: '★★★★★',
+                content: '最喜欢课程的答疑环节，老师和助教都很耐心。实验报告的反馈很详细，能清楚知道自己的不足。',
+                extra: '组队完成期末项目的过程很有意义，不仅提升了技术，还锻炼了协作能力。'
+            },
+            {
+                name: '赵磊',
+                college: '数学学院',
+                grade: '2021级',
+                star: '★★★☆☆',
+                content: '课程内容有点难度，尤其是机器学习部分。建议增加一些基础知识点的讲解视频，帮助理解。',
+                extra: '学习资源很丰富，但是整理得比较分散，希望能有一个统一的资源导航。'
+            }
+        ];
+
+        // 加载状态提示
+        loadMoreReviewsBtn.textContent = '加载中...';
+        loadMoreReviewsBtn.disabled = true;
+
+        // 模拟网络延迟
+        setTimeout(() => {
+            moreReviews.forEach(review => {
+                const reviewCard = document.createElement('div');
+                reviewCard.className = 'review-card';
+                reviewCard.innerHTML = `
+                    <div class="review-header">
+                        <div class="review-avatar">${review.name.charAt(0)}</div>
+                        <div class="review-info">
+                            <h4>${review.name} - ${review.college}</h4>
+                            <div class="review-meta">${review.grade} · 已修完课程</div>
+                        </div>
+                    </div>
+                    <div class="review-stars">${review.star}</div>
+                    <p>${review.content}</p>
+                    <p>${review.extra}</p>
+                `;
+                reviewsContainer.appendChild(reviewCard);
+            });
+
+            // 恢复按钮状态
+            loadMoreReviewsBtn.textContent = '查看更多评价';
+            loadMoreReviewsBtn.disabled = false;
+
+            // 显示加载成功通知
+            showNotification('已加载更多评价！');
+        }, 1000);
+    });
+}
+
+    // 通知提示功能
+    function showNotification(message) {
+        const notification = document.getElementById('notification');
+        if (notification) {
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            // 3秒后隐藏
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+    }
+    
+    // 导航指示器点击跳转（可选增强）
+    navIndicators.forEach(indicator => {
+        indicator.addEventListener('click', () => {
+            const sectionId = indicator.getAttribute('data-section');
+            if (sectionId) {
+                // 激活对应标签页
+                tabButtons.forEach(btn => {
+                    if (btn.getAttribute('data-tab') === sectionId) {
+                        btn.click(); // 触发标签页点击事件
+                    }
+                });
+            }
+        });
+    });
+});
+
+// 团队进程区核心功能
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. 获取所有DOM元素
+    const teamSelect = document.getElementById('team-select');
+    const addTaskBtn = document.getElementById('addTaskBtn');
+    const importTasksBtn = document.getElementById('importTasksBtn');
+    const addTaskForm = document.getElementById('addTaskForm');
+    const cancelTaskBtn = document.getElementById('cancelTaskBtn');
+    const submitTaskBtn = document.getElementById('submitTaskBtn');
+    const taskFormTitle = document.getElementById('taskFormTitle');
+    const editTaskId = document.getElementById('editTaskId');
+    const taskNameInput = document.getElementById('task-name');
+    const taskAssigneeInput = document.getElementById('task-assignee');
+    const taskDateInput = document.getElementById('task-date');
+    const taskDescInput = document.getElementById('task-desc');
+    const taskStatusSelect = document.getElementById('task-status');
+    const allTasksBtn = document.getElementById('allTasksBtn');
+    const pendingTasksBtn = document.getElementById('pendingTasksBtn');
+    const completedTasksBtn = document.getElementById('completedTasksBtn');
+    const taskSearchInput = document.getElementById('taskSearch');
+    const calendarGrid = document.getElementById('calendarGrid');
+    const yearSelect = document.getElementById('calendarYearSelect'); // 修复ID
+    const monthSelect = document.getElementById('calendarMonthSelect'); // 修复ID
+    const prevMonthBtn = document.getElementById('prevMonthBtn');
+    const nextMonthBtn = document.getElementById('nextMonthBtn');
+    
+    // 统计卡片元素
+    const totalTasksCount = document.getElementById('totalTasksCount');
+    const completedTasksCount = document.getElementById('completedTasksCount');
+    const pendingTasksCount = document.getElementById('pendingTasksCount');
+    const completionRate = document.getElementById('completionRate');
+
+    // 2. 全局任务数据（支持跨月份）
+    let allTasks = [
+        { id: 1, name: '项目需求分析', assignee: '张三', date: '2025-11-01', status: 'pending', desc: '完成项目需求文档撰写' },
+        { id: 2, name: '数据集收集', assignee: '李四', date: '2025-11-05', status: 'completed', desc: '收集用户行为数据集' },
+        { id: 3, name: '数据预处理', assignee: '王五', date: '2025-11-06', status: 'pending', desc: '清洗、去重、格式转换' },
+        { id: 4, name: '模型构建', assignee: '张三', date: '2025-11-08', status: 'pending', desc: '搭建机器学习模型' },
+        { id: 5, name: '中期汇报', assignee: '全体', date: '2025-11-10', status: 'pending', desc: '团队项目中期进展汇报' },
+        { id: 6, name: '模型优化', assignee: '李四', date: '2025-11-13', status: 'pending', desc: '优化模型准确率' },
+        { id: 7, name: '实验一提交', assignee: '全体', date: '2025-11-15', status: 'pending', desc: '提交实验一报告和代码' },
+        { id: 8, name: '期末答辩准备', assignee: '全体', date: '2025-12-05', status: 'pending', desc: '准备项目答辩PPT和演示' },
+        { id: 9, name: '可视化报告', assignee: '王五', date: '2024-12-20', status: 'completed', desc: '制作数据可视化分析报告' },
+        { id: 10, name: '春节前收尾', assignee: '全体', date: '2025-01-20', status: 'pending', desc: '完成项目收尾工作' }
+    ];
+
+    // 3. 当前日历状态（默认2025年11月）
+    let currentYear = 2025;
+    let currentMonth = 10; // JS月份0-11
+
+    // 4. 初始化（页面加载完成后立即执行）
+    initCalendar();
+    bindAllEvents();
+    updateTaskStats();
+
+    // 5. 初始化日历（核心渲染函数）
+    function initCalendar() {
+        // 清空日历
+        calendarGrid.innerHTML = '';
+
+        // 添加星期头部
+        const weekDays = ['一', '二', '三', '四', '五', '六', '日'];
+        weekDays.forEach(day => {
+            const dayHeader = document.createElement('div');
+            dayHeader.className = 'calendar-day-header';
+            dayHeader.textContent = day;
+            calendarGrid.appendChild(dayHeader);
+        });
+
+        // 计算当月第一天是星期几（转换为：0=周一，6=周日）
+        const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+        const firstDayAdjusted = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
+
+        // 计算当月总天数
+        const totalDaysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+        // 添加月初空白单元格
+        for (let i = 0; i < firstDayAdjusted; i++) {
+            const emptyDay = document.createElement('div');
+            emptyDay.className = 'calendar-day';
+            calendarGrid.appendChild(emptyDay);
+        }
+
+        // 添加当月日期和任务
+        for (let day = 1; day <= totalDaysInMonth; day++) {
+            const dayEl = document.createElement('div');
+            dayEl.className = 'calendar-day';
+
+            // 日期数字
+            const dateText = document.createElement('div');
+            dateText.style = 'font-weight: bold; margin-bottom: 8px;';
+            dateText.textContent = day;
+            dayEl.appendChild(dateText);
+
+            // 格式化日期（YYYY-MM-DD）
+            const formattedDate = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
+            // 筛选当前日期的任务
+            const tasksForDay = allTasks.filter(task => task.date === formattedDate);
+
+            // 渲染任务
+            tasksForDay.forEach(task => {
+                const taskEl = document.createElement('div');
+                taskEl.className = `task-item ${task.status === 'completed' ? 'task-completed' : ''}`;
+                taskEl.dataset.taskId = task.id; // 用dataset存储ID，更稳定
+                taskEl.innerHTML = `
+                    <div style="font-size: 0.9rem; margin-bottom: 4px;">${task.name}</div>
+                    <div style="font-size: 0.8rem; color: #64748b; margin-bottom: 4px;">负责人：${task.assignee}</div>
+                    <div style="display: flex; gap: 8px; font-size: 0.8rem;">
+                        <span class="task-action" data-action="complete" title="标记完成/未完成">✅</span>
+                        <span class="task-action" data-action="edit" title="编辑">✏️</span>
+                        <span class="task-action" data-action="delete" title="删除">🗑️</span>
+                    </div>
+                `;
+                dayEl.appendChild(taskEl);
+            });
+
+            calendarGrid.appendChild(dayEl);
+        }
+
+        // 更新选择器状态（同步当前年月）
+        yearSelect.value = currentYear;
+        monthSelect.value = currentMonth;
+    }
+
+    // 6. 绑定所有事件（集中管理，避免遗漏）
+    function bindAllEvents() {
+        // 月份切换按钮事件
+        if (prevMonthBtn) {
+            prevMonthBtn.addEventListener('click', () => {
+                currentMonth--;
+                if (currentMonth < 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                }
+                initCalendar(); // 重新渲染日历
+                showNotification(`已切换至 ${currentYear}年${currentMonth + 1}月`);
+            });
+        }
+
+        if (nextMonthBtn) {
+            nextMonthBtn.addEventListener('click', () => {
+                currentMonth++;
+                if (currentMonth > 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                }
+                initCalendar(); // 重新渲染日历
+                showNotification(`已切换至 ${currentYear}年${currentMonth + 1}月`);
+            });
+        }
+
+        // 年份/月份选择器事件
+        if (yearSelect) {
+            yearSelect.addEventListener('change', () => {
+                currentYear = parseInt(yearSelect.value);
+                initCalendar();
+            });
+        }
+
+        if (monthSelect) {
+            monthSelect.addEventListener('change', () => {
+                currentMonth = parseInt(monthSelect.value);
+                initCalendar();
+            });
+        }
+
+        // 任务操作事件（事件委托，解决动态元素绑定问题）
+        calendarGrid.addEventListener('click', (e) => {
+            const actionEl = e.target.closest('.task-action');
+            if (!actionEl) return;
+
+            const taskEl = actionEl.closest('.task-item');
+            const taskId = parseInt(taskEl.dataset.taskId);
+            const actionType = actionEl.dataset.action;
+            const taskIndex = allTasks.findIndex(t => t.id === taskId);
+
+            if (taskIndex === -1) return;
+
+            switch (actionType) {
+                case 'complete':
+                    // 切换任务状态
+                    allTasks[taskIndex].status = allTasks[taskIndex].status === 'pending' ? 'completed' : 'pending';
+                    taskEl.classList.toggle('task-completed');
+                    updateTaskStats();
+                    showNotification('任务状态已更新！');
+                    break;
+                case 'edit':
+                    // 填充编辑表单
+                    const task = allTasks[taskIndex];
+                    taskFormTitle.textContent = '编辑任务';
+                    editTaskId.value = task.id;
+                    taskNameInput.value = task.name;
+                    taskAssigneeInput.value = task.assignee;
+                    taskDateInput.value = task.date;
+                    taskDescInput.value = task.desc || '';
+                    taskStatusSelect.value = task.status;
+                    addTaskForm.style.display = 'block';
+                    break;
+                case 'delete':
+                    if (confirm('确定删除该任务吗？删除后不可恢复')) {
+                        allTasks.splice(taskIndex, 1);
+                        taskEl.remove();
+                        updateTaskStats();
+                        showNotification('任务已删除！');
+                    }
+                    break;
+            }
+        });
+
+        // 筛选按钮事件
+        if (allTasksBtn) {
+            allTasksBtn.addEventListener('click', () => {
+                document.querySelectorAll('.task-item').forEach(item => item.style.display = 'block');
+                setActiveFilterBtn(allTasksBtn);
+            });
+        }
+
+        if (pendingTasksBtn) {
+            pendingTasksBtn.addEventListener('click', () => {
+                document.querySelectorAll('.task-item').forEach(item => {
+                    item.style.display = item.classList.contains('task-completed') ? 'none' : 'block';
+                });
+                setActiveFilterBtn(pendingTasksBtn);
+            });
+        }
+
+        if (completedTasksBtn) {
+            completedTasksBtn.addEventListener('click', () => {
+                document.querySelectorAll('.task-item').forEach(item => {
+                    item.style.display = item.classList.contains('task-completed') ? 'block' : 'none';
+                });
+                setActiveFilterBtn(completedTasksBtn);
+            });
+        }
+
+        // 搜索事件
+        if (taskSearchInput) {
+            taskSearchInput.addEventListener('input', (e) => {
+                const searchVal = e.target.value.toLowerCase().trim();
+                document.querySelectorAll('.task-item').forEach(item => {
+                    const taskText = item.textContent.toLowerCase();
+                    item.style.display = taskText.includes(searchVal) ? 'block' : 'none';
+                });
+            });
+        }
+
+        // 添加任务按钮事件
+        if (addTaskBtn) {
+            addTaskBtn.addEventListener('click', () => {
+                taskFormTitle.textContent = '添加团队任务';
+                editTaskId.value = '';
+                // 清空表单
+                taskNameInput.value = '';
+                taskAssigneeInput.value = '';
+                taskDateInput.value = '';
+                taskDescInput.value = '';
+                taskStatusSelect.value = 'pending';
+                addTaskForm.style.display = 'block';
+            });
+        }
+
+        // 取消任务事件
+        if (cancelTaskBtn) {
+            cancelTaskBtn.addEventListener('click', () => {
+                addTaskForm.style.display = 'none';
+            });
+        }
+
+        // 提交任务事件
+        if (submitTaskBtn) {
+            submitTaskBtn.addEventListener('click', () => {
+                const taskName = taskNameInput.value.trim();
+                const taskAssignee = taskAssigneeInput.value.trim();
+                const taskDate = taskDateInput.value.trim();
+
+                if (!taskName || !taskAssignee || !taskDate) {
+                    alert('请填写任务名称、负责人和截止日期！');
+                    return;
+                }
+
+                // 解析日期
+                const [selectedYear, selectedMonth] = taskDate.split('-').map(Number);
+                const taskStatus = taskStatusSelect.value;
+                const taskDesc = taskDescInput.value.trim();
+
+                // 编辑模式
+                if (editTaskId.value) {
+                    const taskId = parseInt(editTaskId.value);
+                    const taskIndex = allTasks.findIndex(t => t.id === taskId);
+                    if (taskIndex !== -1) {
+                        // 更新任务数据
+                        allTasks[taskIndex] = {
+                            ...allTasks[taskIndex],
+                            name: taskName,
+                            assignee: taskAssignee,
+                            date: taskDate,
+                            status: taskStatus,
+                            desc: taskDesc
+                        };
+                        // 重新渲染日历（确保任务位置正确）
+                        initCalendar();
+                        showNotification('任务编辑成功！');
+                    }
+                } 
+                // 添加模式
+                else {
+                    // 生成唯一ID
+                    const newTaskId = allTasks.length > 0 ? Math.max(...allTasks.map(t => t.id)) + 1 : 1;
+                    // 添加新任务
+                    allTasks.push({
+                        id: newTaskId,
+                        name: taskName,
+                        assignee: taskAssignee,
+                        date: taskDate,
+                        status: taskStatus,
+                        desc: taskDesc
+                    });
+                    // 如果添加到当前月份，重新渲染
+                    if (selectedYear === currentYear && selectedMonth === currentMonth + 1) {
+                        initCalendar();
+                    } else {
+                        showNotification(`任务已添加至 ${selectedYear}年${selectedMonth}月，切换月份即可查看`);
+                    }
+                    showNotification('任务添加成功！');
+                }
+
+                // 更新统计+关闭表单
+                updateTaskStats();
+                addTaskForm.style.display = 'none';
+            });
+        }
+
+        // 导入任务事件
+        if (importTasksBtn) {
+            importTasksBtn.addEventListener('click', () => {
+                alert('请下载Excel模板填写任务后，通过此处上传导入');
+            });
+        }
+    }
+
+    // 7. 更新任务统计
+    function updateTaskStats() {
+        const total = allTasks.length;
+        const completed = allTasks.filter(t => t.status === 'completed').length;
+        const pending = total - completed;
+        const rate = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+        // 更新DOM显示
+        totalTasksCount.textContent = total;
+        completedTasksCount.textContent = completed;
+        pendingTasksCount.textContent = pending;
+        completionRate.textContent = `${rate}%`;
+    }
+
+    // 8. 设置筛选按钮激活状态
+    function setActiveFilterBtn(activeBtn) {
+        [allTasksBtn, pendingTasksBtn, completedTasksBtn].forEach(btn => {
+            btn.classList.remove('active');
+            btn.style.backgroundColor = '';
+            btn.style.color = '';
+        });
+        activeBtn.classList.add('active');
+        activeBtn.style.backgroundColor = 'var(--primary-color)';
+        activeBtn.style.color = 'white';
+    }
+
+    // 9. 通知提示（复用全局函数，若未定义则创建）
+    function showNotification(message) {
+        const notification = document.getElementById('notification');
+        if (notification) {
+            notification.textContent = message;
+            notification.classList.add('show');
+            setTimeout(() => notification.classList.remove('show'), 3000);
+        } else {
+            // 若没有全局通知元素，创建临时提示
+            const tempNotify = document.createElement('div');
+            tempNotify.style = 'position: fixed; bottom: 20px; right: 20px; padding: 10px 20px; background: var(--primary-color); color: white; border-radius: 4px; z-index: 9999;';
+            tempNotify.textContent = message;
+            document.body.appendChild(tempNotify);
+            setTimeout(() => document.body.removeChild(tempNotify), 3000);
+        }
+    }
+});
+
+// 取消登录功能
+const cancelLoginBtn = document.getElementById('cancelLoginBtn');
+const loginOverlay = document.getElementById('loginOverlay');
+
+if (cancelLoginBtn && loginOverlay) {
+    cancelLoginBtn.addEventListener('click', () => {
+        loginOverlay.style.display = 'none';
+    });
+}
+
+// 生成详细评测报告功能
+const generateReportBtn = document.getElementById('generateReportBtn');
+
+if (generateReportBtn) {
+    generateReportBtn.addEventListener('click', () => {
+        // 模拟生成报告的加载状态
+        generateReportBtn.textContent = '生成中...';
+        generateReportBtn.disabled = true;
+        
+        // 模拟网络延迟
+        setTimeout(() => {
+            // 方式1：弹出报告预览窗口（推荐）
+            const reportContent = `
+                <div style="padding: 20px; max-width: 800px; margin: 0 auto;">
+                    <h2 style="color: var(--primary-color); text-align: center; margin-bottom: 30px;">大数据分析实践课程 - 学习评测报告</h2>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h3>一、基本信息</h3>
+                        <p>学号：2023001234</p>
+                        <p>姓名：XXX</p>
+                        <p>学院：计算机学院</p>
+                        <p>年级：2023级</p>
+                        <p>评测时间：2025年11月6日</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h3>二、综合评测结果</h3>
+                        <p>综合得分：82分（优秀）</p>
+                        <p>学习进度：75%（已完成大部分核心课程内容）</p>
+                        <p>整体评价：该生具备扎实的Python编程和数据处理基础，在SQL数据库操作方面表现突出，但在大数据处理和深度学习领域存在明显短板，需重点加强。</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h3>三、各科目详细得分</h3>
+                        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                            <tr style="background-color: #f8fafc;">
+                                <th style="border: 1px solid #e2e8f0; padding: 10px; text-align: left;">科目</th>
+                                <th style="border: 1px solid #e2e8f0; padding: 10px; text-align: center;">得分</th>
+                                <th style="border: 1px solid #e2e8f0; padding: 10px; text-align: center;">掌握等级</th>
+                                <th style="border: 1px solid #e2e8f0; padding: 10px; text-align: left;">评价</th>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px;">Python编程</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px; text-align: center;">92分</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px; text-align: center;">熟练掌握</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px;">代码实现能力强，能高效完成复杂编程任务</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px;">Pandas数据处理</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px; text-align: center;">88分</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px; text-align: center;">熟练掌握</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px;">数据清洗、转换技能熟练，处理效率高</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px;">机器学习算法</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px; text-align: center;">76分</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px; text-align: center;">中等掌握</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px;">基础算法理解较好，但复杂场景应用能力不足</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px;">数据可视化</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px; text-align: center;">72分</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px; text-align: center;">中等掌握</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px;">基础图表制作熟练，复杂交互式图表能力欠缺</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px;">Spark大数据处理</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px; text-align: center;">63分</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px; text-align: center;">基础掌握</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px;">环境配置和基础操作了解，复杂任务处理困难</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px;">SQL数据库</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px; text-align: center;">90分</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px; text-align: center;">熟练掌握</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px;">复杂查询语句编写能力强，优化意识好</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px;">统计分析</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px; text-align: center;">75分</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px; text-align: center;">中等掌握</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px;">基础统计方法应用熟练，高级统计模型了解不足</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px;">深度学习框架</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px; text-align: center;">58分</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px; text-align: center;">基础掌握</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 10px;">框架基本概念了解，实际项目开发能力欠缺</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h3>四、优势与不足</h3>
+                        <h4>优势：</h4>
+                        <ol style="padding-left: 20px; margin-top: 10px;">
+                            <li>Python编程基础扎实，代码规范度高，问题解决能力强</li>
+                            <li>数据处理流程熟练，能高效完成数据清洗、转换等工作</li>
+                            <li>SQL数据库操作能力突出，复杂查询和优化能力强</li>
+                            <li>学习态度认真，课程参与度高，作业完成质量好</li>
+                        </ol>
+                        
+                        <h4>不足：</h4>
+                        <ol style="padding-left: 20px; margin-top: 10px;">
+                            <li>Spark大数据处理技术掌握不熟练，难以处理大规模数据</li>
+                            <li>深度学习相关知识储备不足，框架使用和模型构建能力欠缺</li>
+                            <li>复杂数据可视化图表制作能力不足，可视化思维有待提升</li>
+                            <li>跨学科知识融合能力有待加强，实际项目应用能力需提升</li>
+                        </ol>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h3>五、个性化学习建议</h3>
+                        <h4>短期目标（1-2个月）：</h4>
+                        <ol style="padding-left: 20px; margin-top: 10px;">
+                            <li>完成Spark官方文档学习，掌握RDD、DataFrame等核心概念</li>
+                            <li>完成3个Spark实战案例（如日志分析、用户行为分析）</li>
+                            <li>学习Matplotlib/Seaborn高级用法，制作3个复杂可视化图表</li>
+                            <li>参与课程讨论和小组项目，提升团队协作和问题解决能力</li>
+                        </ol>
+                        
+                        <h4>中期目标（3-4个月）：</h4>
+                        <ol style="padding-left: 20px; margin-top: 10px;">
+                            <li>学习TensorFlow/PyTorch框架基础，掌握神经网络构建流程</li>
+                            <li>完成1个简单深度学习项目（如图像分类、文本情感分析）</li>
+                            <li>学习数据可视化工具ECharts，制作1个交互式可视化系统</li>
+                            <li>阅读3篇相关领域顶会论文，了解前沿技术发展趋势</li>
+                        </ol>
+                        
+                        <h4>长期目标（6个月以上）：</h4>
+                        <ol style="padding-left: 20px; margin-top: 10px;">
+                            <li>参与科研项目或竞赛，提升实际项目开发和创新能力</li>
+                            <li>构建个人技术博客，记录学习心得和项目经验</li>
+                            <li>深入研究某一细分领域（如推荐系统、数据可视化），形成技术专长</li>
+                            <li>尝试开源项目贡献，提升技术影响力和团队协作能力</li>
+                        </ol>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h3>六、推荐学习资源</h3>
+                        <ul style="padding-left: 20px; margin-top: 10px;">
+                            <li>书籍：《Spark快速大数据分析》《深度学习入门》《Python数据可视化实战》</li>
+                            <li>在线课程：Spark官方培训课程、Coursera深度学习专项课程</li>
+                            <li>实战平台：Kaggle、天池竞赛平台、LeetCode编程练习</li>
+                            <li>技术社区：GitHub、Stack Overflow、知乎专栏、掘金</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="text-align: right; margin-top: 50px; color: #64748b;">
+                        <p>评测人：课程组</p>
+                        <p>报告生成时间：2025年11月6日</p>
+                    </div>
+                </div>
+            `;
+            
+            // 创建新窗口显示报告
+            const reportWindow = window.open('', '_blank', 'width=1000,height=800');
+            reportWindow.document.write(`
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>学习评测详细报告</title>
+                    <style>
+                        :root {
+                            --primary-color: #980a0e;
+                            --text-color: #334155;
+                        }
+                        body {
+                            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+                            line-height: 1.6;
+                            color: var(--text-color);
+                            padding: 20px;
+                        }
+                        h1, h2, h3, h4 {
+                            color: var(--primary-color);
+                            margin-bottom: 1rem;
+                        }
+                        table {
+                            border-collapse: collapse;
+                            width: 100%;
+                            margin: 1rem 0;
+                        }
+                        th, td {
+                            border: 1px solid #e2e8f0;
+                            padding: 0.75rem;
+                            text-align: left;
+                        }
+                        th {
+                            background-color: #f8fafc;
+                        }
+                        ol, ul {
+                            padding-left: 1.5rem;
+                            margin: 1rem 0;
+                        }
+                    </style>
+                </head>
+                <body>${reportContent}</body>
+                </html>
+            `);
+            reportWindow.document.close();
+            
+            // 恢复按钮状态
+            generateReportBtn.textContent = '生成详细评测报告';
+            generateReportBtn.disabled = false;
+            
+            showNotification('详细评测报告已生成！');
+        }, 2000);
+    });
+}
+
+</script>
