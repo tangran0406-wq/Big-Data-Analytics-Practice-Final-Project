@@ -745,7 +745,7 @@
             margin-bottom: 40px;
         }
         
-        @media (max-width: 992px) {
+        @media (max-width: 1992px) {
             .assessment-container {
                 grid-template-columns: 1fr;
             }
@@ -1130,7 +1130,7 @@
     <!-- 登录弹窗 -->
     <div class="login-overlay" id="loginOverlay" style="display: none;">
         <div class="login-modal">
-            <h3>请登录后提交作业</h3>
+            <h3>请登录后使用完整功能</h3>
             <div class="login-error" id="loginError">用户名或密码错误</div>
             <div class="form-group">
                 <label for="username">用户名</label>
@@ -1690,15 +1690,6 @@
                     
                     <div class="team-progress">
     <div class="progress-toolbar">
-        <div>
-            <label for="team-select">选择团队：</label>
-            <select id="team-select" class="team-selector">
-                <option value="">请选择你的团队</option>
-                <option value="team1">期末项目组 - 用户行为分析</option>
-                <option value="team2">机器学习学习小组</option>
-                <option value="team3">交通流量数据分析项目组</option>
-            </select>
-        </div>
         <button class="btn" id="addTaskBtn">添加任务</button>
         <button class="btn btn-outline" id="importTasksBtn">导入任务</button>
     </div>
@@ -1808,43 +1799,44 @@
                     </div>
                 </div>
                 
-                <!-- 新增：学习评测 -->
-                <div class="tab-content" id="assessment">
-                    <h3>学习评测与知识画像</h3>
-                    <p>基于课堂测试、平时实验等数据，构建个人知识画像，生成个性化评测结果和学习建议。</p>
-                    
-                   <div class="assessment-container" style="padding: 20px; width: 100%; max-width: none;">
-    <h3 style="color: var(--primary-color); margin-bottom: 20px;">大数据能力评测（共30题）</h3>
+<!-- 2. 学习评测模块完整代码（已解除所有宽度限制） -->
+<div class="tab-content" id="assessment">
+    <h3>学习评测与知识画像</h3>
+    <p>基于课堂测试、平时实验等数据，构建个人知识画像，生成个性化评测结果和学习建议。</p>
     
-    <!-- 答题说明 -->
-    <div style="background: #f8fafc; padding: 15px; border-radius: var(--border-radius); margin-bottom: 20px;">
-        <p>📌 答题说明：</p>
-        <ul style="padding-left: 20px; margin-top: 10px;">
-            <li>本次评测包含Python编程、大数据处理、机器学习、数据可视化等6个学科</li>
-            <li>共30题，每题1分，满分30分，答题时间60分钟</li>
-            <li>完成答题后提交，系统将自动批改并生成AI分析报告</li>
-        </ul>
-    </div>
-    
-    <!-- 答题区域 -->
-    <div id="questionContainer" style="margin-bottom: 30px; width: 100%; max-width: none;">
-        <!-- 题目将通过JS动态加载 -->
-    </div>
-    
-    <!-- 提交按钮 -->
-    <div style="text-align: center; margin-bottom: 30px;">
-        <button class="btn" id="submitAnswerBtn" style="padding: 10px 30px; font-size: 1.1rem;">提交答题结果</button>
-    </div>
-    
-    <!-- 评测报告区域（默认隐藏） -->
-<div id="reportContainer" style="display: none; margin-top: 30px; width: 98%; max-width: 1400px; margin-left: auto; margin-right: auto;">
-        <h3 style="color: var(--primary-color); margin-bottom: 20px; text-align: center;">AI评测分析报告</h3>
-        <div id="aiReportContent" style="background: white; padding: 25px; border-radius: var(--border-radius); box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 100%;">
-            <!-- AI生成的报告将显示在这里 -->
+    <!-- 评测容器：彻底宽屏化 -->
+    <div class="assessment-container">
+        <h3 style="color: var(--primary-color); margin-bottom: 20px;">大数据能力评测（共30题）</h3>
+        
+        <!-- 答题说明：宽度自适应 -->
+        <div style="background: #f8fafc; padding: 15px; border-radius: var(--border-radius); margin-bottom: 20px; width: 100%; max-width: 1800px; margin-left: auto; margin-right: auto;">
+            <p>📌 答题说明：</p>
+            <ul style="padding-left: 20px; margin-top: 10px;">
+                <li>本次评测包含Python编程、大数据处理、机器学习、数据可视化等6个学科</li>
+                <li>共30题，每题1分，满分30分，答题时间60分钟</li>
+                <li>完成答题后提交，系统将自动批改并生成AI分析报告</li>
+            </ul>
+        </div>
+        
+        <!-- 答题区域：全屏宽度，最大宽度1800px（可调整） -->
+        <div id="questionContainer" style="margin-bottom: 30px; max-width: 1800px; margin-left: auto; margin-right: auto;">
+            <!-- 题目将通过JS动态加载 -->
+        </div>
+        
+        <!-- 提交按钮：居中显示 -->
+        <div style="text-align: center; margin-bottom: 30px;">
+            <button class="btn" id="submitAnswerBtn" style="padding: 10px 30px; font-size: 1.1rem;">提交答题结果</button>
+        </div>
+        
+        <!-- 评测报告区域：最大化宽度 -->
+        <div id="reportContainer" style="display: none; margin-top: 30px; width: 100%; max-width: 1800px; margin-left: auto; margin-right: auto; padding: 0;">
+            <h3 style="color: var(--primary-color); margin-bottom: 20px; text-align: center;">AI评测分析报告</h3>
+            <div id="aiReportContent" style="background: white; padding: 25px 30px; border-radius: var(--border-radius); box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 100%; margin: 0 auto;">
+                <!-- AI生成的报告将显示在这里 -->
+            </div>
         </div>
     </div>
 </div>
-                </div>
             </div>
         </section>
     </div>
@@ -2430,9 +2422,60 @@ function loadTeamsData() {
     }
 }
 
-// ==================== 原有的全局变量和登录管理 ====================
+// ==================== 原有的全局变量和登录管理（修改后） ====================
 let isLoggedIn = false;
 let currentUser = null;
+
+// -------------------------- 新增：预设合法用户列表（可扩展到40-50个） --------------------------
+// 格式：{ username: 用户名, password: 密码, id: 唯一ID, role: 角色（student/teacher） }
+const LEGAL_USERS = [
+ { username: '202300130220', password: '123456', id: '刘傲宇', role: 'student' },
+  { username: '202300130236', password: '123456', id: '陈德康', role: 'student' },
+  { username: '202300130262', password: '123456', id: '何青青', role: 'student' },
+  { username: '202300130098', password: '123456', id: '马浩鑫', role: 'student' },
+  { username: '202300130041', password: '123456', id: '徐守政', role: 'student' },
+  { username: '202300130153', password: '123456', id: '吴宇轩', role: 'student' },
+  { username: '202300130051', password: '123456', id: '汤冉', role: 'student' },
+  { username: '202300130178', password: '123456', id: '刘爽', role: 'student' },
+  { username: '202300130090', password: '123456', id: '杨笑语', role: 'student' },
+  { username: '202300271038', password: '123456', id: '李云飞', role: 'student' },
+  { username: '202300130046', password: '123456', id: '李江涛', role: 'student' },
+  { username: '202300130063', password: '123456', id: '邱珺', role: 'student' },
+  { username: '202300130228', password: '123456', id: '徐昌华', role: 'student' },
+  { username: '202300130067', password: '123456', id: '罗艺超', role: 'student' },
+  { username: '202300130050', password: '123456', id: '王睿', role: 'student' },
+  { username: '202300130092', password: '123456', id: '王俊磊', role: 'student' },
+  { username: '202300130160', password: '123456', id: '刘逸宁', role: 'student' },
+  { username: '202300130166', password: '123456', id: '朱亚宁', role: 'student' },
+  { username: '202300130028', password: '123456', id: '苗雨健', role: 'student' },
+  { username: '202300130083', password: '123456', id: '王乐临', role: 'student' },
+  { username: '202300130045', password: '123456', id: '张博文', role: 'student' },
+  { username: '202300510045', password: '123456', id: '边鑫磊', role: 'student' },
+  { username: '202322130198', password: '123456', id: '周子翔', role: 'student' },
+  { username: '202300130005', password: '123456', id: '于佳杭', role: 'student' },
+  { username: '202300130235', password: '123456', id: '危弘毅', role: 'student' },
+  { username: '202300130086', password: '123456', id: '张珈恺', role: 'student' },
+  { username: '202300130242', password: '123456', id: '王启源', role: 'student' },
+  { username: '202300130113', password: '123456', id: '丁正旸', role: 'student' },
+  { username: '202200101012', password: '123456', id: '康海洋', role: 'student' },
+  { username: '202300130239', password: '123456', id: '陆云', role: 'student' },
+  { username: '202300130146', password: '123456', id: '颜一涵', role: 'student' },
+  { username: '202300130100', password: '123456', id: '王玺源', role: 'student' },
+  { username: '202300130030', password: '123456', id: '赵汉哲', role: 'student' },
+  { username: '202320130203', password: '123456', id: '李姿含', role: 'student' },
+  { username: '202300130281', password: '123456', id: '马小强', role: 'student' },
+  { username: '202300130003', password: '123456', id: '肖皓天', role: 'student' },
+  { username: '202302130293', password: '123456', id: '李嘉欣', role: 'student' },
+  { username: '202300130205', password: '123456', id: '李尚远', role: 'student' },
+  { username: '202300130214', password: '123456', id: '于博雅', role: 'student' },
+  { username: '202300300198', password: '123456', id: '朱宣玮', role: 'student' },
+  { username: '202322130197', password: '123456', id: '崔嘉铭', role: 'student' },
+  { username: '202300130103', password: '123456', id: '任俊毅', role: 'student' },
+  { username: '202300130059', password: '123456', id: '林子洋', role: 'student' },
+  { username: '202200130005', password: '123456', id: '常智博', role: 'student' },
+  // 可在此处添加老师账号（如果需要）
+  // { username: 'teacher01', password: 'teacher@2025', id: '老师姓名', role: 'teacher' },
+];
 
 // DOM元素
 const loginOverlay = document.getElementById('loginOverlay');
@@ -2451,8 +2494,16 @@ const loginError = document.getElementById('loginError');
 function initLoginState() {
     const savedUser = localStorage.getItem('loggedInUser');
     if (savedUser) {
-        isLoggedIn = true;
-        currentUser = JSON.parse(savedUser);
+        const parsedUser = JSON.parse(savedUser);
+        // 校验本地存储的用户是否仍在合法列表中（防止非法用户通过本地存储伪造登录）
+        const isLegal = LEGAL_USERS.some(user => user.id === parsedUser.id);
+        if (isLegal) {
+            isLoggedIn = true;
+            currentUser = parsedUser;
+        } else {
+            // 非法用户，清除本地存储
+            localStorage.removeItem('loggedInUser');
+        }
         updateLoginUI();
     }
 }
@@ -2462,7 +2513,7 @@ function updateLoginUI() {
     if (isLoggedIn && currentUser) {
         unLoginState.style.display = 'none';
         loggedInState.style.display = 'flex';
-        usernameDisplay.textContent = `欢迎，${currentUser.username}`;
+        usernameDisplay.textContent = `欢迎，${currentUser.id}`;
     } else {
         unLoginState.style.display = 'flex';
         loggedInState.style.display = 'none';
@@ -2496,23 +2547,43 @@ function addGlobalLoginGuard() {
     });
 }
 
-// 登录按钮事件
+// 登录按钮事件（核心修改：添加合法用户校验）
 if (loginBtn) {
     loginBtn.addEventListener('click', () => {
         const username = usernameInput.value.trim();
         const password = passwordInput.value.trim();
         
-        if (username && password) {
-            isLoggedIn = true;
-            currentUser = { username, role: 'student', id: '2023001234' };
-            localStorage.setItem('loggedInUser', JSON.stringify(currentUser));
-            
-            loginOverlay.style.display = 'none';
-            updateLoginUI();
-            showNotification(`登录成功，欢迎 ${username}！`);
-        } else {
+        // 1. 基础校验：用户名和密码不能为空
+        if (!username || !password) {
+            loginError.textContent = '用户名和密码不能为空！';
             loginError.style.display = 'block';
+            return;
         }
+
+        // 2. 核心校验：匹配合法用户列表
+        const legalUser = LEGAL_USERS.find(user => 
+            user.username === username && user.password === password
+        );
+
+        if (!legalUser) {
+            // 用户名或密码不匹配，提示错误
+            loginError.textContent = '用户名或密码错误！请使用合法账号登录';
+            loginError.style.display = 'block';
+            return;
+        }
+
+        // 3. 校验通过：保存合法用户信息（使用预设的id和role）
+        isLoggedIn = true;
+        currentUser = {
+            username: legalUser.username,
+            role: legalUser.role,
+            id: legalUser.id
+        };
+        localStorage.setItem('loggedInUser', JSON.stringify(currentUser));
+        
+        loginOverlay.style.display = 'none';
+        updateLoginUI();
+        showNotification(`登录成功，欢迎 ${legalUser.id}！`);
     });
 }
 
@@ -2539,18 +2610,9 @@ if (cancelLoginBtn && loginOverlay) {
     });
 }
 
+
 // ==================== 数据导出导入功能 ====================
 function addDataManagementPanel() {
-    const managementHTML = `
-        <div style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-            <div style="font-weight: bold; margin-bottom: 10px; color: var(--primary-color);">数据管理</div>
-            <button class="btn" onclick="exportAllData()" style="margin-bottom: 8px; width: 100%;">导出所有数据</button>
-            <input type="file" id="importDataFile" accept=".json" style="display: none;" onchange="importData(this.files[0])">
-            <button class="btn btn-outline" onclick="document.getElementById('importDataFile').click()" style="width: 100%;">导入数据</button>
-        </div>
-    `;
-    
-    document.body.insertAdjacentHTML('beforeend', managementHTML);
 }
 
 // 导出所有数据
