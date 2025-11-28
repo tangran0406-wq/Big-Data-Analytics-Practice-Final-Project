@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>辅助学习资源 - 大数据分析实践课程平台</title>
     <style>
+         .appflow-chat-widget, 
+        [class*="appflow-chat"], 
+        [class*="chat-widget"],
+        #appflow-chat-container {
+        z-index: 99999 !important; /* 远高于页面其他元素 */
+        pointer-events: auto !important; /* 启用点击事件（关键） */
+        position: fixed !important; /* 确保固定定位不被影响 */
+        }
         :root {
             --primary-color: #980a0e;
             --secondary-color: #7a080b;
@@ -879,6 +887,17 @@
     });
         });
     });
+</script>
+<script src="https://o.alicdn.com/appflow/chatbot/v1/AppflowChatSDK.js"></script>
+<script>
+    window.APPFLOW_CHAT_SDK.init({
+    integrateConfig: {
+        integrateId: 'cit-0bfdb25b1d5e45c3898c',
+        domain: {
+            requestDomain: 'https://1420546017612097.appflow.aliyunnest.com'
+        }
+    }
+});
 </script>
 </body>
 </html>
