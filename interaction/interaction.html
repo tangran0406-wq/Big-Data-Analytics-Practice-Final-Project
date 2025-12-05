@@ -5,14 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>互动交流区 - 大数据分析实践课程平台</title>
     <style>
-         .appflow-chat-widget, 
-        [class*="appflow-chat"], 
-        [class*="chat-widget"],
-        #appflow-chat-container {
-        z-index: 99999 !important; /* 远高于页面其他元素 */
-        pointer-events: auto !important; /* 启用点击事件（关键） */
-        position: fixed !important; /* 确保固定定位不被影响 */
-        }
         :root {
             --primary-color: #980a0e;
             --secondary-color: #7a080b;
@@ -454,70 +446,6 @@
             margin-bottom: 15px;
             padding-bottom: 15px;
             border-bottom: 1px solid #f1f5f9;
-        }
-        
-        /* 作业上传区样式 */
-        .assignment-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-        
-        .assignment-card {
-            background: white;
-            border-radius: var(--border-radius);
-            padding: 25px;
-            box-shadow: var(--box-shadow);
-            transition: transform 0.3s ease;
-        }
-        
-        .assignment-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .assignment-deadline {
-            display: inline-block;
-            background-color: #fff3f4;
-            color: var(--primary-color);
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-        }
-        
-        .assignment-requirements {
-            margin: 15px 0;
-            padding-left: 20px;
-        }
-        
-        .assignment-requirements li {
-            margin-bottom: 8px;
-        }
-        
-        .upload-area {
-            border: 2px dashed #e2e8f0;
-            border-radius: var(--border-radius);
-            padding: 30px;
-            text-align: center;
-            margin: 20px 0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .upload-area:hover {
-            border-color: var(--primary-color);
-            background-color: rgba(152, 10, 14, 0.03);
-        }
-        
-        .upload-icon {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-        }
-        
-        .upload-input {
-            display: none;
         }
         
         /* 聊天样式 */
@@ -1087,17 +1015,6 @@
     </style>
 </head>
 <body>
-    <script src="https://o.alicdn.com/appflow/chatbot/v1/AppflowChatSDK.js"></script>
-<script>
-    window.APPFLOW_CHAT_SDK.init({
-    integrateConfig: {
-        integrateId: 'cit-0bfdb25b1d5e45c3898c',
-        domain: {
-            requestDomain: 'https://1420546017612097.appflow.aliyunnest.com'
-        }
-    }
-});
-</script>
     <header>
         <div class="header-container">
             <a href="../index.html" class="logo">
@@ -1178,7 +1095,6 @@
                 <div class="interaction-tabs">
                     <button class="tab-button active" data-tab="reviews">课程评价</button>
                     <button class="tab-button" data-tab="questions">问题讨论</button>
-                    <button class="tab-button" data-tab="assignments">作业上传</button>
                     <button class="tab-button" data-tab="project-team">项目发布与组队</button>
                     <button class="tab-button" data-tab="team-progress">团队进程</button>
                     <button class="tab-button" data-tab="assessment">学习评测</button>
@@ -1384,81 +1300,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="text-center">
-                        <button class="btn btn-outline">查看更多问题</button>
-                    </div>
-                </div>
-                
-                <!-- 作业上传区 -->
-                <div class="tab-content" id="assignments">
-                    <h3>作业与实验提交</h3>
-                    <p>在这里可以查看作业要求并上传你的作业和实验报告。请注意各项作业的截止时间。</p>
-                    
-                    <div class="assignment-container">
-                        <div class="assignment-card">
-                            <h3>实验一：数据预处理</h3>
-                            <span class="assignment-deadline">截止日期：2023-11-15 23:59</span>
-                            <p>完成基本的数据清洗、转换和集成操作，掌握Pandas库的基本使用方法。</p>
-                            <ul class="assignment-requirements">
-                                <li>处理缺失值和异常值</li>
-                                <li>进行数据转换和标准化</li>
-                                <li>完成至少两种数据集成操作</li>
-                                <li>提交Jupyter Notebook文件和实验报告</li>
-                            </ul>
-                            <div class="upload-area" id="upload-experiment-1">
-                                <div class="upload-icon">📂</div>
-                                <p>点击或拖拽文件到此处上传</p>
-                                <p class="text-muted">支持 .ipynb, .pdf, .doc, .docx 格式</p>
-                                <input type="file" class="upload-input" id="experiment-1-file" multiple>
-                            </div>
-                            <div class="text-center">
-                                <button class="btn submit-assignment" data-assignment="experiment-1">提交作业</button>
-                            </div>
-                        </div>
-                        
-                        <div class="assignment-card">
-                            <h3>作业二：数据分析报告</h3>
-                            <span class="assignment-deadline">截止日期：2023-11-30 23:59</span>
-                            <p>基于提供的数据集，完成一次完整的数据分析流程，并撰写分析报告。</p>
-                            <ul class="assignment-requirements">
-                                <li>包含数据探索性分析</li>
-                                <li>至少应用两种分析方法</li>
-                                <li>提供可视化结果和解读</li>
-                                <li>提交分析报告和相关代码</li>
-                            </ul>
-                            <div class="upload-area" id="upload-assignment-2">
-                                <div class="upload-icon">📂</div>
-                                <p>点击或拖拽文件到此处上传</p>
-                                <p class="text-muted">支持 .zip, .rar, .pdf, .doc, .docx 格式</p>
-                                <input type="file" class="upload-input" id="assignment-2-file" multiple>
-                            </div>
-                            <div class="text-center">
-                                <button class="btn submit-assignment" data-assignment="assignment-2">提交作业</button>
-                            </div>
-                        </div>
-                        
-                        <div class="assignment-card">
-                            <h3>期末项目</h3>
-                            <span class="assignment-deadline">截止日期：2023-12-25 23:59</span>
-                            <p>选择一个实际问题，设计并实现一个完整的大数据分析解决方案。</p>
-                            <ul class="assignment-requirements">
-                                <li>提交项目计划书（11月20日前）</li>
-                                <li>包含完整的分析流程和代码</li>
-                                <li>提供项目演示视频（5-10分钟）</li>
-                                <li>提交项目报告和答辩PPT</li>
-                            </ul>
-                            <div class="upload-area" id="upload-project">
-                                <div class="upload-icon">📂</div>
-                                <p>点击或拖拽文件到此处上传</p>
-                                <p class="text-muted">支持 .zip, .rar 格式（包含所有材料）</p>
-                                <input type="file" class="upload-input" id="project-file" multiple>
-                            </div>
-                            <div class="text-center">
-                                <button class="btn submit-assignment" data-assignment="project">提交项目</button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 
                 <!-- 项目发布与组队 -->
@@ -1498,6 +1339,16 @@
                                     <label for="project-requirements">招募要求</label>
                                     <textarea id="project-requirements" class="form-control" placeholder="请描述对学生技能、专业、人数等要求"></textarea>
                                 </div>
+                                <!-- 新增：发布人姓名 -->
+    <div class="form-group">
+        <label for="project-publisher">发布人姓名</label>
+        <input type="text" id="project-publisher" class="form-control" placeholder="请输入您的姓名">
+    </div>
+    <!-- 新增：学院或单位 -->
+    <div class="form-group">
+        <label for="project-institution">学院或单位</label>
+        <input type="text" id="project-institution" class="form-control" placeholder="请输入您的学院或单位">
+    </div>
                                 <div class="form-group">
                                     <label for="project-contact">联系方式</label>
                                     <input type="text" id="project-contact" class="form-control" placeholder="邮箱/电话">
@@ -1613,6 +1464,16 @@
                                     <label for="team-content">详情</label>
                                     <textarea id="team-content" class="form-control" placeholder="请描述你的需求、现有成员情况、希望招募的成员技能等"></textarea>
                                 </div>
+                                                                <!-- 新增：发布人姓名 -->
+    <div class="form-group">
+        <label for="project-publisher">发布人姓名</label>
+        <input type="text" id="project-publisher" class="form-control" placeholder="请输入您的姓名">
+    </div>
+    <!-- 新增：学院或单位 -->
+    <div class="form-group">
+        <label for="project-institution">学院与年级</label>
+        <input type="text" id="project-institution" class="form-control" placeholder="请输入您的学院与年级">
+    </div>
                                 <div class="form-group">
                                     <label for="team-contact">联系方式</label>
                                     <input type="text" id="team-contact" class="form-control" placeholder="QQ/微信/邮箱等">
@@ -1825,10 +1686,10 @@
     
     <!-- 评测容器：彻底宽屏化 -->
     <div class="assessment-container">
-        <h3 style="color: var(--primary-color); margin-bottom: 20px;">大数据能力评测（共30题）</h3>
+        <h3 style="color: var(--primary-color); margin-bottom: 20px; padding: 0 20px;">大数据能力评测（共30题）</h3>
         
-        <!-- 答题说明：宽度自适应 -->
-        <div style="background: #f8fafc; padding: 15px; border-radius: var(--border-radius); margin-bottom: 20px; width: 100%; max-width: 1800px; margin-left: auto; margin-right: auto;">
+        <!-- 答题说明：宽度自适应（仅左右留内边距） -->
+        <div style="background: #f8fafc; padding: 15px 20px; border-radius: var(--border-radius); margin-bottom: 20px; width: 100%;">
             <p>📌 答题说明：</p>
             <ul style="padding-left: 20px; margin-top: 10px;">
                 <li>本次评测包含Python编程、大数据处理、机器学习、数据可视化等6个学科</li>
@@ -1837,20 +1698,27 @@
             </ul>
         </div>
         
-        <!-- 答题区域：全屏宽度，最大宽度1800px（可调整） -->
-        <div id="questionContainer" style="margin-bottom: 30px; max-width: 1800px; margin-left: auto; margin-right: auto;">
+        <!-- 答题区域：双列布局，从屏幕最左边开始 -->
+        <div id="questionContainer" style="
+            margin-bottom: 30px; 
+            width: 100%; /* 占据整个屏幕宽度 */
+            display: grid;
+            grid-template-columns: repeat(2, minmax(450px, 1fr)); /* 固定双列 */
+            gap: 20px;
+            padding: 0 20px; /* 仅左右留20px内边距，避免内容贴边 */
+        ">
             <!-- 题目将通过JS动态加载 -->
         </div>
         
         <!-- 提交按钮：居中显示 -->
-        <div style="text-align: center; margin-bottom: 30px;">
+        <div style="text-align: center; margin-bottom: 30px; padding: 0 20px;">
             <button class="btn" id="submitAnswerBtn" style="padding: 10px 30px; font-size: 1.1rem;">提交答题结果</button>
         </div>
         
         <!-- 评测报告区域：最大化宽度 -->
-        <div id="reportContainer" style="display: none; margin-top: 30px; width: 100%; max-width: 1800px; margin-left: auto; margin-right: auto; padding: 0;">
+        <div id="reportContainer" style="display: none; margin-top: 30px; width: 100%; padding: 0 20px;">
             <h3 style="color: var(--primary-color); margin-bottom: 20px; text-align: center;">AI评测分析报告</h3>
-            <div id="aiReportContent" style="background: white; padding: 25px 30px; border-radius: var(--border-radius); box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 100%; margin: 0 auto;">
+            <div id="aiReportContent" style="background: white; padding: 25px 30px; border-radius: var(--border-radius); box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 100%;">
                 <!-- AI生成的报告将显示在这里 -->
             </div>
         </div>
@@ -1930,44 +1798,108 @@ const DataManager = {
         }
     },
 
-    // 问题讨论数据
-    initQuestionsData() {
-        if (!localStorage.getItem(this.STORAGE_KEYS.QUESTIONS)) {
-            const defaultQuestions = [
-                {
-                    id: 1,
-                    author: '赵伟',
-                    title: '如何理解PCA降维的原理和应用场景？',
-                    content: '在学习降维算法时，对PCA的数学原理理解不够透彻，尤其是特征值和特征向量的作用。另外，想知道在实际项目中，PCA通常应用在哪些场景？有什么需要注意的地方？',
-                    tags: ['知识点疑问', '机器学习', 'PCA'],
-                    createTime: '2023-11-05 09:15:00',
-                    answers: [
-                        {
-                            id: 1,
-                            author: '刘老师（授课教师）',
-                            content: 'PCA的核心思想是找到数据中方差最大的方向，以此来减少特征维度同时保留主要信息。特征值表示对应特征向量方向上的方差大小，我们通常选择特征值较大的前k个特征向量来构建新的特征空间。',
-                            extra: '应用场景主要有：数据可视化（高维数据降维到2D/3D）、去除噪声、加速后续算法训练等。使用时要注意数据需要标准化，并且PCA是线性降维方法，对非线性数据效果有限。',
-                            createTime: '2023-11-05 10:30:00'
-                        }
-                    ],
-                    likes: 12,
-                    answerCount: 1
-                },
-                {
-                    id: 2,
-                    author: '陈明',
-                    title: '实验三的Spark环境总是启动失败，该如何解决？',
-                    content: '按照教程配置了Spark环境，但启动时总是报"java.net.BindException: 地址已在使用"的错误。尝试过重启电脑，还是不行。有人遇到过类似问题吗？该怎么解决？',
-                    tags: ['实验难点', 'Spark', '环境配置'],
-                    createTime: '2023-11-04 15:30:00',
-                    answers: [],
-                    likes: 8,
-                    answerCount: 0
-                }
-            ];
-            this.saveQuestions(defaultQuestions);
-        }
-    },
+// 问题讨论数据初始化
+initQuestionsData() {
+    if (!localStorage.getItem(this.STORAGE_KEYS.QUESTIONS)) {
+        const defaultQuestions = [
+            {
+                id: 1,
+                author: '赵伟',
+                authorAvatar: '赵', // 新增：作者头像显示文本
+                title: '如何理解PCA降维的原理和应用场景？',
+                content: '在学习降维算法时，对PCA的数学原理理解不够透彻，尤其是特征值和特征向量的作用。另外，想知道在实际项目中，PCA通常应用在哪些场景？有什么需要注意的地方？',
+                tags: ['知识点疑问', '机器学习', 'PCA'],
+                createTime: '2023-11-05 09:15:00',
+                displayTime: '2小时前', // 新增：用于前端显示的相对时间
+                answers: [
+                    {
+                        id: 1,
+                        author: '刘老师（授课教师）',
+                        authorAvatar: '刘', // 新增：回答者头像显示文本
+                        content: 'PCA的核心思想是找到数据中方差最大的方向，以此来减少特征维度同时保留主要信息。特征值表示对应特征向量方向上的方差大小，我们通常选择特征值较大的前k个特征向量来构建新的特征空间。应用场景主要有：数据可视化（高维数据降维到2D/3D）、去除噪声、加速后续算法训练等。使用时要注意数据需要标准化，并且PCA是线性降维方法，对非线性数据效果有限。',
+                        createTime: '2023-11-05 10:30:00',
+                        displayTime: '1小时前' // 新增：用于前端显示的相对时间
+                    },
+                    // 补充其他4个回答，使总回答数为5
+                    {
+                        id: 2,
+                        author: '张同学',
+                        authorAvatar: '张',
+                        content: '补充一下，PCA降维后的数据是正交的，这有助于减少特征之间的相关性，提高模型的泛化能力。',
+                        createTime: '2023-11-05 11:00:00',
+                        displayTime: '30分钟前'
+                    },
+                    {
+                        id: 3,
+                        author: '李同学',
+                        authorAvatar: '李',
+                        content: '实际项目中，我常用PCA来预处理高维数据，比如图像识别中的特征降维，效果不错。',
+                        createTime: '2023-11-05 11:15:00',
+                        displayTime: '15分钟前'
+                    },
+                    {
+                        id: 4,
+                        author: '王同学',
+                        authorAvatar: '王',
+                        content: '要注意PCA对异常值比较敏感，所以在使用前最好先处理异常值。',
+                        createTime: '2023-11-05 11:20:00',
+                        displayTime: '10分钟前'
+                    },
+                    {
+                        id: 5,
+                        author: '陈同学',
+                        authorAvatar: '陈',
+                        content: '学习PCA时，建议结合线性代数的知识，理解协方差矩阵和特征分解的过程。',
+                        createTime: '2023-11-05 11:25:00',
+                        displayTime: '5分钟前'
+                    }
+                ],
+                likes: 12,
+                answerCount: 5 // 修改：与HTML显示的5个回答一致
+            },
+            {
+                id: 2,
+                author: '陈明',
+                authorAvatar: '陈', // 新增：作者头像显示文本
+                title: '实验三的Spark环境总是启动失败，该如何解决？',
+                content: '按照教程配置了Spark环境，但启动时总是报"java.net.BindException: 地址已在使用"的错误。尝试过重启电脑，还是不行。有人遇到过类似问题吗？该怎么解决？',
+                tags: ['实验难点', 'Spark', '环境配置'],
+                createTime: '2023-11-04 15:30:00',
+                displayTime: '昨天 15:30', // 新增：用于前端显示的相对时间
+                answers: [
+                    // 补充3个回答，使总回答数为3
+                    {
+                        id: 1,
+                        author: '孙老师',
+                        authorAvatar: '孙',
+                        content: '这个错误通常是因为Spark需要的端口被其他程序占用了。你可以使用netstat命令查看哪个程序占用了端口，然后关闭它或者修改Spark的配置文件更换端口。',
+                        createTime: '2023-11-04 16:00:00',
+                        displayTime: '昨天 16:00'
+                    },
+                    {
+                        id: 2,
+                        author: '周同学',
+                        authorAvatar: '周',
+                        content: '我之前也遇到过这个问题，后来发现是Hadoop的进程没有完全关闭。你可以尝试执行stop-all.sh命令关闭所有Hadoop进程，然后再启动Spark。',
+                        createTime: '2023-11-04 16:30:00',
+                        displayTime: '昨天 16:30'
+                    },
+                    {
+                        id: 3,
+                        author: '吴同学',
+                        authorAvatar: '吴',
+                        content: '如果修改端口的话，需要修改spark-env.sh文件中的SPARK_MASTER_PORT参数，默认是7077。',
+                        createTime: '2023-11-04 17:00:00',
+                        displayTime: '昨天 17:00'
+                    }
+                ],
+                likes: 8,
+                answerCount: 3 // 修改：与HTML显示的3个回答一致
+            }
+        ];
+        this.saveQuestions(defaultQuestions);
+    }
+},
 
     // 作业数据
     initAssignmentsData() {
@@ -2017,65 +1949,143 @@ const DataManager = {
         }
     },
 
-    // 项目数据
-    initProjectsData() {
-        if (!localStorage.getItem(this.STORAGE_KEYS.PROJECTS)) {
-            const defaultProjects = [
-                {
-                    id: 1,
-                    title: '电商平台用户购买行为预测模型',
-                    publisher: '李教授 - 计算机学院',
-                    type: 'research',
-                    content: '基于电商平台用户历史数据，构建用户购买行为预测模型，用于精准营销推荐。要求使用机器学习算法，准确率达到85%以上。',
-                    requirements: '要求掌握Python、机器学习基础，有数据分析经验者优先',
-                    contact: 'lij@example.edu.cn',
-                    createTime: '2023-11-01',
-                    tags: ['机器学习', '预测模型', '2-3人']
-                },
-                {
-                    id: 2,
-                    title: '城市交通流量数据分析与可视化',
-                    publisher: '王老师 - 数据科学学院',
-                    type: 'practice',
-                    content: '分析城市交通流量数据，识别拥堵热点区域，制作交互式可视化报表，为交通管理提供决策支持。需使用Python+ECharts实现。',
-                    requirements: '要求掌握Python、数据分析基础，有可视化经验者优先',
-                    contact: 'wangj@example.edu.cn',
-                    createTime: '2023-10-28',
-                    tags: ['数据可视化', '数据分析', '3-4人']
-                }
-            ];
-            this.saveProjects(defaultProjects);
-        }
-    },
+    // 项目数据初始化
+initProjectsData() {
+    if (!localStorage.getItem(this.STORAGE_KEYS.PROJECTS)) {
+        const defaultProjects = [
+            {
+                id: 1,
+                title: '电商平台用户购买行为预测模型',
+                publisher: '李教授 - 计算机学院',
+                type: 'research',
+                typeText: '科研项目', // 新增：用于前端显示的类型文本
+                content: '基于电商平台用户历史数据，构建用户购买行为预测模型，用于精准营销推荐。要求使用机器学习算法，准确率达到85%以上。',
+                requirements: '要求掌握Python、机器学习基础，有数据分析经验者优先',
+                contact: 'lij@example.edu.cn',
+                createTime: '2025-11-01', // 修改：与HTML日期保持一致
+                tags: ['机器学习', '预测模型', '2-3人']
+            },
+            {
+                id: 2,
+                title: '城市交通流量数据分析与可视化',
+                publisher: '王老师 - 数据科学学院',
+                type: 'practice',
+                typeText: '实践项目', // 新增：用于前端显示的类型文本
+                content: '分析城市交通流量数据，识别拥堵热点区域，制作交互式可视化报表，为交通管理提供决策支持。需使用Python+ECharts实现。',
+                requirements: '要求掌握Python、数据分析基础，有可视化经验者优先',
+                contact: 'wangj@example.edu.cn',
+                createTime: '2025-10-28', // 修改：与HTML日期保持一致
+                tags: ['数据可视化', '数据分析', '3-4人']
+            },
+            {
+                id: 3,
+                title: '医疗数据隐私保护算法研究',
+                publisher: '张教授 - 信息学院',
+                type: 'research',
+                typeText: '科研项目',
+                content: '针对电子病历数据，研究差分隐私、联邦学习等隐私保护算法，设计兼顾隐私性和数据可用性的解决方案。要求有一定的密码学基础。',
+                requirements: '要求有一定的密码学基础，掌握Python编程',
+                contact: 'zhangp@example.edu.cn',
+                createTime: '2025-10-25',
+                tags: ['隐私计算', '机器学习', '2人']
+            },
+            {
+                id: 4,
+                title: '校园二手交易平台数据分析',
+                publisher: '刘老师 - 管理学院',
+                type: 'practice',
+                typeText: '实践项目',
+                content: '基于校园二手交易平台的历史交易数据，分析商品流通规律、用户交易行为特征，为平台优化提供数据支撑。需完成数据清洗、建模和可视化。',
+                requirements: '要求掌握Python数据分析，有数据清洗经验',
+                contact: 'liul@example.edu.cn',
+                createTime: '2025-10-20',
+                tags: ['数据分析', 'Python', '2-3人']
+            },
+            {
+                id: 5,
+                title: 'AI辅助教学系统推荐算法优化',
+                publisher: '陈老师 - 教育学院',
+                type: 'research',
+                typeText: '科研项目',
+                content: '优化现有教学系统的课程推荐算法，结合学生学习行为、成绩数据，实现个性化课程推荐。需掌握协同过滤、深度学习推荐算法。',
+                requirements: '需掌握协同过滤、深度学习推荐算法',
+                contact: 'chenj@example.edu.cn',
+                createTime: '2025-10-18',
+                tags: ['推荐系统', '深度学习', '3人']
+            }
+        ];
+        this.saveProjects(defaultProjects);
+    }
+},
 
-    // 组队数据
-    initTeamsData() {
-        if (!localStorage.getItem(this.STORAGE_KEYS.TEAMS)) {
-            const defaultTeams = [
-                {
-                    id: 1,
-                    title: '寻找期末项目队友（已有2人，还差1-2人）',
-                    author: '周小天 - 计算机学院',
-                    type: 'project',
-                    content: '我们目前有2人，都是计算机专业，有Python和机器学习基础。想做一个关于用户行为分析的项目，希望找有数据可视化或深度学习经验的同学加入。',
-                    contact: 'QQ 123456789',
-                    createTime: '2023-11-03',
-                    tags: ['项目组队', '数据分析']
-                },
-                {
-                    id: 2,
-                    title: '机器学习学习小组（零基础友好）',
-                    author: '陈晓 - 数学学院',
-                    type: 'study',
-                    content: '组建机器学习学习小组，每周一起学习、讨论、刷题。计划从基础算法开始，逐步深入到实战项目。欢迎零基础的同学加入，一起进步！目前已有3人。',
-                    contact: '微信 chenxiao123',
-                    createTime: '2023-10-30',
-                    tags: ['学习小组', '机器学习']
-                }
-            ];
-            this.saveTeams(defaultTeams);
-        }
-    },
+// 组队数据初始化
+initTeamsData() {
+    if (!localStorage.getItem(this.STORAGE_KEYS.TEAMS)) {
+        const defaultTeams = [
+            {
+                id: 1,
+                title: '寻找期末项目队友（已有2人，还差1-2人）',
+                author: '周小天 - 计算机学院',
+                type: 'project',
+                typeText: '项目组队', // 新增：用于前端显示的类型文本
+                content: '我们目前有2人，都是计算机专业，有Python和机器学习基础。想做一个关于用户行为分析的项目，希望找有数据可视化或深度学习经验的同学加入。',
+                contact: 'QQ 123456789',
+                createTime: '2023-11-03',
+                displayTime: '3天前', // 新增：用于前端显示的相对时间
+                tags: ['项目组队', '数据分析']
+            },
+            {
+                id: 2,
+                title: '机器学习学习小组（零基础友好）',
+                author: '陈晓 - 数学学院',
+                type: 'study',
+                typeText: '学习小组', // 新增：用于前端显示的类型文本
+                content: '组建机器学习学习小组，每周一起学习、讨论、刷题。计划从基础算法开始，逐步深入到实战项目。欢迎零基础的同学加入，一起进步！目前已有3人。',
+                contact: '微信 chenxiao123',
+                createTime: '2023-10-30',
+                displayTime: '1周前', // 新增：用于前端显示的相对时间
+                tags: ['学习小组', '机器学习']
+            },
+            {
+                id: 3,
+                title: '全国大学生数学建模竞赛组队（缺1名编程手）',
+                author: '李明 - 自动化学院',
+                type: 'competition',
+                typeText: '竞赛组队',
+                content: '现有2人，分别负责建模和论文撰写，均有建模竞赛经验。寻找一名熟练掌握Python/Matlab，擅长数据处理和模型实现的同学，要求有责任心，能投入足够时间。',
+                contact: 'QQ 987654321',
+                createTime: '2023-11-01',
+                displayTime: '5天前',
+                tags: ['竞赛组队', '数学建模', '编程']
+            },
+            {
+                id: 4,
+                title: 'Spark大数据处理实验组队（2人组，还差1人）',
+                author: '王浩 - 软件学院',
+                type: 'study',
+                typeText: '学习小组',
+                content: '课程实验要求2人组队完成Spark大数据处理任务，本人有Hadoop基础，希望找一名认真负责、能一起钻研技术的同学，共同完成实验报告和代码实现。',
+                contact: '微信 wanghao456',
+                createTime: '2023-11-04',
+                displayTime: '2天前',
+                tags: ['学习小组', 'Spark', '大数据']
+            },
+            {
+                id: 5,
+                title: '数据可视化课程设计组队（3人组，缺2人）',
+                author: '赵婷 - 信息科学与工程学院',
+                type: 'project',
+                typeText: '项目组队',
+                content: '课程设计要求完成一个交互式数据可视化系统，本人擅长前端开发（Vue+ECharts），需要2名同学负责数据处理和后端接口开发，要求掌握Python和SQL。',
+                contact: '邮箱 zhaoting@example.com',
+                createTime: '2023-11-05',
+                displayTime: '1天前',
+                tags: ['项目组队', '数据可视化', 'Web开发']
+            }
+        ];
+        this.saveTeams(defaultTeams);
+    }
+},
 
     // 任务数据
     initTasksData() {
@@ -2549,7 +2559,7 @@ function showLoginModal() {
 
 // 全局登录拦截
 function addGlobalLoginGuard() {
-    document.querySelectorAll('#ask-question-btn, #publishProjectBtn, #publishTeamBtn, #addTaskBtn, #importTasksBtn, #submitTaskBtn, #generateReportBtn, .submit-assignment, #loadMoreReviews').forEach(btn => {
+    document.querySelectorAll('#ask-question-btn, #publishTeamBtn, #addTaskBtn, #importTasksBtn, #submitTaskBtn, #generateReportBtn, .submit-assignment').forEach(btn => {
         if (btn) {
             const originalClick = btn.onclick;
             btn.onclick = function(e) {
@@ -2927,61 +2937,91 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // 查看更多评价功能（修改为使用DataManager）
-    const loadMoreReviewsBtn = document.getElementById('loadMoreReviews');
-    if (loadMoreReviewsBtn) {
-        loadMoreReviewsBtn.addEventListener('click', () => {
-            // 模拟加载更多评价
-            const moreReviews = [
-                {
-                    name: '刘阳',
-                    college: '软件学院',
-                    grade: '2021级',
-                    status: '已修完课程',
-                    stars: 4,
-                    content: '课程的项目驱动教学模式非常好，能让我们在实践中掌握知识。建议基础薄弱的同学提前预习Python和数据分析基础，会更轻松。',
-                    extra: '老师提供的案例都很贴近实际工作场景，对找实习帮助很大。'
-                },
-                {
-                    name: '陈雨',
-                    college: '信息科学与工程学院',
-                    grade: '2022级',
-                    status: '已修完课程',
-                    stars: 5,
-                    content: '最喜欢课程的答疑环节，老师和助教都很耐心。实验报告的反馈很详细，能清楚知道自己的不足。',
-                    extra: '组队完成期末项目的过程很有意义，不仅提升了技术，还锻炼了协作能力。'
-                }
-            ];
-            
-            moreReviews.forEach(review => {
-                DataManager.addReview(review);
-            });
-            
-            loadReviewsData();
-            showNotification('已加载更多评价！');
-        });
-    }
+// 查看更多评价功能（修改为使用DataManager）
+const loadMoreReviewsBtn = document.getElementById('loadMoreReviews');
+if (loadMoreReviewsBtn) {
+    // 状态管理
+    let isLoading = false;
+    let currentPage = 1;
+    const totalPages = 3; // 假设总共有3页数据
     
-    // 作业上传区域交互
-    const uploadAreas = document.querySelectorAll('.upload-area');
-    uploadAreas.forEach(area => {
-        area.addEventListener('click', () => {
-            const fileInput = area.querySelector('.upload-input');
-            if (fileInput) {
-                fileInput.click();
+    // 模拟动态数据（按页区分）
+    const mockReviewsData = {
+        1: [/* 初始加载的数据 */],
+        2: [
+            {
+                id: 'review-3', // 添加唯一标识
+                name: '刘阳',
+                college: '软件学院',
+                grade: '2021级',
+                status: '已修完课程',
+                stars: 4,
+                content: '课程的项目驱动教学模式非常好，能让我们在实践中掌握知识。建议基础薄弱的同学提前预习Python和数据分析基础，会更轻松。',
+                extra: '老师提供的案例都很贴近实际工作场景，对找实习帮助很大。'
+            },
+            {
+                id: 'review-4',
+                name: '陈雨',
+                college: '信息科学与工程学院',
+                grade: '2022级',
+                status: '已修完课程',
+                stars: 5,
+                content: '最喜欢课程的答疑环节，老师和助教都很耐心。实验报告的反馈很详细，能清楚知道自己的不足。',
+                extra: '组队完成期末项目的过程很有意义，不仅提升了技术，还锻炼了协作能力。'
             }
-        });
+        ],
+        3: [/* 第三页数据 */]
+    };
+    
+    loadMoreReviewsBtn.addEventListener('click', async () => {
+        // 防止重复点击
+        if (isLoading || currentPage >= totalPages) return;
         
-        const fileInput = area.querySelector('.upload-input');
-        if (fileInput) {
-            fileInput.addEventListener('change', (e) => {
-                if (e.target.files.length > 0) {
-                    const fileName = e.target.files[0].name;
-                    showNotification(`已选择文件：${fileName}`);
-                }
-            });
+        isLoading = true;
+        loadMoreReviewsBtn.disabled = true;
+        loadMoreReviewsBtn.textContent = '加载中...';
+        
+        try {
+            // 模拟异步加载延迟
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            currentPage++;
+            const moreReviews = mockReviewsData[currentPage] || [];
+            
+            // 检查并添加新数据（避免重复）
+            const addedCount = moreReviews.filter(review => {
+                // 假设DataManager有getReviews方法获取现有评价
+                const existingReviews = DataManager.getReviews();
+                return !existingReviews.some(existing => existing.id === review.id);
+            }).length;
+            
+            if (addedCount > 0) {
+                moreReviews.forEach(review => {
+                    DataManager.addReview(review);
+                });
+                
+                loadReviewsData();
+                showNotification(`已加载${addedCount}条新评价！`);
+            }
+            
+            // 检查是否已加载全部
+            if (currentPage >= totalPages) {
+                loadMoreReviewsBtn.textContent = '已加载全部';
+                loadMoreReviewsBtn.disabled = true;
+            } else {
+                loadMoreReviewsBtn.textContent = '查看更多评价';
+                loadMoreReviewsBtn.disabled = false;
+            }
+        } catch (error) {
+            console.error('加载更多评价失败:', error);
+            showNotification('加载失败，请稍后重试！');
+            loadMoreReviewsBtn.textContent = '查看更多评价';
+            loadMoreReviewsBtn.disabled = false;
+        } finally {
+            isLoading = false;
         }
     });
+}
 
     // 通知提示功能
     function showNotification(message) {
