@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多媒体资源展示中心</title>
+    <!-- 引入图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- 全局设置与变量合并 --- */
+        :root {
+            --primary-color: #980a0e;
+            --light-color: rgba(255, 255, 255, 0.85);
+            --header-accent: #ffffff;
+            --body-accent: #3498db;
+            --bg-light: #f4f6f9;
+            --bg-dark: #1a1a2e;
+            --text-dark: #333;
+            --text-light: #fff;
+            --card-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        
+        body { 
+            background-color: var(--bg-light); 
+            color: var(--text-dark); 
+            padding-bottom: 50px; 
+            padding-top: 0; 
+        }
+
+        /* =========================================
+           1. 头部样式
+           ========================================= */
+        header {
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%;
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        .header-container {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            padding: 15px 40px; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            flex-direction: row;
+        }
+        .logo { display: flex; align-items: center; }
+        .school-logo { height: 50px; margin-right: 15px; }
+        .logo .logo-text { display: flex; flex-direction: column; color: white; }
+        .logo h1 { font-size: 1.5rem; margin: 0; line-height: 1.2; }
+        .logo span { font-size: 0.9rem; color: var(--light-color); display: block; }
+        
+        nav ul { display: flex; list-style: none; margin: 0; padding: 0; }
+        nav li { margin-left: 25px; }
+        
+        nav a { 
+            color: white; 
+            font-weight: 500; 
+            text-decoration: none; 
+            position: relative; 
+            padding-bottom: 5px; 
+            opacity: 0.9; 
+            transition: opacity 0.2s ease; 
+        }
+        nav a:hover { opacity: 1; }
+        nav a::after { 
+            content: ''; 
+            position: absolute; 
+            bottom: 0; 
+            left: 0; 
+            width: 0; 
+            height: 2px; 
+            background-color: var(--header-accent); 
+            transition: width 0.3s ease; 
+        }
+        nav a:hover::after { width: 100%; }
+
+        @media (max-width: 900px) {
+            .header-container { flex-direction: column; padding: 15px 20px; }
+            .logo { margin-bottom: 15px; }
+            nav ul { flex-wrap: wrap; justify-content: center; }
+            nav li { margin: 0 10px 10px; }
+        }
+
+        /* =========================================
+           2. 页面主体布局容器
+           ========================================= */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; }
+
+        .section-title {
+            font-size: 1.6rem;
+            margin: 3rem 0 1.5rem 0;
+            padding-left: 15px;
+            border-left: 5px solid var(--body-accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* --- 轮播组件通用样式 --- */
+        .carousel-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden; 
+            padding: 10px 55px; 
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            gap: 20px;
+            width: 100%; 
+        }
+
+        /* 左右切换按钮 */
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            color: var(--primary-color);
+            border: 1px solid #ddd;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .nav-btn:hover { background-color: var(--body-accent); color: white; border-color: var(--body-accent); }
+        
+        .nav-btn.prev { left: 5px; } 
+        .nav-btn.next { right: 5px; }
+        
+        /* --- 卡片样式 --- */
+        .video-card {
+            flex: 0 0 calc((100% - 40px) / 3);
+            background: #252540;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            background: #000;
+        }
+        .video-wrapper video {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: contain; /* 确保封面图完整显示 */
+        }
+        .video-info { padding: 15px; color: #fff; }
+        .video-info h3 { font-size: 1rem; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+
+        .file-card {
+            flex: 0 0 calc((100% - 60px) / 4);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 200px;
+            border-top: 4px solid transparent;
+            transition: 0.3s;
+        }
+        .file-card:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+
+        .file-card.pdf { border-color: #e74c3c; }
+        .file-card.pptx { border-color: #e67e22; }
+        .file-card.docx { border-color: #2b579a; }
+
+        .file-header { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 10px; }
+        .file-icon { font-size: 2.2rem; }
+        
+        .pdf .file-icon { color: #e74c3c; }
+        .pptx .file-icon { color: #e67e22; }
+        .docx .file-icon { color: #2b579a; }
+
+        .file-name { font-weight: bold; color: #333; font-size: 1rem; word-break: break-all; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;}
+        
+        .btn-group {
+            margin-top: auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            padding: 8px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: 0.3s;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .btn-download {
+            background: #f1f2f6;
+            color: #555;
+        }
+        .btn-download:hover {
+            background: #dfe4ea;
+            color: #333;
+        }
+
+        .btn-preview {
+            background: var(--bg-light);
+            border: 1px solid var(--body-accent);
+            color: var(--body-accent);
+        }
+        .btn-preview:hover {
+            background: var(--body-accent);
+            color: white;
+        }
+
+        .dark-section { 
+            background-color: var(--bg-dark); 
+            color: #fff; 
+            padding-bottom: 3rem; 
+            margin-top: 0;
+            padding-top: 110px;
+        }
+        .dark-section .section-title { color: #fff; }
+
+        /* 响应式适配 */
+        @media (max-width: 900px) {
+            .video-card { flex: 0 0 calc((100% - 20px) / 2); } 
+            .file-card { flex: 0 0 calc((100% - 40px) / 3); }
+            
+            .dark-section { padding-top: 180px; }
+        }
+        @media (max-width: 600px) {
+            .video-card, .file-card { flex: 0 0 100%; } 
+            .nav-btn { width: 35px; height: 35px; }
+            .carousel-wrapper { padding: 10px 40px; }
+            .nav-btn.prev { left: 0; }
+            .nav-btn.next { right: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 头部 -->
+    <header>
+        <div class="header-container">
+          <div class="logo">
+            <a href="../index.html">
+                <img src="../assets/school_logo.png" alt="校徽" class="school-logo">
+            </a>
+            <div class="logo-text">
+              <h1>大数据分析实践课程平台</h1>
+              <span>依托教育改革，AI驱动全链路智能化</span>
+            </div>
+          </div>
+          <nav>
+            <ul>
+              <li><a href="../index.html#highlights">课程介绍</a></li>
+              <li><a href="../index.html#content">课程内容</a></li>
+              <li><a href="../index.html#assist">辅助学习</a></li>
+              <li><a href="../index.html#community">互动区</a></li>
+            </ul>
+          </nav>
+        </div>
+    </header>
+
+    <!-- 1. 视频课程展示栏 (深色背景) -->
+    <div class="dark-section">
+        <div class="container">
+            <div class="section-title">
+                <i class="fas fa-play-circle"></i> 视频分享
+            </div>
+            
+            <div class="carousel-wrapper">
+                <button class="nav-btn prev" onclick="moveCarousel('video', -1)"><i class="fas fa-chevron-left"></i></button>
+                <div class="carousel-track" id="track-video">
+                    <!-- JS内容 -->
+                </div>
+                <button class="nav-btn next" onclick="moveCarousel('video', 1)"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. 文件展示栏 -->
+    <div class="container">
+        <div class="section-title">
+            <i class="fas fa-file-alt"></i> 文件分享
+        </div>
+        
+        <div class="carousel-wrapper">
+            <button class="nav-btn prev" onclick="moveCarousel('file', -1)"><i class="fas fa-chevron-left"></i></button>
+            <div class="carousel-track" id="track-file">
+                <!-- JS内容 -->
+            </div>
+            <button class="nav-btn next" onclick="moveCarousel('file', 1)"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <!-- JavaScript 逻辑 -->
+    <script>
+        // ==========================================
+        //  修改点 1：视频数据结构改为对象，包含封面图
+        // ==========================================
+        const resourceData = {
+            videos: [
+                // 格式：{ name: "视频文件名.mp4", cover: "封面图片名.jpg" }
+                // 如果没有封面图，可以把 cover 留空或删除该属性
+                { name: "项目经验分析.mp4", cover: "cover1.jpg" },
+                { name: "数据质量管理.mp4", cover: "cover2.jpg" },
+                { name: "canis讲解.mp4", cover: "cover3.jpg" },
+                { name: "可视化设计.mp4", cover: "cover4.jpg" },
+                { name: "hololens交互入门.mp4", cover: "cover5.jpg" }
+            ],
+            files: [
+                { name: "服务器连接与BERT环境配置.pdf", type: "pdf" },
+                { name: "Github操作指南.pdf", type: "pdf" },
+                { name: "2021级赵艺淇-经验分享.pdf", type: "pdf" },
+                { name: "2021级敖宇轩邹旭东-经验分享.pdf", type: "pdf" },
+                { name: "实验报告模版.docx", type: "docx" },
+                { name: "How2PrepareSlides.docx", type: "docx" },
+                { name: "张庆宇交流报告.pptx", type: "pptx" }
+            ]
+        };
+
+        // ==========================================
+        //  修改点 2：增加封面图片的路径配置
+        // ==========================================
+        const PATHS = {
+            video: 'assets/videos/',
+            file: 'assets/files/',
+            cover: 'assets/videos/' // 假设封面图放在这个文件夹
+        };
+
+        function init() {
+            renderVideos();
+            renderFiles();
+        }
+
+        function renderVideos() {
+            const track = document.getElementById('track-video');
+            if(resourceData.videos.length === 0) {
+                track.innerHTML = "<p style='color:#fff; padding:20px'>暂无视频文件</p>";
+                return;
+            }
+
+            resourceData.videos.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'video-card';
+                
+                // 1. 获取视频路径
+                const videoSrc = `${PATHS.video}${item.name}`;
+                
+                // 2. 获取封面路径 (如果有 cover 属性)
+                // 如果 item.cover 存在，就拼路径；否则设为空字符串
+                const posterAttr = item.cover ? `poster="${PATHS.cover}${item.cover}"` : '';
+
+                card.innerHTML = `
+                    <div class="video-wrapper">
+                        <!-- 修改点 3：添加 poster 属性 -->
+                        <video controls preload="metadata" ${posterAttr}>
+                            <source src="${videoSrc}" type="video/mp4">
+                            您的浏览器不支持 Video 标签。
+                        </video>
+                    </div>
+                    <div class="video-info">
+                        <h3>${item.name}</h3>
+                        <p style="font-size:0.8rem; opacity:0.7">MP4 视频资源</p>
+                    </div>
+                `;
+                track.appendChild(card);
+            });
+        }
+
+        // 文件渲染逻辑保持不变
+        function renderFiles() {
+            const track = document.getElementById('track-file');
+            resourceData.files.forEach(file => {
+                const card = document.createElement('div');
+                
+                let typeClass = 'pdf';
+                let iconClass = 'fa-file-pdf';
+
+                if (file.type === 'pptx') {
+                    typeClass = 'pptx';
+                    iconClass = 'fa-file-powerpoint';
+                } else if (file.type === 'docx') {
+                    typeClass = 'docx';
+                    iconClass = 'fa-file-word';
+                }
+                
+                card.className = `file-card ${typeClass}`;
+                const filePath = `${PATHS.file}${file.name}`;
+
+                let buttonsHtml = '';
+
+                buttonsHtml += `
+                    <a href="${filePath}" class="action-btn btn-download" download>
+                        <i class="fas fa-download"></i> 下载
+                    </a>
+                `;
+
+                if (file.type === 'pdf') {
+                    buttonsHtml += `
+                        <a href="${filePath}" class="action-btn btn-preview" target="_blank">
+                            <i class="fas fa-eye"></i> 预览
+                        </a>
+                    `;
+                }
+
+                card.innerHTML = `
+                    <div>
+                        <div class="file-header">
+                            <i class="fas ${iconClass} file-icon"></i>
+                            <div class="file-name">${file.name}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="btn-group">
+                        ${buttonsHtml}
+                    </div>
+                `;
+                track.appendChild(card);
+            });
+        }
+
+        // 轮播控制逻辑
+        const carouselState = { video: 0, file: 0 };
+
+        function moveCarousel(type, direction) {
+            const track = document.getElementById(`track-${type}`);
+            if (!track) return;
+            
+            const cards = track.children;
+            if (cards.length === 0) return;
+
+            const cardWidth = cards[0].offsetWidth; 
+            const gap = 20; 
+            const totalItemWidth = cardWidth + gap;
+            
+            const containerWidth = track.parentElement.offsetWidth;
+            const itemsVisible = Math.floor(containerWidth / totalItemWidth);
+            const maxIndex = Math.max(0, cards.length - itemsVisible);
+
+            let newIndex = carouselState[type] + direction;
+            
+            if (newIndex < 0) newIndex = 0;
+            if (newIndex > maxIndex) newIndex = maxIndex;
+
+            carouselState[type] = newIndex;
+
+            const translateX = -(newIndex * totalItemWidth);
+            track.style.transform = `translateX(${translateX}px)`;
+        }
+
+        window.addEventListener('resize', () => {
+            ['video', 'file'].forEach(type => {
+                carouselState[type] = 0;
+                const track = document.getElementById(`track-${type}`);
+                if(track) track.style.transform = `translateX(0px)`;
+            });
+        });
+
+        init();
+    </script>
+</body>
+</html>
