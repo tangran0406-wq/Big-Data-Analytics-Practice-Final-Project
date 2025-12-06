@@ -5,269 +5,834 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>大数据分析实践课程平台</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#980a0e',
+            primaryDark: '#7f1d1d',
+            secondary: '#facc15',
+            bgWarm: '#fff7f2',
+          },
+          boxShadow: {
+            'red-glow': '0 10px 40px rgba(184, 28, 36, 0.25)',
+          }
+        }
+      }
+    }
+  </script>
+
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    /* 横向弹幕 */
+    @keyframes marquee {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    .animate-marquee {
+      animation: marquee 20s linear infinite;
+    }
+
+    .marquee-wrap:hover .animate-marquee {
+      animation-play-state: paused;
+    }
+  </style>
 </head>
 
-<body>
-  <!-- 顶部导航 -->
-  <header>
-    <div class="header-container">
-      <div class="logo">
-        <img src="./assets/school_logo.png" alt="校徽" class="school-logo">
-        <div class="logo-text">
-          <h1>大数据分析实践课程平台 </h1>
-          <span>依托教育改革，AI驱动全链路智能化</span>
+<body class="min-h-screen bg-slate-50 flex flex-col text-slate-800">
+
+  <!-- ================= Header ================= -->
+  <header id="site-header"
+    class="fixed top-0 left-0 right-0 z-50 border-t-4 border-primary bg-primary text-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <!-- Logo -->
+      <div class="flex items-center space-x-4 group cursor-default">
+        <img src="./assets/school_logo.png" alt="校徽"
+          class="h-12 w-auto transition-transform duration-300 group-hover:scale-105">
+        <div class="flex flex-col leading-tight">
+          <h1 class="text-xl md:text-2xl font-bold tracking-tight text-white">
+            大数据分析实践课程平台
+          </h1>
+          <span class="text-xs md:text-sm text-red-100 font-medium tracking-wide">
+            依托教育改革，AI驱动全链路智能化
+          </span>
         </div>
       </div>
-      <nav>
-        <ul>
-          <li><a href="introduction/introdiction.html">课程介绍</a></li>
-          <li><a href="#content">课程内容</a></li>
-          <li><a href="assist/assist.html">辅助学习</a></li>
-          <li><a href="interaction/interaction.html">互动区</a></li>
 
+      <!-- Nav -->
+      <nav>
+        <ul class="flex space-x-1 md:space-x-6 text-sm md:text-base font-semibold">
+          <li>
+            <a href="introduction/introdiction.html"
+              class="px-3 py-2 rounded-lg text-red-100 hover:text-white hover:bg-red-900/40 transition-colors">
+              课程介绍
+            </a>
+          </li>
+          <li>
+            <a href="#content"
+              class="px-3 py-2 rounded-lg text-red-100 hover:text-white hover:bg-red-900/40 transition-colors">
+              课程内容
+            </a>
+          </li>
+          <li>
+            <a href="#assist"
+              class="px-3 py-2 rounded-lg text-red-100 hover:text-white hover:bg-red-900/40 transition-colors">
+              辅助学习
+            </a>
+          </li>
+          <li>
+            <a href="interaction/interaction.html"
+              class="px-3 py-2 rounded-lg text-red-100 hover:text-white hover:bg-red-900/40 transition-colors">
+              互动区
+            </a>
+          </li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <!-- 顶部大图（Hero） -->
-  <section class="hero" id="top">
 
-  </section>
-  <section id="content" class="section" aria-labelledby="h-content">
+  <main class="flex-grow">
+    <!-- ================= Hero ================= -->
+    <section id="top"
+      class="relative w-full h-[360px] md:h-[480px] mt-16 overflow-hidden rounded-b-[3rem] shadow-xl shadow-red-900/10">
 
-    <!-- 原有内容 -->
+      <!-- 背景：以照片为主，加一点红色渐变压字 -->
+      <div class="absolute inset-0">
+        <!-- 原图，正常显示 -->
+        <img src="./assets/hero.jpg" alt="大数据分析课程封面" class="w-full h-full object-cover" />
 
+        <!-- 顶部一点深红，让它和 header 有过渡感 -->
+        <div class="absolute inset-0 bg-gradient-to-b from-primaryDark/70 via-primary/20 to-transparent"></div>
 
+        <!-- 底部再加一层轻微暗角，保证白色标题能看清楚 -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+      </div>
 
-    <div class="container">
-      <main>
+      <!-- 文案内容 -->
+      <div class="absolute inset-0 flex items-center justify-center text-center px-4">
+        <div class="max-w-4xl text-white space-y-6">
+          <h2 class="text-4xl md:text-6xl font-extrabold drop-shadow-lg tracking-tight">
+            探索数据价值 <span class="text-secondary">洞见未来趋势</span>
+          </h2>
+          <div class="w-24 h-1 bg-secondary mx-auto rounded-full"></div>
+          <p class="text-lg md:text-2xl font-light opacity-95 drop-shadow-md max-w-2xl mx-auto leading-relaxed">
+            理论与实践深度融合，开启大数据分析之旅
+          </p>
+        </div>
+      </div>
+    </section>
 
-        <!-- 1) 课程内容：左轮播 + 右侧四项 -->
-        <section id="content" class="section" aria-labelledby="h-content">
+    <div class="relative -mt-20 z-10">
 
-          <!-- 左上角贴纸标题 -->
-          <div class="chip-title"><span>课程内容</span></div>
+      <!-- ================= 课程内容 ================= -->
+      <section id="content" class="py-12 md:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
+        <!-- 标题 Chip -->
+        <div class="flex items-center mb-10">
+          <div
+            class="bg-primary text-white px-8 py-2.5 rounded-r-full font-bold shadow-lg shadow-red-200 text-xl relative -left-4 sm:-left-6 lg:-left-8 tracking-wide">
+            课程内容
+          </div>
+          <div class="h-0.5 bg-red-100 flex-grow ml-4 rounded-full"></div>
+        </div>
 
-          <div class="content-frame">
-            <!-- 左：轮播 -->
-            <div class="slider" aria-label="课程图片轮播">
-              <ul class="slides">
-                <li class="slide is-active"><img src="./assets/content-1.jpg" alt="课堂剪影 1" /></li>
-                <li class="slide"><img src="./assets/content-2.jpg" alt="课堂剪影 2" /></li>
-                <li class="slide"><img src="./assets/content-3.jpg" alt="课堂剪影 3" /></li>
-                <li class="slide"><img src="./assets/content-4.jpg" alt="课堂剪影 4" /></li>
-              </ul>
-              <button class="nav prev" aria-label="上一张"><i class="ri-arrow-left-s-line"></i></button>
-              <button class="nav next" aria-label="下一张"><i class="ri-arrow-right-s-line"></i></button>
-              <div class="dots" aria-hidden="true"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 h-auto lg:h-[420px]">
+          <!-- 轮播 -->
+          <div
+            class="lg:col-span-2 relative group overflow-hidden rounded-2xl shadow-xl shadow-red-100 bg-gray-100 border-2 border-white ring-1 ring-red-50">
+            <div id="course-slider-track"
+              class="flex transition-transform duration-700 ease-in-out h-full translate-x-0">
+              <!-- slide 1 -->
+              <div class="min-w-full h-64 lg:h-full relative js-slide">
+                <img src="./assets/content-1.jpg" alt="课堂剪影 1" class="w-full h-full object-cover" />
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primaryDark/90 to-transparent p-6">
+                  <span class="text-white font-bold text-lg tracking-wide pl-2 border-l-4 border-secondary">课堂剪影
+                    1</span>
+                </div>
+              </div>
+              <!-- slide 2 -->
+              <div class="min-w-full h-64 lg:h-full relative js-slide">
+                <img src="./assets/content-2.jpg" alt="课堂剪影 2" class="w-full h-full object-cover" />
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primaryDark/90 to-transparent p-6">
+                  <span class="text-white font-bold text-lg tracking-wide pl-2 border-l-4 border-secondary">课堂剪影
+                    2</span>
+                </div>
+              </div>
+              <!-- slide 3 -->
+              <div class="min-w-full h-64 lg:h-full relative js-slide">
+                <img src="./assets/content-3.jpg" alt="课堂剪影 3" class="w-full h-full object-cover" />
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primaryDark/90 to-transparent p-6">
+                  <span class="text-white font-bold text-lg tracking-wide pl-2 border-l-4 border-secondary">课堂剪影
+                    3</span>
+                </div>
+              </div>
+              <!-- slide 4 -->
+              <div class="min-w-full h-64 lg:h-full relative js-slide">
+                <img src="./assets/content-4.jpg" alt="课堂剪影 4" class="w-full h-full object-cover" />
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primaryDark/90 to-transparent p-6">
+                  <span class="text-white font-bold text-lg tracking-wide pl-2 border-l-4 border-secondary">课堂剪影
+                    4</span>
+                </div>
+              </div>
             </div>
 
-            <!-- 右：四项侧栏 -->
-            <!-- 右：四项侧栏 -->
-            <aside class="content-sidebar" aria-label="课程内容栏目">
-              
-              <!-- 链接到 ppt 文件夹下的 index.html -->
-              <a class="side-item" href="PPT/index.html">
-                <i class="ri-slideshow-3-line" aria-hidden="true"></i> 课程 PPT
-              </a>
+            <!-- 控制按钮 -->
+            <button id="btn-slide-prev"
+              class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-primary/80 backdrop-blur-sm text-white p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all transform hover:scale-110"
+              aria-label="上一张">
+              <i class="ri-arrow-left-s-line text-2xl"></i>
+            </button>
+            <button id="btn-slide-next"
+              class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-primary/80 backdrop-blur-sm text-white p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all transform hover:scale-110"
+              aria-label="下一张">
+              <i class="ri-arrow-right-s-line text-2xl"></i>
+            </button>
 
-              <!-- 链接到 video 文件夹下的 index.html -->
-              <a class="side-item" href="course/player.html?id=vid001">
-                <i class="ri-video-line" aria-hidden="true"></i> 课程视频
-              </a>
-
-              <!-- 链接到 ebook 文件夹下的 index.html -->
-              <a class="side-item" href="ebooks/index.html">
-                <i class="ri-book-2-line" aria-hidden="true"></i> 电子书
-              </a>
-
-              <!-- 链接到 experience 文件夹下的 index.html -->
-              <a class="side-item" href="shareExp/redirect.html">
-                <i class="ri-user-smile-line" aria-hidden="true"></i> 经验分享
-              </a>
-
-            </aside>
+            <!-- dots -->
+            <div class="absolute bottom-6 right-6 flex space-x-2">
+              <button class="js-slide-dot h-1.5 rounded-full bg-secondary w-8"></button>
+              <button class="js-slide-dot h-1.5 rounded-full bg-white/60 w-4"></button>
+              <button class="js-slide-dot h-1.5 rounded-full bg-white/60 w-4"></button>
+              <button class="js-slide-dot h-1.5 rounded-full bg-white/60 w-4"></button>
+            </div>
           </div>
-        </section>
 
-        <!-- 2) 辅助学习：只保留“参考论文”一个框，下面直接论文图片+标题网格 -->
-        <section id="assist" class="section" aria-labelledby="h-assist">
+          <!-- 侧栏导航 -->
+          <aside class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+            <!-- PPT -->
+            <a href="PPT/index.html"
+              class="flex items-center p-5 rounded-xl shadow-sm hover:shadow-red-glow transition-all duration-300 transform hover:-translate-y-1 border border-red-50 group bg-white relative overflow-hidden">
+              <div
+                class="absolute inset-0 bg-red-50 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out -z-0">
+              </div>
+              <div
+                class="w-14 h-14 rounded-lg bg-red-100 text-primary flex items-center justify-center text-2xl mr-4 group-hover:bg-white group-hover:scale-110 transition-all z-10 shadow-inner">
+                <i class="ri-slideshow-3-line"></i>
+              </div>
+              <div class="z-10 flex-grow">
+                <h3 class="text-lg font-bold text-gray-800 group-hover:text-primaryDark transition-colors">课程 PPT</h3>
+                <p class="text-xs text-gray-500 group-hover:text-red-700/70">教学课件下载</p>
+              </div>
+              <div
+                class="z-10 w-8 h-8 rounded-full bg-white text-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0 shadow-sm">
+                <i class="ri-arrow-right-line"></i>
+              </div>
+            </a>
 
-          <!-- 左上角贴纸标题 -->
-          <div class="chip-title"><span>辅助学习</span></div>
+            <!-- 视频 -->
+            <a href="course/player.html?id=vid001"
+              class="flex items-center p-5 rounded-xl shadow-sm hover:shadow-red-glow transition-all duration-300 transform hover:-translate-y-1 border border-red-50 group bg-white relative overflow-hidden">
+              <div
+                class="absolute inset-0 bg-red-50 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out -z-0">
+              </div>
+              <div
+                class="w-14 h-14 rounded-lg bg-red-100 text-primary flex items-center justify-center text-2xl mr-4 group-hover:bg-white group-hover:scale-110 transition-all z-10 shadow-inner">
+                <i class="ri-video-line"></i>
+              </div>
+              <div class="z-10 flex-grow">
+                <h3 class="text-lg font-bold text-gray-800 group-hover:text-primaryDark transition-colors">课程视频</h3>
+                <p class="text-xs text-gray-500 group-hover:text-red-700/70">在线视频观看</p>
+              </div>
+              <div
+                class="z-10 w-8 h-8 rounded-full bg-white text-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0 shadow-sm">
+                <i class="ri-arrow-right-line"></i>
+              </div>
+            </a>
 
-          <div class="card">
-            <div class="body">
-              <a href="assist/assist.html#reference-papers">
-                <h3 class="section-title">
-                  <i class="ri-article-line" aria-hidden="true"></i> 参考论文       
-                </h3>
-              </a>
-              <div class="paper-grid">
-                <a class="paper" href="./papers/paper-01.pdf" target="_blank" rel="noopener">
-                  <img src="./assets/paper-01.png" alt="论文封面 1" />
-                  <div class="title">A Recursive Subdivision Technique for Sampling Multi-class Scatterplots</div>
-                </a>
+            <!-- 电子书 -->
+            <a href="ebooks/index.html"
+              class="flex items-center p-5 rounded-xl shadow-sm hover:shadow-red-glow transition-all duration-300 transform hover:-translate-y-1 border border-red-50 group bg-white relative overflow-hidden">
+              <div
+                class="absolute inset-0 bg-red-50 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out -z-0">
+              </div>
+              <div
+                class="w-14 h-14 rounded-lg bg-red-100 text-primary flex items-center justify-center text-2xl mr-4 group-hover:bg-white group-hover:scale-110 transition-all z-10 shadow-inner">
+                <i class="ri-book-2-line"></i>
+              </div>
+              <div class="z-10 flex-grow">
+                <h3 class="text-lg font-bold text-gray-800 group-hover:text-primaryDark transition-colors">电子书</h3>
+                <p class="text-xs text-gray-500 group-hover:text-red-700/70">配套教材阅读</p>
+              </div>
+              <div
+                class="z-10 w-8 h-8 rounded-full bg-white text-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0 shadow-sm">
+                <i class="ri-arrow-right-line"></i>
+              </div>
+            </a>
 
-                <a class="paper" href="./papers/paper-02.pdf" target="_blank" rel="noopener">
-                  <img src="./assets/paper-02.png" alt="论文封面 2" />
-                  <div class="title">Crowdsourcing Graphical Perception: Using Mechanical Turk to Assess Visualization
-                    Design</div>
-                </a>
+            <!-- 经验分享 -->
+            <a href="shareExp/redirect.html"
+              class="flex items-center p-5 rounded-xl shadow-sm hover:shadow-red-glow transition-all duration-300 transform hover:-translate-y-1 border border-red-50 group bg-white relative overflow-hidden">
+              <div
+                class="absolute inset-0 bg-red-50 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out -z-0">
+              </div>
+              <div
+                class="w-14 h-14 rounded-lg bg-red-100 text-primary flex items-center justify-center text-2xl mr-4 group-hover:bg-white group-hover:scale-110 transition-all z-10 shadow-inner">
+                <i class="ri-user-smile-line"></i>
+              </div>
+              <div class="z-10 flex-grow">
+                <h3 class="text-lg font-bold text-gray-800 group-hover:text-primaryDark transition-colors">经验分享</h3>
+                <p class="text-xs text-gray-500 group-hover:text-red-700/70">往届学生心得</p>
+              </div>
+              <div
+                class="z-10 w-8 h-8 rounded-full bg-white text-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0 shadow-sm">
+                <i class="ri-arrow-right-line"></i>
+              </div>
+            </a>
+          </aside>
+        </div>
+      </section>
 
-                <a class="paper" href="./papers/paper-03.pdf" target="_blank" rel="noopener">
-                  <img src="./assets/paper-03.png" alt="论文封面 3" />
-                  <div class="title">Prompting for Discovery: Flexible Sense-Making for AI Art-Making with DreamSheets
+      <!-- ================= 辅助学习 ================= -->
+      <section id="assist"
+        class="py-12 bg-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 rounded-3xl shadow-sm border border-red-50 mb-12 scroll-mt-24">
+        <!-- 标题 -->
+        <div class="flex items-center mb-10">
+          <div
+            class="bg-primaryDark text-white px-8 py-2.5 rounded-r-full font-bold shadow-lg shadow-red-200 text-xl relative -left-4 sm:-left-6 lg:-left-8">
+            辅助学习
+          </div>
+          <div class="h-0.5 bg-red-100 flex-grow ml-4 rounded-full"></div>
+        </div>
+
+        <div class="space-y-16">
+          <!-- 参考论文 -->
+          <div>
+            <a href="assist/assist.html#reference-papers"
+              class="inline-flex items-center text-2xl font-bold text-gray-800 mb-6 hover:text-primary transition-colors group">
+              <span class="w-2 h-8 bg-primary mr-3 rounded-full"></span>
+              <i class="ri-article-line mr-2 text-primary"></i>
+              参考论文
+              <i
+                class="ri-arrow-right-s-line opacity-0 group-hover:opacity-100 transition-opacity ml-2 text-primary"></i>
+            </a>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <!-- 每篇论文 -->
+              <a href="./papers/paper-01.pdf" target="_blank" rel="noopener noreferrer"
+                class="group block bg-bgWarm rounded-xl overflow-hidden shadow-sm hover:shadow-red-glow transition-all duration-300 transform hover:-translate-y-2 border border-red-50">
+                <div class="h-48 overflow-hidden bg-gray-200 relative">
+                  <img src="./assets/paper-01.png" alt="A Recursive Subdivision Technique"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <div class="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors"></div>
+                </div>
+                <div class="p-4 relative">
+                  <div
+                    class="absolute top-0 right-4 transform -translate-y-1/2 bg-white rounded-full p-1.5 shadow-md text-primary opacity-0 group-hover:opacity-100 transition-all">
+                    <i class="ri-download-line"></i>
                   </div>
-                </a>
+                  <h4
+                    class="text-sm font-semibold text-gray-800 line-clamp-2 group-hover:text-primary transition-colors">
+                    A Recursive Subdivision Technique for Sampling Multi-class Scatterplots
+                  </h4>
+                  <div
+                    class="mt-3 text-xs text-red-500 font-medium flex items-center bg-red-50 w-fit px-2 py-1 rounded">
+                    <i class="ri-file-pdf-line mr-1"></i> PDF 下载
+                  </div>
+                </div>
+              </a>
 
-                <a class="paper" href="./papers/paper-04.pdf" target="_blank" rel="noopener">
-                  <img src="./assets/paper-04.png" alt="论文封面 4" />
-                  <div class="title">Table-GPT: Table Fine-tuned GPT for Diverse Table Tasks</div>
-                </a>
-              </div>
+              <a href="./papers/paper-02.pdf" target="_blank" rel="noopener noreferrer"
+                class="group block bg-bgWarm rounded-xl overflow-hidden shadow-sm hover:shadow-red-glow transition-all duration-300 transform hover:-translate-y-2 border border-red-50">
+                <div class="h-48 overflow-hidden bg-gray-200 relative">
+                  <img src="./assets/paper-02.png" alt="Crowdsourcing Graphical Perception"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <div class="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors"></div>
+                </div>
+                <div class="p-4 relative">
+                  <div
+                    class="absolute top-0 right-4 transform -translate-y-1/2 bg-white rounded-full p-1.5 shadow-md text-primary opacity-0 group-hover:opacity-100 transition-all">
+                    <i class="ri-download-line"></i>
+                  </div>
+                  <h4
+                    class="text-sm font-semibold text-gray-800 line-clamp-2 group-hover:text-primary transition-colors">
+                    Crowdsourcing Graphical Perception: Using Mechanical Turk
+                  </h4>
+                  <div
+                    class="mt-3 text-xs text-red-500 font-medium flex items-center bg-red-50 w-fit px-2 py-1 rounded">
+                    <i class="ri-file-pdf-line mr-1"></i> PDF 下载
+                  </div>
+                </div>
+              </a>
+
+              <a href="./papers/paper-03.pdf" target="_blank" rel="noopener noreferrer"
+                class="group block bg-bgWarm rounded-xl overflow-hidden shadow-sm hover:shadow-red-glow transition-all duration-300 transform hover:-translate-y-2 border border-red-50">
+                <div class="h-48 overflow-hidden bg-gray-200 relative">
+                  <img src="./assets/paper-03.png" alt="Prompting for Discovery"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <div class="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors"></div>
+                </div>
+                <div class="p-4 relative">
+                  <div
+                    class="absolute top-0 right-4 transform -translate-y-1/2 bg-white rounded-full p-1.5 shadow-md text-primary opacity-0 group-hover:opacity-100 transition-all">
+                    <i class="ri-download-line"></i>
+                  </div>
+                  <h4
+                    class="text-sm font-semibold text-gray-800 line-clamp-2 group-hover:text-primary transition-colors">
+                    Prompting for Discovery: Flexible Sense-Making for AI Art-Making
+                  </h4>
+                  <div
+                    class="mt-3 text-xs text-red-500 font-medium flex items-center bg-red-50 w-fit px-2 py-1 rounded">
+                    <i class="ri-file-pdf-line mr-1"></i> PDF 下载
+                  </div>
+                </div>
+              </a>
+
+              <a href="./papers/paper-04.pdf" target="_blank" rel="noopener noreferrer"
+                class="group block bg-bgWarm rounded-xl overflow-hidden shadow-sm hover:shadow-red-glow transition-all duration-300 transform hover:-translate-y-2 border border-red-50">
+                <div class="h-48 overflow-hidden bg-gray-200 relative">
+                  <img src="./assets/paper-04.png" alt="Table-GPT"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <div class="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors"></div>
+                </div>
+                <div class="p-4 relative">
+                  <div
+                    class="absolute top-0 right-4 transform -translate-y-1/2 bg-white rounded-full p-1.5 shadow-md text-primary opacity-0 group-hover:opacity-100 transition-all">
+                    <i class="ri-download-line"></i>
+                  </div>
+                  <h4
+                    class="text-sm font-semibold text-gray-800 line-clamp-2 group-hover:text-primary transition-colors">
+                    Table-GPT: Table Fine-tuned GPT for Diverse Table Tasks
+                  </h4>
+                  <div
+                    class="mt-3 text-xs text-red-500 font-medium flex items-center bg-red-50 w-fit px-2 py-1 rounded">
+                    <i class="ri-file-pdf-line mr-1"></i> PDF 下载
+                  </div>
+                </div>
+              </a>
             </div>
           </div>
 
-          <!-- 教学视频（整卡） -->
-          <div class="card" id="teach-videos">
-            <div class="body">
-              <a href="assist/assist.html#teaching-videos">
-                <h3 class="section-title">
-                  <i class="ri-movie-line" aria-hidden="true"></i> 教学视频
-                </h3>
-              </a>
+          <!-- 教学视频 -->
+          <div id="teach-videos">
+            <a href="assist/assist.html#teaching-videos"
+              class="inline-flex items-center text-2xl font-bold text-gray-800 mb-6 hover:text-primary transition-colors group">
+              <span class="w-2 h-8 bg-primary mr-3 rounded-full"></span>
+              <i class="ri-movie-line mr-2 text-primary"></i>
+              教学视频
+              <i
+                class="ri-arrow-right-s-line opacity-0 group-hover:opacity-100 transition-opacity ml-2 text-primary"></i>
+            </a>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <figure class="bg-black rounded-xl overflow-hidden shadow-lg group relative border-b-4 border-primary">
+                <video controls preload="metadata" src="./videos/20240914 孙老师费老师介绍项目.mp4"
+                  class="w-full h-48 object-cover opacity-90 group-hover:opacity-100 transition-opacity"></video>
+                <div class="absolute top-2 right-2 bg-red-600 text-white text-xs px-2 py-1 rounded opacity-80">
+                  <i class="ri-play-circle-line mr-1"></i> Video
+                </div>
+                <figcaption class="p-4 bg-gray-900 text-white text-center text-sm font-medium">
+                  孙老师 &amp; 费老师：项目介绍
+                </figcaption>
+              </figure>
 
-              <div class="video-grid">
-                <figure class="video-card">
-                  <video controls preload="metadata" src="./videos/20240914 孙老师费老师介绍项目.mp4"></video>
-                  <figcaption>孙老师 & 费老师：项目介绍</figcaption>
-                </figure>
+              <figure class="bg-black rounded-xl overflow-hidden shadow-lg group relative border-b-4 border-primary">
+                <video controls preload="metadata" src="./videos/项目经验分析.mp4"
+                  class="w-full h-48 object-cover opacity-90 group-hover:opacity-100 transition-opacity"></video>
+                <div class="absolute top-2 right-2 bg-red-600 text-white text-xs px-2 py-1 rounded opacity-80">
+                  <i class="ri-play-circle-line mr-1"></i> Video
+                </div>
+                <figcaption class="p-4 bg-gray-900 text-white text-center text-sm font-medium">
+                  项目经验分析
+                </figcaption>
+              </figure>
 
-                <figure class="video-card">
-                  <video controls preload="metadata" src="./videos/项目经验分析.mp4"></video>
-                  <figcaption>项目经验分析</figcaption>
-                </figure>
-
-                <figure class="video-card">
-                  <video controls preload="metadata" src="./videos/canis讲解-裁剪版.mp4"></video>
-                  <figcaption>Canis 讲解（裁剪版）</figcaption>
-                </figure>
-              </div>
-            </div>
-          </div>
-
-          <!-- 思维导图（整卡） -->
-          <div class="card">
-            <div class="body">
-              <a href="assist/assist.html#mind-maps">
-                <h3 class="section-title">
-                  <i class="ri-mind-map" aria-hidden="true"></i> 思维导图
-                </h3>
-              </a>
-              <!-- 显示图片 + 提供下载 -->
-              <figure class="mindmap">
-                <img src="./assets/大数据分析-思维导图.png" alt="大数据分析 · 思维导图" loading="lazy" />
-                <figcaption style="margin-top:8px;">
-                  <a href="./assets/大数据分析-思维导图.png" download></a>
+              <figure class="bg-black rounded-xl overflow-hidden shadow-lg group relative border-b-4 border-primary">
+                <video controls preload="metadata" src="./videos/canis讲解-裁剪版.mp4"
+                  class="w-full h-48 object-cover opacity-90 group-hover:opacity-100 transition-opacity"></video>
+                <div class="absolute top-2 right-2 bg-red-600 text-white text-xs px-2 py-1 rounded opacity-80">
+                  <i class="ri-play-circle-line mr-1"></i> Video
+                </div>
+                <figcaption class="p-4 bg-gray-900 text-white text-center text-sm font-medium">
+                  Canis 讲解（裁剪版）
                 </figcaption>
               </figure>
             </div>
           </div>
 
-
-          <!-- 配置教程（整卡） -->
-          <div class="card">
-            <div class="body">
-              <a href="assist/assist.html#tutorials">
-                <h3 class="section-title">
-                  <i class="ri-tools-line" aria-hidden="true"></i> 配置教程
-                </h3>
+          <!-- 思维导图 + 配置教程 -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Mind maps -->
+            <div>
+              <a href="assist/assist.html#mind-maps"
+                class="inline-flex items-center text-2xl font-bold text-gray-800 mb-6 hover:text-primary transition-colors group">
+                <span class="w-2 h-8 bg-primary mr-3 rounded-full"></span>
+                <i class="ri-mind-map-line mr-2 text-primary"></i>
+                思维导图
               </a>
-              <div class="res-placeholder">在这里放软件安装与环境配置教程</div>
+              <div class="grid grid-cols-2 gap-4">
+                <!-- 占位 4 个 -->
+                <a href="assist/assist.html#mind-maps"
+                  class="block p-4 bg-red-50 rounded-xl border border-red-100 hover:border-primary/30 hover:shadow-md transition-all group/item text-center">
+                  <div
+                    class="w-10 h-10 mx-auto bg-white rounded-full flex items-center justify-center text-primary mb-2 shadow-sm group-hover/item:scale-110 transition-transform">
+                    <i class="ri-node-tree"></i>
+                  </div>
+                  <div class="text-sm font-semibold text-gray-700 group-hover/item:text-primary">思维导图 1</div>
+                </a>
+                <a href="assist/assist.html#mind-maps"
+                  class="block p-4 bg-red-50 rounded-xl border border-red-100 hover:border-primary/30 hover:shadow-md transition-all group/item text-center">
+                  <div
+                    class="w-10 h-10 mx-auto bg-white rounded-full flex items-center justify-center text-primary mb-2 shadow-sm group-hover/item:scale-110 transition-transform">
+                    <i class="ri-node-tree"></i>
+                  </div>
+                  <div class="text-sm font-semibold text-gray-700 group-hover/item:text-primary">思维导图 2</div>
+                </a>
+                <a href="assist/assist.html#mind-maps"
+                  class="block p-4 bg-red-50 rounded-xl border border-red-100 hover:border-primary/30 hover:shadow-md transition-all group/item text-center">
+                  <div
+                    class="w-10 h-10 mx-auto bg-white rounded-full flex items-center justify-center text-primary mb-2 shadow-sm group-hover/item:scale-110 transition-transform">
+                    <i class="ri-node-tree"></i>
+                  </div>
+                  <div class="text-sm font-semibold text-gray-700 group-hover/item:text-primary">思维导图 3</div>
+                </a>
+                <a href="assist/assist.html#mind-maps"
+                  class="block p-4 bg-red-50 rounded-xl border border-red-100 hover:border-primary/30 hover:shadow-md transition-all group/item text-center">
+                  <div
+                    class="w-10 h-10 mx-auto bg-white rounded-full flex items-center justify-center text-primary mb-2 shadow-sm group-hover/item:scale-110 transition-transform">
+                    <i class="ri-node-tree"></i>
+                  </div>
+                  <div class="text-sm font-semibold text-gray-700 group-hover/item:text-primary">思维导图 4</div>
+                </a>
+              </div>
+            </div>
+
+            <!-- 配置教程 -->
+            <div>
+              <a href="assist/assist.html#tutorials"
+                class="inline-flex items-center text-2xl font-bold text-gray-800 mb-6 hover:text-primary transition-colors group">
+                <span class="w-2 h-8 bg-primary mr-3 rounded-full"></span>
+                <i class="ri-tools-line mr-2 text-primary"></i>
+                配置教程
+              </a>
+              <div class="space-y-4">
+                <a href="assist/assist.html#open-env"
+                  class="flex items-start p-5 bg-white border border-gray-200 rounded-xl hover:border-primary/50 hover:shadow-red-glow transition-all group">
+                  <div
+                    class="flex-shrink-0 w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center text-primary text-xl mr-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                    <i class="ri-server-line"></i>
+                  </div>
+                  <div>
+                    <h4 class="text-base font-bold text-gray-800 group-hover:text-primary mb-1">开放环境配置</h4>
+                    <p class="text-sm text-gray-500 line-clamp-2">
+                      统一说明课程用到的开放环境 / 实验平台的申请方式与使用步骤。
+                    </p>
+                    <span class="text-xs text-primary font-medium mt-2 inline-block">查看说明 →</span>
+                  </div>
+                </a>
+
+                <a href="assist/assist.html#tool-usage"
+                  class="flex items-start p-5 bg-white border border-gray-200 rounded-xl hover:border-primary/50 hover:shadow-red-glow transition-all group">
+                  <div
+                    class="flex-shrink-0 w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center text-primary text-xl mr-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                    <i class="ri-hammer-line"></i>
+                  </div>
+                  <div>
+                    <h4 class="text-base font-bold text-gray-800 group-hover:text-primary mb-1">工具使用教程</h4>
+                    <p class="text-sm text-gray-500 line-clamp-2">
+                      Python / Node.js / 可视化库 / Git 等工具的安装与基础使用方法。
+                    </p>
+                    <span class="text-xs text-primary font-medium mt-2 inline-block">查看教程 →</span>
+                  </div>
+                </a>
+              </div>
             </div>
           </div>
 
-        </section>
-
-<!-- 3) 互动区 -->
-        <section id="community" class="section" aria-labelledby="h-community" 
-         onclick="window.location.href='interaction/interaction.html'">
-
-  <!-- 左上角贴纸标题 -->
-  <div class="chip-title"><span>互动区</span></div>
-
-  <div class="grid cols-3">
-    <!-- 课程评价 -->
-    <div class="card">
-      <div class="body">
-        <h3>课程评价</h3>
-        <div id="rating" class="stars" aria-label="课程评分" style="font-size:0">
-          <i class="ri-star-line" data-star="1" aria-hidden="true"></i>
-          <i class="ri-star-line" data-star="2" aria-hidden="true"></i>
-          <i class="ri-star-line" data-star="3" aria-hidden="true"></i>
-          <i class="ri-star-line" data-star="4" aria-hidden="true"></i>
-          <i class="ri-star-line" data-star="5" aria-hidden="true"></i>
         </div>
-        <textarea class="input" id="reviewText" rows="3" placeholder="写下你的收获或建议…"></textarea>
-        <div class="actions">
-          <button id="saveReview" class="btn"><i class="ri-save-2-line"></i> 提交评价（本地保存）</button>
+      </section>
+
+      <!-- ================= 互动区 ================= -->
+      <section id="community" class="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20 scroll-mt-24">
+        <div class="flex items-center mb-10">
+          <div
+            class="bg-primary text-white px-8 py-2.5 rounded-r-full font-bold shadow-lg shadow-red-200 text-xl relative -left-4 sm:-left-6 lg:-left-8">
+            互动区
+          </div>
+          <div class="h-0.5 bg-red-100 flex-grow ml-4 rounded-full"></div>
         </div>
-        <div id="reviews" class="filelist"></div>
+
+        <div class="bg-white rounded-3xl shadow-xl shadow-red-100/50 border border-red-100 overflow-hidden">
+          <div class="p-8 bg-gradient-to-br from-red-50/80 via-white to-orange-50/50">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10">
+              <div>
+                <h3 class="text-2xl md:text-3xl font-bold text-primaryDark mb-2 flex items-center">
+                  <i class="ri-discuss-line mr-3"></i>
+                  课程评价 · 实验难点 · 学习测评
+                </h3>
+                <p class="text-gray-600 pl-1">
+                  看看学长学姐怎么说，带着问题和测评一起刷～
+                </p>
+              </div>
+              <a href="interaction/interaction.html#reviews"
+                class="mt-6 md:mt-0 px-8 py-3 bg-primary text-white rounded-full font-semibold shadow-lg shadow-red-500/30 hover:shadow-red-500/50 hover:bg-primaryDark transition-all transform hover:-translate-y-1 flex items-center">
+                进入完整互动区 <i class="ri-arrow-right-line ml-2"></i>
+              </a>
+            </div>
+
+            <!-- 弹幕评价 -->
+            <a href="interaction/interaction.html#reviews"
+              class="block mb-10 relative overflow-hidden h-20 bg-white rounded-2xl border-2 border-red-50 group hover:border-primary/30 transition-colors shadow-inner marquee-wrap"
+              aria-label="课程评价弹幕区">
+              <div class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white to-transparent z-10"></div>
+              <div class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white to-transparent z-10"></div>
+
+              <div class="flex items-center whitespace-nowrap h-full animate-marquee">
+                <!-- 一遍 -->
+                <div
+                  class="inline-flex items-center mx-4 px-5 py-2.5 bg-red-50 rounded-full shadow-sm border border-red-100 text-sm text-gray-700">
+                  <span class="font-bold text-primary mr-2">“</span>
+                  <span class="font-medium mr-2">期末大作业很锻炼工程能力！</span>
+                  <span class="text-xs text-gray-500 border-l border-gray-300 pl-2">2022级 张同学</span>
+                </div>
+                <div
+                  class="inline-flex items-center mx-4 px-5 py-2.5 bg-red-50 rounded-full shadow-sm border border-red-100 text-sm text-gray-700">
+                  <span class="font-bold text-primary mr-2">“</span>
+                  <span class="font-medium mr-2">参考论文+思维导图真的救命。</span>
+                  <span class="text-xs text-gray-500 border-l border-gray-300 pl-2">2021级 李同学</span>
+                </div>
+                <div
+                  class="inline-flex items-center mx-4 px-5 py-2.5 bg-red-50 rounded-full shadow-sm border border-red-100 text-sm text-gray-700">
+                  <span class="font-bold text-primary mr-2">“</span>
+                  <span class="font-medium mr-2">实验有点难，但助教很耐心。</span>
+                  <span class="text-xs text-gray-500 border-l border-gray-300 pl-2">2022级 王同学</span>
+                </div>
+                <div
+                  class="inline-flex items-center mx-4 px-5 py-2.5 bg-red-50 rounded-full shadow-sm border border-red-100 text-sm text-gray-700">
+                  <span class="font-bold text-primary mr-2">“</span>
+                  <span class="font-medium mr-2">建议提早开组队，不要拖到最后一周。</span>
+                  <span class="text-xs text-gray-500 border-l border-gray-300 pl-2">2021级 陈同学</span>
+                </div>
+                <div
+                  class="inline-flex items-center mx-4 px-5 py-2.5 bg-red-50 rounded-full shadow-sm border border-red-100 text-sm text-gray-700">
+                  <span class="font-bold text-primary mr-2">“</span>
+                  <span class="font-medium mr-2">AI 测评挺好玩，可以当复习 checklist。</span>
+                  <span class="text-xs text-gray-500 border-l border-gray-300 pl-2">2023级 赵同学</span>
+                </div>
+                <!-- 再重复一遍，做无缝循环 -->
+                <div
+                  class="inline-flex items-center mx-4 px-5 py-2.5 bg-red-50 rounded-full shadow-sm border border-red-100 text-sm text-gray-700">
+                  <span class="font-bold text-primary mr-2">“</span>
+                  <span class="font-medium mr-2">期末大作业很锻炼工程能力！</span>
+                  <span class="text-xs text-gray-500 border-l border-gray-300 pl-2">2022级 张同学</span>
+                </div>
+                <div
+                  class="inline-flex items-center mx-4 px-5 py-2.5 bg-red-50 rounded-full shadow-sm border border-red-100 text-sm text-gray-700">
+                  <span class="font-bold text-primary mr-2">“</span>
+                  <span class="font-medium mr-2">参考论文+思维导图真的救命。</span>
+                  <span class="text-xs text-gray-500 border-l border-gray-300 pl-2">2021级 李同学</span>
+                </div>
+                <div
+                  class="inline-flex items-center mx-4 px-5 py-2.5 bg-red-50 rounded-full shadow-sm border border-red-100 text-sm text-gray-700">
+                  <span class="font-bold text-primary mr-2">“</span>
+                  <span class="font-medium mr-2">实验有点难，但助教很耐心。</span>
+                  <span class="text-xs text-gray-500 border-l border-gray-300 pl-2">2022级 王同学</span>
+                </div>
+                <div
+                  class="inline-flex items-center mx-4 px-5 py-2.5 bg-red-50 rounded-full shadow-sm border border-red-100 text-sm text-gray-700">
+                  <span class="font-bold text-primary mr-2">“</span>
+                  <span class="font-medium mr-2">建议提早开组队，不要拖到最后一周。</span>
+                  <span class="text-xs text-gray-500 border-l border-gray-300 pl-2">2021级 陈同学</span>
+                </div>
+                <div
+                  class="inline-flex items-center mx-4 px-5 py-2.5 bg-red-50 rounded-full shadow-sm border border-red-100 text-sm text-gray-700">
+                  <span class="font-bold text-primary mr-2">“</span>
+                  <span class="font-medium mr-2">AI 测评挺好玩，可以当复习 checklist。</span>
+                  <span class="text-xs text-gray-500 border-l border-gray-300 pl-2">2023级 赵同学</span>
+                </div>
+              </div>
+            </a>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <a href="interaction/interaction.html#questions"
+                class="block p-8 bg-white rounded-2xl shadow-sm border border-red-100 hover:shadow-red-glow hover:border-primary/30 transition-all group relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                  <i class="ri-question-answer-fill text-8xl text-primary"></i>
+                </div>
+                <div class="flex items-center mb-4 relative z-10">
+                  <div
+                    class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-red-600 text-white flex items-center justify-center text-2xl mr-4 group-hover:scale-110 transition-transform shadow-md">
+                    <i class="ri-question-answer-line"></i>
+                  </div>
+                  <h4 class="text-xl font-bold text-gray-900 group-hover:text-primary transition-colors">
+                    实验难点提问
+                  </h4>
+                </div>
+                <p class="text-gray-500 mb-6 h-12 relative z-10">
+                  环境配置、报错信息、模型参数……都可以在这里集中记录 &amp; 讨论。
+                </p>
+                <div
+                  class="text-primary font-bold flex items-center group-hover:translate-x-2 transition-transform relative z-10">
+                  进入问题讨论区 <i class="ri-arrow-right-line ml-2"></i>
+                </div>
+              </a>
+
+              <a href="interaction/interaction.html#assessment"
+                class="block p-8 bg-white rounded-2xl shadow-sm border border-red-100 hover:shadow-red-glow hover:border-primary/30 transition-all group relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                  <i class="ri-file-chart-fill text-8xl text-secondary"></i>
+                </div>
+                <div class="flex items-center mb-4 relative z-10">
+                  <div
+                    class="w-12 h-12 rounded-xl bg-gradient-to-br from-secondary to-amber-600 text-white flex items-center justify-center text-2xl mr-4 group-hover:scale-110 transition-transform shadow-md">
+                    <i class="ri-bar-chart-2-line"></i>
+                  </div>
+                  <h4 class="text-xl font-bold text-gray-900 group-hover:text-secondary transition-colors">
+                    学习测评
+                  </h4>
+                </div>
+                <p class="text-gray-500 mb-6 h-12 relative z-10">
+                  30 题小测，一键生成个人知识画像与复习建议，期末查缺补漏好助手。
+                </p>
+                <div
+                  class="text-secondary font-bold flex items-center group-hover:translate-x-2 transition-transform relative z-10">
+                  进入学习评测 <i class="ri-arrow-right-line ml-2"></i>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ================= Footer ================= -->
+  <footer class="bg-primaryDark text-white py-10 mt-auto border-t border-red-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+      <div class="flex flex-col mb-6 md:mb-0">
+        <p class="text-lg font-bold">大数据分析实践课程平台</p>
+        <p class="text-sm text-red-200 mt-2">
+          © 2024 All rights reserved. 依托教育改革，AI驱动全链路智能化
+        </p>
+      </div>
+
+      <div class="flex items-center space-x-6">
+        <a href="#" class="text-red-200 hover:text-white transition-colors"><i class="ri-wechat-fill text-xl"></i></a>
+        <a href="#" class="text-red-200 hover:text-white transition-colors"><i class="ri-mail-fill text-xl"></i></a>
+
+        <a href="#top" id="btn-back-top"
+          class="inline-flex items-center px-5 py-2 bg-red-800 hover:bg-red-700 text-white rounded-full transition-all text-sm font-medium shadow-md border border-red-700">
+          <i class="ri-arrow-up-line mr-2"></i>
+          返回顶部
+        </a>
       </div>
     </div>
+  </footer>
 
-    <!-- 知识点、实验难点提问 -->
-    <div class="card">
-      <div class="body">
-        <h3>知识点、实验难点提问</h3>
-        <input id="qaInput" class="input" placeholder="例如：第 3 次实验环境变量如何配置？" />
-        <div class="actions">
-          <button id="addQuestion" class="btn gray"><i class="ri-question-line"></i> 发布提问</button>
-        </div>
-        <div id="qaList" class="filelist"></div>
-      </div>
-    </div>
+  <!-- ================= Scripts ================= -->
+  <script>
+    // Header 滚动效果
 
-    <!-- 上传作业 -->
-    <div class="card">
-      <div class="body">
-        <h3>上传作业 / 实验 · 同学交流</h3>
-        <div id="drop" class="uploader">
-          拖放文件到此，或
-          <label for="fileInput" class="btn" style="margin-left:8px;cursor:pointer;">选择文件</label>
-        </div>
-        <input type="file" id="fileInput" multiple style="display:none" />
-        <div id="fileList" class="filelist"></div>
-      </div>
-    </div>
-  </div>
-</section>
 
-      </main>
-    </div>
 
-    <footer>
-      <div class="container foot">
-        <a href="#top" class="btn gray"><i class="ri-arrow-up-line"></i> 返回顶部</a>
-      </div>
-    </footer>
 
-    <script src="app.js"></script>
-    <script src="https://o.alicdn.com/appflow/chatbot/v1/AppflowChatSDK.js"></script>
-<script>
-    window.APPFLOW_CHAT_SDK.init({
-    integrateConfig: {
-        integrateId: 'cit-0bfdb25b1d5e45c3898c',
-        domain: {
-            requestDomain: 'https://1420546017612097.appflow.aliyunnest.com'
+
+    // 返回顶部按钮平滑滚动（兼容一些旧浏览器）
+    document.getElementById('btn-back-top').addEventListener('click', function (e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // 轮播图逻辑
+    (function () {
+      const track = document.getElementById('course-slider-track');
+      const slides = document.querySelectorAll('.js-slide');
+      const dots = document.querySelectorAll('.js-slide-dot');
+      const prevBtn = document.getElementById('btn-slide-prev');
+      const nextBtn = document.getElementById('btn-slide-next');
+
+      let current = 0;
+      const total = slides.length;
+      let timer = null;
+
+      function update() {
+        track.style.transform = 'translateX(-' + (current * 100) + '%)';
+        dots.forEach((dot, idx) => {
+          if (idx === current) {
+            dot.classList.remove('bg-white/60', 'w-4');
+            dot.classList.add('bg-secondary', 'w-8');
+          } else {
+            dot.classList.remove('bg-secondary', 'w-8');
+            dot.classList.add('bg-white/60', 'w-4');
+          }
+        });
+      }
+
+      function next() {
+        current = (current + 1) % total;
+        update();
+      }
+      function prev() {
+        current = (current - 1 + total) % total;
+        update();
+      }
+
+      nextBtn.addEventListener('click', () => {
+        next();
+        restart();
+      });
+      prevBtn.addEventListener('click', () => {
+        prev();
+        restart();
+      });
+      dots.forEach((dot, idx) => {
+        dot.addEventListener('click', () => {
+          current = idx;
+          update();
+          restart();
+        });
+      });
+
+      function start() {
+        timer = setInterval(next, 5000);
+      }
+      function restart() {
+        clearInterval(timer);
+        start();
+      }
+
+      update();
+      start();
+    })();
+
+    // Chatbot 注入
+    (function () {
+      const script = document.createElement('script');
+      script.src = "https://o.alicdn.com/appflow/chatbot/v1/AppflowChatSDK.js";
+      script.async = true;
+      script.onload = function () {
+        if (window.APPFLOW_CHAT_SDK) {
+          window.APPFLOW_CHAT_SDK.init({
+            integrateConfig: {
+              integrateId: 'cit-0bfdb25b1d5e45c3898c',
+              domain: {
+                requestDomain: 'https://1420546017612097.appflow.aliyunnest.com'
+              }
+            }
+          });
         }
-    }
-});
-</script>
+      };
+      document.body.appendChild(script);
+    })();
+  </script>
+
 </body>
 
 </html>
