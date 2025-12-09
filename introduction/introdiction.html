@@ -66,7 +66,7 @@
             justify-content: center;
             position: relative;
             overflow: hidden;
-            background-color: rgba(249, 250, 251, 0.95); /* 提高背景不透明度以增强阅读体验 */
+            background-color: rgba(249, 250, 251, 0.95);
             border-radius: var(--border-radius);
             box-shadow: 0 8px 24px rgba(0,0,0,0.1);
         }
@@ -244,13 +244,39 @@
            line-height: 1.7;
         }
 
-         .vertical-feature-text ul {
+        /* Feature List Style */
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 20px;
+        }
+
+        .feature-list li {
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .feature-list li::before {
+            content: '✔';
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+            top: 2px;
+            font-weight: bold;
+        }
+        
+        .feature-list strong {
+            color: var(--primary-color);
+        }
+        
+        .vertical-feature-text ul:not(.feature-list) {
             list-style-position: inside;
             padding-left: 10px;
             margin-top: 20px;
         }
 
-        .vertical-feature-text li {
+        .vertical-feature-text ul:not(.feature-list) li {
             margin-bottom: 10px;
         }
         
@@ -258,91 +284,108 @@
             flex: 1;
             max-width: 500px;
             height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f1f5f9;
+            border-radius: var(--border-radius);
+            overflow: hidden;
         }
         
         .vertical-feature-image img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: contain; 
         }
-        
-        /* 课程资源样式 */
-        .course-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
+
+        /* --- 阶梯式课程内容样式 (已移除背景线) --- */
+        .staircase-section {
+            position: relative;
+            padding: 20px 0;
             margin-top: 30px;
         }
-        
-        .course-card {
-            background-color: white;
+
+        .staircase-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            /* 删除了之前的 ::before 背景线样式 */
+        }
+
+        .stair-card {
+            background: white;
+            padding: 30px;
             border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            overflow: hidden;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .course-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .course-header {
-            height: 140px;
-            background-color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            font-weight: bold;
-            padding: 20px;
-            text-align: center;
-        }
-        
-        .course-content {
-            padding: 25px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            width: 65%; /* 卡片宽度 */
+            margin-bottom: -30px; /* 让卡片在垂直方向稍微重叠，增加紧凑感 */
+            position: relative;
+            z-index: 2;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 6px solid var(--primary-color);
         }
 
-        .course-content h3 {
-            font-size: 1.25rem;
+        .stair-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(152, 10, 14, 0.15);
+            z-index: 10;
+        }
+
+        /* 阶梯偏移逻辑 (核心) */
+        .stair-step-1 { margin-left: 0; }
+        .stair-step-2 { margin-left: 12%; }
+        .stair-step-3 { margin-left: 24%; }
+        .stair-step-4 { margin-left: 36%; }
+
+        /* 卡片内部样式 */
+        .stair-header {
+            display: flex;
+            align-items: center;
             margin-bottom: 15px;
-            color: var(--dark-color);
-        }
-        
-        .course-meta {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            font-size: 0.85rem;
-            color: #64748b;
-        }
-        
-        .course-description {
-            font-size: 0.95rem;
-            color: #555;
-            margin-bottom: 20px;
-            flex-grow: 1;
-            line-height: 1.6;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
         }
 
-        .course-rating {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            font-size: 0.9rem;
-            font-weight: bold;
-            color: var(--accent-color);
-            margin-top: auto;
+        .stair-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: rgba(152, 10, 14, 0.1);
+            margin-right: 15px;
+            line-height: 1;
         }
-        
-        .stars {
-            margin-right: 5px;
+
+        .stair-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .stair-content-text {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .stair-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .stair-tag {
+            background-color: #fff6e6; /* 浅橙色背景 */
+            color: #c45500;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid rgba(240, 165, 0, 0.2);
+        }
+
+        .stair-card:last-child {
+            margin-bottom: 0;
         }
         
         /* 关于我们样式 */
@@ -484,6 +527,9 @@
                 height: 300px;
                 width: 100%;
             }
+            .feature-list li {
+                text-align: left;
+            }
         }
 
         @media (max-width: 768px) {
@@ -513,10 +559,6 @@
                 font-size: 1.8rem;
             }
             
-            .course-cards {
-                grid-template-columns: 1fr;
-            }
-            
             .nav-indicators {
                 display: none;
             }
@@ -544,6 +586,13 @@
             .timeline-item-left::after, .timeline-item-right::after {
                 left: 12px;
             }
+
+            /* 阶梯内容响应式 */
+            .stair-card {
+                width: 100%;
+                margin-left: 0 !important; /* 强制左对齐 */
+                margin-bottom: 20px;
+            }
         }
     </style>
 </head>
@@ -564,7 +613,8 @@
             <nav>
                 <ul>
                     <li><a href="#history">发展历程</a></li>
-                    <li><a href="#course-content">课程核心内容</a></li>
+                    <li><a href="#course-goals">课程目标</a></li>
+                    <li><a href="#course-content">课程内容</a></li>
                     <li><a href="#ai-highlights">AI智能助手</a></li>
                     <li><a href="#about-us">关于我们</a></li>
                 </ul>
@@ -574,6 +624,7 @@
 
     <div class="nav-indicators">
         <div class="nav-indicator active" data-section="history"></div>
+        <div class="nav-indicator" data-section="course-goals"></div>
         <div class="nav-indicator" data-section="course-content"></div>
         <div class="nav-indicator" data-section="ai-highlights"></div>
         <div class="nav-indicator" data-section="about-us"></div>
@@ -631,82 +682,100 @@
             </div>
         </section>
 
+        <section class="page-section" id="course-goals">
+            <div class="content-container">
+                <h2 class="section-title animated-element">课程目标与体系</h2>
+                
+                <div class="vertical-feature-section animated-element">
+                    <div class="vertical-feature-text">
+                        <h3>构建人机智能融合的分析能力</h3>
+                        <p>本课程旨在培养学生构建人机智能融合的<strong>大数据探索分析系统</strong>能力，通过真实项目驱动，实现理论与实践的深度结合。</p>
+                        <ul class="feature-list">
+                            <li><strong>素养目标：</strong>树立为社会民生和国家战略研发国产大数据分析软件系统的自主创新意识，具备系统研发团队合作精神以及职业素养。</li>
+                            <li><strong>能力目标：</strong>自主研发面向社会民生以及国家需求的人机智能融合大数据分析系统；具备需求分析、前沿技术调研、系统开发、系统验证以及持续改进的数据系统工程研究及实践能力。</li>
+                            <li><strong>知识目标：</strong>掌握数据管理、数据分析、数据可视化、人机交互等开发大数据探索式分析系统所需的算法设计思想、基础方法、核心技术及实现流程。</li>
+                        </ul>
+                    </div>
+                    <div class="vertical-feature-image">
+                         <img src="1.png" alt="课程目标细化图">
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="page-section" id="course-content">
             <div class="content-container">
-                <h2 class="section-title animated-element">课程核心内容</h2>
-                <div class="course-cards stagger-container">
+                <h2 class="section-title animated-element">课程内容架构</h2>
+                <p style="text-align: center; margin-bottom: 50px; color: #666;" class="animated-element">
+                    基于真实项目执行过程的理论教学知识重构，从基础到高阶的进阶之路。
+                </p>
+                
+                <div class="staircase-container stagger-container">
                     
-                    <div class="course-card animated-element">
-                        <div class="course-header">
-                            数据采集与预处理
+                    <div class="stair-card stair-step-1 animated-element">
+                        <div class="stair-header">
+                            <span class="stair-number">01</span>
+                            <div class="stair-title">基础：理解项目与数据处理</div>
                         </div>
-                        <div class="course-content">
-                            <h3>数据采集与预处理</h3>
-                            <div class="course-meta">
-                                <span>基础</span>
-                                <span>实践</span>
-                            </div>
-                            <p class="course-description">掌握网络爬虫技术、数据清洗（ETL）流程，处理缺失值与异常值，为分析奠定高质量数据基础。</p>
-                            <div class="course-rating">
-                                <span class="stars">★★★★★</span>
-                                <span>5.0</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="course-card animated-element">
-                        <div class="course-header">
-                            数据挖掘与建模
-                        </div>
-                        <div class="course-content">
-                            <h3>数据挖掘与建模</h3>
-                            <div class="course-meta">
-                                <span>核心</span>
-                                <span>算法</span>
-                            </div>
-                            <p class="course-description">深入学习分类、聚类、关联规则等经典算法，利用Scikit-learn等工具解决实际业务问题。</p>
-                            <div class="course-rating">
-                                <span class="stars">★★★★★</span>
-                                <span>4.9</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="course-card animated-element">
-                        <div class="course-header">
-                            大数据可视化
-                        </div>
-                        <div class="course-content">
-                            <h3>大数据可视化</h3>
-                            <div class="course-meta">
-                                <span>应用</span>
-                                <span>展示</span>
-                            </div>
-                            <p class="course-description">利用ECharts、Tableau等工具将复杂数据转化为直观图表，挖掘数据背后的价值。</p>
-                            <div class="course-rating">
-                                <span class="stars">★★★★★</span>
-                                <span>4.9</span>
+                        <div class="stair-content">
+                            <p class="stair-content-text">从理解大气污染等真实项目需求出发，掌握数据采样、清洗与管理的核心技能。建立系统构建的初步认知。</p>
+                            <div class="stair-tags">
+                                <span class="stair-tag">Pandas数据清洗</span>
+                                <span class="stair-tag">电子表格实践</span>
+                                <span class="stair-tag">数据采样与降维</span>
+                                <span class="stair-tag">众包数据管理</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="course-card animated-element">
-                        <div class="course-header">
-                            综合项目实战
+                    <div class="stair-card stair-step-2 animated-element">
+                        <div class="stair-header">
+                            <span class="stair-number">02</span>
+                            <div class="stair-title">分析：建立数据模型</div>
                         </div>
-                        <div class="course-content">
-                            <h3>综合项目实战</h3>
-                            <div class="course-meta">
-                                <span>进阶</span>
-                                <span>综合</span>
-                            </div>
-                            <p class="course-description">基于真实行业案例，将采集、处理、挖掘与可视化全流程贯通，培养解决复杂工程问题的综合能力。</p>
-                            <div class="course-rating">
-                                <span class="stars">★★★★★</span>
-                                <span>5.0</span>
+                        <div class="stair-content">
+                            <p class="stair-content-text">运用统计分析与机器学习工具，深入挖掘数据价值。结合深度学习算法解决复杂预测问题。</p>
+                            <div class="stair-tags">
+                                <span class="stair-tag">统计方法实践</span>
+                                <span class="stair-tag">机器学习工具</span>
+                                <span class="stair-tag">LSTM算法</span>
+                                <span class="stair-tag">K-Means聚类</span>
                             </div>
                         </div>
                     </div>
+
+                    <div class="stair-card stair-step-3 animated-element">
+                        <div class="stair-header">
+                            <span class="stair-number">03</span>
+                            <div class="stair-title">呈现：可视化与交互设计</div>
+                        </div>
+                        <div class="stair-content">
+                            <p class="stair-content-text">学习如何让数据“说话”。设计可视化评估体系，并基于 Canis 平台进行人机交互实践。</p>
+                            <div class="stair-tags">
+                                <span class="stair-tag">可视化设计</span>
+                                <span class="stair-tag">人机交互实践</span>
+                                <span class="stair-tag">Canis平台</span>
+                                <span class="stair-tag">BERT环境配置</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stair-card stair-step-4 animated-element">
+                        <div class="stair-header">
+                            <span class="stair-number">04</span>
+                            <div class="stair-title">系统：大规模计算与实战</div>
+                        </div>
+                        <div class="stair-content">
+                            <p class="stair-content-text">最终构建完整的大数据探索分析系统。处理大规模计算任务，完成手机移动数据采集与分析的综合实战。</p>
+                            <div class="stair-tags">
+                                <span class="stair-tag">SPARK实践</span>
+                                <span class="stair-tag">手机移动数据采集</span>
+                                <span class="stair-tag">普适计算</span>
+                                <span class="stair-tag">构建探索分析系统</span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -828,10 +897,10 @@
 
             const animatedElements = document.querySelectorAll('.animated-element, .stagger-container');
             animatedElements.forEach(el => {
-                if (el.classList.contains('animated-element') && !el.closest('.stagger-container')) {
-                      observer.observe(el);
-                }
-                else if (el.classList.contains('stagger-container')) {
+                if (el.classList.contains('stagger-container')) {
+                     observer.observe(el);
+                } 
+                else if (!el.closest('.stagger-container')) {
                       observer.observe(el);
                 }
             });
