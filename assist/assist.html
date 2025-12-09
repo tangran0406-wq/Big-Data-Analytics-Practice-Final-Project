@@ -33,53 +33,120 @@
         html {
             scroll-behavior: smooth;
         }
-      /* 思维导图悬浮窗样式 */
+ .filter-btn {
+    background-color: white;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 8px 16px;
+    margin: 0 8px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.filter-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.filter-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* 确保卡片有过渡动画 */
+.resource-card-horizontal {
+    transition: all 0.3s ease; /* 已在现有CSS中存在，确认没有被覆盖即可 */
+}
+.mindmap-popup-container {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    pointer-events: none !important;
+    z-index: 99999 !important;
+    overflow: visible !important;
+}
+.mindmap-popup-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9998;
+    pointer-events: none;
+    /* 移除过大的宽高设置，改用最小必要尺寸 */
+    width: auto;
+    height: auto;
+}
+
+/* 2. 修复悬浮窗定位和显示问题 */
 .image-hover-container {
     position: relative;
     display: inline-block;
+    /* 确保父容器不会遮挡子元素 */
+    z-index: 10;
 }
 
+/* 3. 改进弹窗定位，使其相对于视口居中 */
 .image-popup {
-    position: absolute;
-    top: -320px; /* 调整显示位置 */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 300px;
-    height: 300px;
+    position: fixed; /* 改为固定定位，相对于视口 */
+    width: 80vw;    /* 使用视口宽度的百分比，更灵活 */
+    max-width: 600px; /* 最大宽度限制 */
+    height: 80vh;   /* 使用视口高度的百分比 */
+    max-height: 300px; /* 最大高度限制 */
     border-radius: var(--border-radius);
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     overflow: hidden;
-    z-index: 100;
+    z-index: 9999; /* 确保在最上层 */
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
-    pointer-events: none; /* 确保点击能穿透到下面的按钮 */
+    pointer-events: auto;
+    background-color: white;
+    /* 居中定位 */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    /* 添加内边距，让图片有呼吸空间 */
+    padding: 15px;
+    /* 确保弹窗内容区域不被裁剪 */
+    box-sizing: border-box;
 }
 
-.image-hover-container:hover .image-popup {
-    opacity: 1;
-    visibility: visible;
-    top: -330px; /* 稍微上移产生动画效果 */
-}
-
+/* 4. 关键修复：确保图片完整显示 */
 .image-popup img {
     width: 100%;
     height: 100%;
+    /* 保持图片比例，完整显示在容器内 */
     object-fit: contain;
-    background-color: white;
-    padding: 10px;
+    /* 确保图片作为块级元素显示 */
+    display: block;
+    /* 添加背景色，提升图片可读性 */
+    background-color: #f8f9fa;
 }
 
-/* 响应式调整 */
+/* 5. 悬停时显示弹窗并调整动画 */
+.image-hover-container:hover .image-popup {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* 6. 确保所有父容器不会遮挡弹窗 */
+.page-section, .content-container, .resource-card-horizontal {
+    overflow: visible !important;
+}
+
+/* 7. 优化响应式显示 */
 @media (max-width: 768px) {
     .image-popup {
-        width: 250px;
-        height: 250px;
-        top: -270px;
-    }
-    
-    .image-hover-container:hover .image-popup {
-        top: -280px;
+        width: 90vw;
+        height: 70vh;
+        max-width: none;
+        max-height: none;
+        padding: 10px;
     }
 }
         /* 横向卡片样式 */
@@ -588,13 +655,6 @@
         </div>
     </header>
 
-    <div class="nav-indicators">
-        <div class="nav-indicator active" data-section="overview"></div>
-        <div class="nav-indicator" data-section="reference-papers"></div>
-        <div class="nav-indicator" data-section="mind-maps"></div>
-        <div class="nav-indicator" data-section="tutorials"></div>
-    </div>
-
     <div class="page-container">
         <section class="page-section" id="overview">
             <div class="content-container">
@@ -615,82 +675,126 @@
 <section class="page-section" id="reference-papers">
     <div class="content-container">
         <h2 class="section-title">参考论文</h2>
-        <div class="resource-cards-horizontal">
-            <div class="resource-card-horizontal">
-                <div class="resource-info-horizontal">
-                    <div class="resource-category">核心文献</div>
-                    <h3>《A Recursive Subdivision Technique for Sampling Multi-class Scatterplots》</h3>
-                    <p class="resource-desc">基于定制二叉 kd 树的非均匀递归采样技术，可在多类散点图中忠实呈现相对数据和类别密度，同时保留主要异常值，经定量评估和案例研究验证其效果优于现有方法。</p>
-                </div>
-                <div class="resource-action-horizontal">
-                    <a href="../papers/paper-01.pdf" class="btn" download="paper-01">下载论文</a>
-                </div>
-            </div>
+        
+        <!-- 标签筛选栏 -->
+        <div class="paper-filters" style="margin-bottom: 20px; text-align: center;">
+            <button class="filter-btn active" data-filter="all">全部</button>
+            <button class="filter-btn" data-filter="可视化设计">可视化设计</button>
+            <button class="filter-btn" data-filter="数据质量">数据质量</button>
+            <button class="filter-btn" data-filter="数据采样">数据采样</button>
+            <button class="filter-btn" data-filter="深度学习">深度学习</button>
+        </div>
+        
+        
             
-            <div class="resource-card-horizontal">
+            <div class="resource-card-horizontal" data-category="可视化设计">
                 <div class="resource-info-horizontal">
-                    <div class="resource-category">核心文献</div>
+                    <div class="resource-category">可视化设计</div>
                     <h3>《Crowdsourcing Graphical Perception: Using Mechanical Turk to Assess Visualization Design》</h3>
                     <p class="resource-desc">在 Amazon Mechanical Turk 上复制过往图形感知实验并开展新实验，验证了众包用于图形感知研究的可行性，得出可视化设计新见解并给出众包研究设计建议。</p>
                 </div>
                 <div class="resource-action-horizontal">
-                    <a href="../papers/paper-02.pdf" class="btn" download="paper-02">下载论文</a>
+                    <a href="../papers/paper-02.pdf" class="btn" download="《Crowdsourcing Graphical Perception: Using Mechanical Turk to Assess Visualization Design》">下载论文</a>
+                </div>
+            </div>
+
+
+
+            <div class="resource-card-horizontal" data-category="数据采样">
+                <div class="resource-info-horizontal">
+                    <div class="resource-category">数据采样</div>
+                    <h3>《Backpropagation Free Transformers》</h3>
+                    <p class="resource-desc">聚焦以更符合生物学合理性的方式训练 Transformer，指出反向传播存在的三大问题，提出对应解决方法并扩展至 Transformer，在自然语言处理任务中验证了无反向传播方法对大型神经网络的学习有效性。</p>
+                </div>
+                <div class="resource-action-horizontal">
+                    <a href="papers/数据采样/数据采样01.pdf" class="btn" download="《Backpropagation Free Transformers》">下载论文</a>
+                </div>
+            </div><div class="resource-card-horizontal" data-category="数据采样">
+                <div class="resource-info-horizontal">
+                    <div class="resource-category">数据采样</div>
+                    <h3>《BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding》</h3>
+                    <p class="resource-desc">提出 BERT 模型，通过掩码语言模型和下一句预测任务预训练深层双向 Transformer，仅需添加一个输出层，无需大幅修改任务架构，就在 11 项自然语言处理任务中取得最先进结果。</p>
+                </div>
+                <div class="resource-action-horizontal">
+                    <a href="papers/数据采样/数据采样02.pdf" class="btn" download="《BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding》">下载论文</a>
+                </div>
+            </div><div class="resource-card-horizontal" data-category="可视化设计">
+                <div class="resource-info-horizontal">
+                    <div class="resource-category">可视化设计</div>
+                    <h3>《Data Formulator 2: Iteratively Creating Rich Visualizations with AI》</h3>
+                    <p class="resource-desc">提出 Data Formulator 2 可视化系统，结合图形界面和自然语言输入，通过概念编码架和数据线程支持用户迭代创建可视化，无需关注数据转换细节，可导航历史设计并复用先前成果完成复杂数据探索。</p>
+                </div>
+                <div class="resource-action-horizontal">
+                    <a href="papers/可视化设计/可视化设计02.pdf" class="btn" download="《Data Formulator 2: Iteratively Creating Rich Visualizations with AI》">下载论文</a>
+                </div>
+            </div><div class="resource-card-horizontal" data-category="可视化设计">
+                <div class="resource-info-horizontal">
+                    <div class="resource-category">可视化设计</div>
+                    <h3>《Effortless Data Exploration with zenvisage: An Expressive and Interactive Visual Analytics System》</h3>
+                    <p class="resource-desc">设计 zenvisage 可视化分析平台及查询语言 ZQL，支持对可视化集合进行组合、过滤、比较和排序等操作，通过图形化查询优化器提升执行效率，帮助用户从大型数据集中高效找到所需视觉模式。</p>
+                </div>
+                <div class="resource-action-horizontal">
+                    <a href="papers/可视化设计/可视化设计03.pdf" class="btn" download="《Effortless Data Exploration with zenvisage: An Expressive and Interactive Visual Analytics System》">下载论文</a>
+                </div>
+            </div><div class="resource-card-horizontal" data-category="深度学习">
+                <div class="resource-info-horizontal">
+                    <div class="resource-category">深度学习</div>
+                    <h3>《ProactiveTasks: the Short of Mobile Device Use Sessions》</h3>
+                    <p class="resource-desc">基于移动设备使用时长和交互类型，将使用会话分为浏览、查看和参与三类，聚焦短时间查看会话，提出 ProactiveTasks 交互式锁屏原型，通过主动推荐短任务优化移动设备交互体验，并探索其设计空间。</p>
+                </div>
+                <div class="resource-action-horizontal">
+                    <a href="papers/深度学习/深度学习01.pdf" class="btn" download="《ProactiveTasks: the Short of Mobile Device Use Sessions》">下载论文</a>
+                </div>
+            </div><div class="resource-card-horizontal" data-category="深度学习">
+                <div class="resource-info-horizontal">
+                    <div class="resource-category">深度学习</div>
+                    <h3>《Visualization-Aware Sampling for Very Large Databases》</h3>
+                    <p class="resource-desc">提出可视化感知采样（VAS）方法，通过最小化可视化导向的损失函数选择数据集子集，在散点图和地图可视化中，以更少数据点保证高视觉质量，在回归、密度估计和聚类任务中提升用户成功率且加快可视化速度。</p>
+                </div>
+                <div class="resource-action-horizontal">
+                    <a href="papers/深度学习/数度学习02.pdf" class="btn" download="《Visualization-Aware Sampling for Very Large Databases》">下载论文</a>
                 </div>
             </div>
             
-            <div class="resource-card-horizontal">
+
+
+
+            <div class="resource-card-horizontal" data-category="数据质量">
                 <div class="resource-info-horizontal">
-                    <div class="resource-category">专题文献</div>
-                    <h3>《Prompting for Discovery: Flexible Sense-Making for AI Art-Making with DreamSheets》</h3>
-                    <p class="resource-desc"> 设计了 DreamSheets 工具，基于电子表格界面并结合 LLM 辅助功能，支持用户自定义文本到图像模型的探索策略，通过两项用户研究提炼出界面设计建议</p>
-                </div>
-                <div class="resource-action-horizontal">
-                    <a href="../papers/paper-03.pdf" class="btn" download="paper-03">下载论文</a>
-                </div>
-            </div>
-            <div class="resource-card-horizontal">
-                <div class="resource-info-horizontal">
-                    <div class="resource-category">核心文献</div>
-                    <h3>《Table-GPT: Table Fine-tuned GPT for Diverse Table Tasks》</h3>
-                    <p class="resource-desc">提出 “表格微调” 范式，对 GPT-3.5 和 ChatGPT 等语言模型进行微调，使其在多种表格任务中表现优于原始模型，且具备良好的泛化能力。</p>
-                </div>
-                <div class="resource-action-horizontal">
-                    <a href="../papers/paper-04.pdf" class="btn" download="paper-04">下载论文</a>
-                </div>
-            </div>
-            <div class="resource-card-horizontal">
-                <div class="resource-info-horizontal">
-                    <div class="resource-category">核心文献</div>
+                    <div class="resource-category">数据质量</div>
                     <h3>《A Relational Model of Data for Large Shared Data Banks》</h3>
                     <p class="resource-desc">提出基于 n 元关系、数据基关系范式和通用数据子语言的关系数据模型，解决了现有模型的数据依赖问题，为大型共享数据库提供了数据独立性和一致性保障的基础方法论。</p>
                 </div>
                 <div class="resource-action-horizontal">
-                    <a href="../papers/paper-05.pdf" class="btn" download="paper-05">下载论文</a>
+                    <a href="papers/数据质量/数据质量01.pdf" class="btn" download="《A Relational Model of Data for Large Shared Data Banks》">下载论文</a>
                 </div>
             </div>
-            <div class="resource-card-horizontal">
+            
+            <div class="resource-card-horizontal" data-category="数据质量">
                 <div class="resource-info-horizontal">
-                    <div class="resource-category">专题文献</div>
+                    <div class="resource-category">数据质量</div>
                     <h3>《A Survey on the Detection Algorithms for False Data Injection Attacks in Smart Grids》</h3>
                     <p class="resource-desc">系统梳理了智能电网中虚假数据注入攻击的检测算法，将其分为模型驱动和数据驱动两类，分析了各类算法的优缺点、适用场景及性能，指出了未来算法开发的核心准则。</p>
                 </div>
                 <div class="resource-action-horizontal">
-                    <a href="../papers/paper-06.pdf" class="btn" download="paper-06">下载论文</a>
+                    <a href="papers/数据质量/数据质量02.pdf" class="btn" download="《A Survey on the Detection Algorithms for False Data Injection Attacks in Smart Grids》">下载论文</a>
                 </div>
             </div>
-            <div class="resource-card-horizontal">
+            
+            <div class="resource-card-horizontal" data-category="数据质量">
                 <div class="resource-info-horizontal">
-                    <div class="resource-category">专题文献</div>
+                    <div class="resource-category">数据质量</div>
                     <h3>《A Tutorial on Principal Components Analysis》</h3>
                     <p class="resource-desc">从基础数学知识（标准差、协方差、特征向量等）入手，详细讲解了主成分分析（PCA）的原理、步骤、应用场景及实现方式，为读者提供了易懂的 PCA 入门指导。</p>
                 </div>
                 <div class="resource-action-horizontal">
-                    <a href="../papers/paper-07.pdf" class="btn" download="paper-07">下载论文</a>
+                    <a href="papers/数据质量/数据质量03.pdf" class="btn" download="《A Tutorial on Principal Components Analysis》">下载论文</a>
                 </div>
             </div>
         </div>
     </div>
 </section>
+<div class="mindmap-popup-container"></div>
 <section class="page-section" id="mind-maps">
     <div class="content-container">
         <h2 class="section-title">思维导图</h2>
@@ -703,11 +807,10 @@
                 <div class="resource-action-horizontal">
                     <div class="image-hover-container">
                         <a href="1.png" class="btn" download="1.png">下载思维导图</a>
-                        <div class="image-popup">
-                                <img src="interaction.png" alt="交互设计与可视化交互体系思维导图">
-                            </div>
+                         <div class="image-popup">
+                        <img src="1.png" alt="01思维导图">
+                        </div>
                     </div>
-                    
                 </div>
             </div>
             <div class="resource-card-horizontal">
@@ -718,9 +821,13 @@
                 <div class="resource-action-horizontal">
                     <div class="image-hover-container">
                         <a href="2.png" class="btn" download="2.png">下载思维导图</a>
+                        <div class="image-popup">
+                        <img src="2.png" alt="02思维导图">
+                        </div>
                     </div>
                 </div>
-            </div><div class="resource-card-horizontal">
+            </div>
+            <div class="resource-card-horizontal">
                 <div class="resource-info-horizontal">
                     <h3>03-data basics I</h3>
                     <p class="resource-desc">说明数据分析中提问的重要性，介绍数据类型、属性与数据集分类，讲解数据采样方法、误差及归一化。</p>
@@ -728,6 +835,9 @@
                 <div class="resource-action-horizontal">
                     <div class="image-hover-container">
                         <a href="3.png" class="btn" download="3.png">下载思维导图</a>
+                        <div class="image-popup">
+                        <img src="3.png" alt="03思维导图">
+                        </div>
                     </div>
                 </div>
             </div><div class="resource-card-horizontal">
@@ -738,6 +848,9 @@
                 <div class="resource-action-horizontal">
                     <div class="image-hover-container">
                         <a href="4.png" class="btn" download="4.png">下载思维导图</a>
+                        <div class="image-popup">
+                        <img src="4.png" alt="04思维导图">
+                        </div>
                     </div>
                 </div>
             </div><div class="resource-card-horizontal">
@@ -748,6 +861,9 @@
                 <div class="resource-action-horizontal">
                     <div class="image-hover-container">
                         <a href="5.png" class="btn" download="5.png">下载思维导图</a>
+                        <div class="image-popup">
+                        <img src="5.png" alt="05思维导图">
+                        </div>
                     </div>
                 </div>
             </div><div class="resource-card-horizontal">
@@ -758,6 +874,9 @@
                 <div class="resource-action-horizontal">
                     <div class="image-hover-container">
                         <a href="6.png" class="btn" download="6.png">下载思维导图</a>
+                        <div class="image-popup">
+                        <img src="6.png" alt="06思维导图">
+                        </div>
                     </div>
                 </div>
             </div><div class="resource-card-horizontal">
@@ -768,6 +887,9 @@
                 <div class="resource-action-horizontal">
                     <div class="image-hover-container">
                         <a href="7.png" class="btn" download="7.png">下载思维导图</a>
+                        <div class="image-popup">
+                        <img src="7.png" alt="07思维导图">
+                        </div>
                     </div>
                 </div>
             </div><div class="resource-card-horizontal">
@@ -778,6 +900,9 @@
                 <div class="resource-action-horizontal">
                     <div class="image-hover-container">
                         <a href="8.png" class="btn" download="8.png">下载思维导图</a>
+                        <div class="image-popup">
+                        <img src="8.png" alt="08思维导图">
+                        </div>
                     </div>
                 </div>
             </div><div class="resource-card-horizontal">
@@ -788,6 +913,9 @@
                 <div class="resource-action-horizontal">
                     <div class="image-hover-container">
                         <a href="9.png" class="btn" download="9.png">下载思维导图</a>
+                        <div class="image-popup">
+                        <img src="9.png" alt="09思维导图">
+                        </div>
                     </div>
                 </div>
             </div><div class="resource-card-horizontal">
@@ -798,6 +926,9 @@
                 <div class="resource-action-horizontal">
                     <div class="image-hover-container">
                         <a href="10.png" class="btn" download="10.png">下载思维导图</a>
+                        <div class="image-popup">
+                        <img src="10.png" alt="10思维导图">
+                        </div>
                     </div>
                 </div>
             </div><div class="resource-card-horizontal">
@@ -808,6 +939,9 @@
                 <div class="resource-action-horizontal">
                     <div class="image-hover-container">
                         <a href="11.png" class="btn" download="11.png">下载思维导图</a>
+                        <div class="image-popup">
+                        <img src="11.png" alt="11思维导图">
+                        </div>
                     </div>
                 </div>
             </div><div class="resource-card-horizontal">
@@ -818,6 +952,9 @@
                 <div class="resource-action-horizontal">
                     <div class="image-hover-container">
                         <a href="12.png" class="btn" download="12.png">下载思维导图</a>
+                        <div class="image-popup">
+                        <img src="12.png" alt="12思维导图">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -868,20 +1005,56 @@
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // 获取导航元素
-        const indicators = document.querySelectorAll('.nav-indicator');
-        const headerLinks = document.querySelectorAll('nav a[href^="#"]');
-        const header = document.querySelector('header');
-        const headerHeight = header.offsetHeight;
-
-        // 处理右侧导航指示器点击
-        indicators.forEach(indicator => {
-            indicator.addEventListener('click', function() {
-                const sectionId = this.getAttribute('data-section');
-                scrollToSection(sectionId);
-            });
+    // 修复后的筛选功能代码
+document.addEventListener('DOMContentLoaded', function() {
+    // 获取所有筛选按钮和论文卡片
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const paperCards = document.querySelectorAll('.resource-card-horizontal[data-category]');
+    
+    // 为每个论文卡片添加初始过渡样式
+    paperCards.forEach(card => {
+        card.style.transition = 'all 0.3s ease';
+    });
+    
+    // 筛选处理函数
+    function filterCards(category) {
+        paperCards.forEach(card => {
+            const cardCategory = card.getAttribute('data-category');
+            if (category === 'all' || cardCategory === category) {
+                // 显示卡片并添加动画
+                card.style.display = 'flex';
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 50);
+            } else {
+                // 隐藏卡片并添加动画
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.display = 'none';
+                }, 300);
+            }
         });
+    }
+    
+    // 为每个筛选按钮添加点击事件
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // 移除所有按钮的active类
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // 给当前点击的按钮添加active类
+            this.classList.add('active');
+            
+            // 获取当前筛选类别并执行筛选
+            const filter = this.getAttribute('data-filter');
+            filterCards(filter);
+        });
+    });
+    
+    // 初始加载时显示所有卡片
+    filterCards('all');
+});
 
         // 处理顶部导航链接点击（新增这部分逻辑）
         headerLinks.forEach(link => {
@@ -941,7 +1114,6 @@
         });
     });
         });
-    });
     // 思维导图预览功能
 document.querySelectorAll('.image-hover-container').forEach(container => {
     const btn = container.querySelector('.btn');
@@ -984,6 +1156,7 @@ document.querySelectorAll('.image-hover-container').forEach(container => {
         }
     });
 });
+
 </script>
 <script src="https://o.alicdn.com/appflow/chatbot/v1/AppflowChatSDK.js"></script>
 <script>
