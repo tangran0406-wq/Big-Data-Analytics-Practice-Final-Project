@@ -1,6 +1,6 @@
 ﻿Big-Data-Analytics-Practice-Final-Project
 
-组内成员的实验报告见：https://github.com/tangran0406-wq/Report
+
 
 一、目前已有数据
 课程 PPT
@@ -22,7 +22,7 @@ AI 应用：包含课前伴学、课堂互动、课后辅导、教师备课以�
 
 与课程有关的软件、知识点。
 
-三、期望实现
+三、主要功能
 1、课程介绍
 课程背景
 
